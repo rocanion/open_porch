@@ -1,0 +1,12 @@
+*.tmproj
+.DS_Store
+.bundle
+config/database.yml
+db/schema.rb
+log/*.log
+tmp/**/*
+tmp/restart.txt
+docs/.DS_Store
+public/stylesheets/*
+coverage/*
+.rvmrc
