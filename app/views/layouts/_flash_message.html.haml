@@ -1,0 +1,4 @@
+.flash_wrapper
+  - flash.each do |type, message|
+    .flash_message{ :class => type.to_s }
+      = message

@@ -3,8 +3,13 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.3'
 gem 'pg', '0.10.1' # See installation notes below
 gem 'haml', '3.0.25'
+gem 'spatial_adapter', '1.2.0', :require => 'spatial_adapter/postgresql'
 
-
+group :test do
+  gem "bundler"
+  gem "jeweler"
+  gem "rcov"
+end
 
 
 

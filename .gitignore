@@ -3,6 +3,7 @@
 .bundle
 config/database.yml
 db/schema.rb
+db/dumps/*
 log/*.log
 tmp/**/*
 tmp/restart.txt
