@@ -9,6 +9,8 @@ group :test do
   gem "bundler"
   gem "jeweler"
   gem "rcov"
+  gem 'test_dummy'
+  gem 'faker'
 end
 
 

@@ -10,7 +10,9 @@
 #       Install PostgreSQL and put its /bin directory on your path.
 development:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
+  schema_search_path: public
+  template: template_postgis
   database: open_porch_development
   pool: 5
   username: open_porch
@@ -38,7 +40,9 @@ development:
 # Do not set this db to the same as development or production.
 test:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
+  schema_search_path: public
+  template: template_postgis
   database: open_porch_test
   pool: 5
   username: open_porch
@@ -46,7 +50,9 @@ test:
 
 production:
   adapter: postgresql
-  encoding: unicode
+  encoding: utf8
+  schema_search_path: public
+  template: template_postgis
   database: open_porch_production
   pool: 5
   username: open_porch

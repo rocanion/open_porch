@@ -1,6 +1,6 @@
 module AreasHelper
   def draw_areas(areas)
-    areas.collect do |area|
+    [areas].flatten.collect do |area|
       %{
         area_border = new google.maps.Polygon({
           paths: [#{area.border_coordinates}],

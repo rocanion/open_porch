@@ -3,15 +3,22 @@
   
 :javascript
   function initialize() {
-    var latlng = new google.maps.LatLng(#{@areas.first.border.rings.first.points.first.x}, #{@areas.first.border.rings.first.points.first.y});
+    var latlng = new google.maps.LatLng(#{@areas.first.center.x}, #{@areas.first.center.y});
     var myOptions = {
       zoom: 14,
       center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      scaleControl: true
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     
-    #{draw_areas([@areas.first])}
+    var marker = new google.maps.Marker({
+        position: latlng, 
+        map: map, 
+        title:"You are here!"
+    });
+      
+    #{draw_areas(@areas)}
   }
 
 = content_for :doc_ready do
@@ -19,7 +26,7 @@
 
 %h1 Areas
 
-#map_canvas{:style => 'width:400px; height:400px'}
+#map_canvas{:style => 'width:100%; height:500px'}
 
   
   

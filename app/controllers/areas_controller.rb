@@ -1,7 +1,6 @@
 class AreasController < ApplicationController
 
   def index
-    @areas = Area.all
-    
+    @areas = Area.closest_from(Area.first.center, 400)
   end
 end
