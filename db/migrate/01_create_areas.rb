@@ -1,4 +1,4 @@
-class CreateOpenPorch < ActiveRecord::Migration
+class CreateAreas < ActiveRecord::Migration
   def self.up
     create_table :areas do |t|
       t.string :name
