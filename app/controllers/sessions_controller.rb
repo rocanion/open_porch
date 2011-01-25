@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_filter :login_required,  :only => :destroy
+  skip_before_filter :login_required,  :except => :destroy
   before_filter :redirect_if_logged_in, :only => [ :new, :create ]
   before_filter :build_user_session,  :only => [ :new, :create ]
   

@@ -2,6 +2,10 @@ require 'test_helper'
 
 class Admin::UsersControllerTest < ActionController::TestCase
   
+  def setup
+    login_as(:admin)
+  end
+  
   def test_get_index
     get :index
     assert_response :success
