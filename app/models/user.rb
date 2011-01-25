@@ -25,7 +25,8 @@ class User < ActiveRecord::Base
   validates :password,
     :length => {
       :within => 4..40,
-      :too_short => "The password you entered is too short (minimum is 4 characters)"
+      :too_short => "The password you entered is too short (minimum is 4 characters)",
+      :if => :password_required?
     },
     :presence => { 
       :message => 'Please choose a password',
