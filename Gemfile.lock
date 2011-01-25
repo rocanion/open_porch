@@ -1,3 +1,21 @@
+GIT
+  remote: git@github.com:twg/formatted_form.git
+  revision: aabab7e3b07e49b98882a496e5f91a744d95a857
+  specs:
+    formatted_form (1.0.0)
+
+GIT
+  remote: git@github.com:twg/wristband.git
+  revision: 9d180a5857daab585cabf77ad71588f1c57e9599
+  specs:
+    wristband (1.0.2)
+      formatted_form (>= 1.0.0)
+      formatted_form (= 1.0.0)
+      haml (= 3.0.25)
+      haml (>= 3.0.25)
+      rails (>= 3.0.3)
+      rails (= 3.0.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -85,6 +103,7 @@ PLATFORMS
 DEPENDENCIES
   bundler
   faker
+  formatted_form!
   haml (= 3.0.25)
   jeweler
   pg (= 0.10.1)
@@ -92,3 +111,4 @@ DEPENDENCIES
   rcov
   spatial_adapter (= 1.2.0)
   test_dummy
+  wristband!

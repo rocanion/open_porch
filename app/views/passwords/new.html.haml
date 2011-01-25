@@ -1,0 +1,15 @@
+%h1 Reset your password
+
+= form_tag passwords_path, :class => 'formatted' do
+  .form_element.text_field_element
+    .label Email
+    .value= text_field_tag :email
+  
+  .form_element.submit_element
+    = submit_tag 'Send Reset Password Email'
+    
+    
+    
+%p
+  Already have an account?
+  = link_to 'Login', login_path

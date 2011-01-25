@@ -42,10 +42,33 @@ class ActiveSupport::TestCase
       if (v != map[k])
         a << k
       end
-
       a
     end
-    
     assert_equal map, result_map, "Difference: #{map.slice(*differences).inspect} vs #{result_map.slice(*differences).inspect}"
   end
+  
+  def login_as(obj)
+    case obj
+    when String
+      user = a User
+      user.update_attribute(:role, obj)
+    when Symbol
+      user = a User
+      user.update_attribute(:role, obj.to_s)
+    when User
+      user = obj
+    else
+      raise "Please specifuy either a User or a role: #{obj.class.to_s}"
+    end
+
+    session[:user_id] = user.id
+    token = Wristband::Support.encrypt_with_salt(user.id.to_s, Time.now.to_f.to_s)
+    cookies[:login_token] = {
+      :value => token,
+      :expires => 2.weeks.from_now.utc
+    }
+    
+    user
+  end
+
 end

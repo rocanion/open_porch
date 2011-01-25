@@ -1,0 +1,6 @@
+= f.text_field :name
+= f.text_field :slug
+= f.text_area :description
+= f.text_field :city
+= f.text_field :state
+= f.submit 'Save', :cancel_url => link_to('cancel', admin_areas_path)

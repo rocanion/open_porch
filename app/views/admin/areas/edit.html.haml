@@ -1,0 +1,4 @@
+%h1 Edit Area
+
+= formatted_form_for @area, :url => [:admin, @area] do |f|
+  = render :partial => 'form', :locals => {:f => f}
