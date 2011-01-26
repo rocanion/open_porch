@@ -2,8 +2,14 @@ class User < ActiveRecord::Base
   
   # == Constants ============================================================
   
-  ROLES = %W{admin regular_user}
+  ROLES = %w{admin regular_user}
   
+  # == Attributes =====================================================
+  
+  attr_accessor :area_id
+  
+  attr_protected :role
+
   # == Extensions ===========================================================
 
   wristband :roles => ROLES
@@ -20,7 +26,7 @@ class User < ActiveRecord::Base
       :with => /^([\w.%-+]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, 
       :message => 'The email address you entered is not valid'
     },
-    :uniqueness => true
+    :uniqueness => {:message => 'This email has already been taken'}
     
   validates :password,
     :length => {
@@ -38,6 +44,11 @@ class User < ActiveRecord::Base
     :inclusion => { :in => ROLES },
     :presence => true
   
+  validates :address, :city, :state,
+    :presence => {
+      :message => 'Please enter your full address'
+    }
+  
   # == Relationships ========================================================
   
   has_many :memberships,
@@ -49,11 +60,18 @@ class User < ActiveRecord::Base
 
   # == Callbacks ============================================================
 
+  before_validation :assign_role, :on => :create
+  
   # == Class Methods ========================================================
 
   # == Instance Methods =====================================================
-
+  
   def password_required?
     self.new_record?
+  end
+  
+protected
+  def assign_role
+    self.role = 'regular_user'
   end
 end

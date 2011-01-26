@@ -1,0 +1,5 @@
+= formatted_form_for @address, :url => registrations_path do |f|
+  = f.text_field :address, :value => '19 Lake Forest Dr'
+  = f.text_field :city, :value => 'Burlington'
+  = f.select :state, grouped_options_for_select([['Canada', CANADA_PROVINCES], ['United States', US_STATES]]), :label => 'State/Province', :include_blank => true
+  = f.submit 'Sign Up'

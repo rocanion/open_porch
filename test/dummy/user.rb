@@ -7,7 +7,15 @@ TestDummy.declare(User) do
     'password'
   end
 
-  dummy :role do
-    User::ROLES[0]
+  dummy :address do
+    Faker::Address.street_address
+  end
+
+  dummy :city do
+    Faker::Address.city
+  end
+
+  dummy :state do
+    Faker::Address.us_state
   end
 end

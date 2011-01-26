@@ -1,5 +1,6 @@
 OpenPorch::Application.routes.draw do
 
+  resources :registrations
   resources :areas
   
   namespace :admin do
@@ -7,6 +8,6 @@ OpenPorch::Application.routes.draw do
     resources :users
   end
   
-  root :to => 'sessions#new', :as => 'login'
+  root :to => 'registrations#index'
   
 end

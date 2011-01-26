@@ -1,12 +1,12 @@
 GIT
   remote: git@github.com:twg/formatted_form.git
-  revision: aabab7e3b07e49b98882a496e5f91a744d95a857
+  revision: da36db68070d083285b34137ebd1d0183e00edc2
   specs:
     formatted_form (1.0.0)
 
 GIT
   remote: git@github.com:twg/wristband.git
-  revision: 9d180a5857daab585cabf77ad71588f1c57e9599
+  revision: d536cecc8acea0a5f3c02122a7e1985299ac0025
   specs:
     wristband (1.0.2)
       formatted_form (>= 1.0.0)
@@ -47,12 +47,13 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    arel (2.0.6)
+    arel (2.0.7)
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faker (0.9.4)
       i18n (~> 0.4)
+    geokit (1.5.0)
     git (1.2.5)
     haml (3.0.25)
     i18n (0.5.0)
@@ -60,7 +61,7 @@ GEM
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
-    mail (2.2.14)
+    mail (2.2.15)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -95,7 +96,7 @@ GEM
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
-    tzinfo (0.3.23)
+    tzinfo (0.3.24)
 
 PLATFORMS
   ruby
@@ -104,6 +105,7 @@ DEPENDENCIES
   bundler
   faker
   formatted_form!
+  geokit (= 1.5.0)
   haml (= 3.0.25)
   jeweler
   pg (= 0.10.1)

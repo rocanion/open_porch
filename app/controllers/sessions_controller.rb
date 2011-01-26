@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       login(@session_user)
       redirect_to(user_path(current_user), :notice => "Welcome, you are now logged in.")
     else
-      flash[:alert] = 'Login failed. Did you mistype?'
+      flash.now[:alert] = 'Login failed. Did you mistype?'
       render :action => :new
     end
   end
@@ -25,9 +25,5 @@ protected
   
   def redirect_if_logged_in
     redirect_to user_path(current_user) if logged_in?
-  end
-  
-  def login_required
-    redirect_to login_path unless logged_in?
   end
 end

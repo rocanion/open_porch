@@ -1,0 +1,6 @@
+%h1 Join your Neighborhood Forum
+
+= debug session[:registration_step]
+= formatted_form_for @user do |f|
+  = render :partial => "registration_step_#{@user.current_registration_step}", :locals => {:f => f}
+  = f.submit 'Continue', :cancel_url => (@user.first_registration_step? ? '' : f.submit('Back', :name => 'back_button'))

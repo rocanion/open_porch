@@ -6,9 +6,11 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(
       :email => 'user@example.com',
       :password => 'tester',
-      :password_confirmation => 'tester'
+      :password_confirmation => 'tester',
+      :address => 'street 1',
+      :city => 'Burlington',
+      :state => 'Vermont'
     )
-    user.role = 'admin'
     user.save
     assert_created user
   end
@@ -16,14 +18,13 @@ class UserTest < ActiveSupport::TestCase
   def test_create_requirements
     user = User.create
   
-    assert_errors_on user, :email, :password, :role
+    assert_errors_on user, :email, :password, :address, :city, :state
     assert user.errors[:email].include?("Please enter your email address")
     assert user.errors[:email].include?("The email address you entered is not valid")
     assert user.errors[:email].include?("The email address you entered is to short")
     assert user.errors[:password].include?("Please choose a password")
     assert user.errors[:password].include?("The password you entered is too short (minimum is 4 characters)")
-    assert user.errors[:role].include?("can't be blank")
-    assert user.errors[:role].include?("is not included in the list")
+    assert user.is_regular_user?
   end
 
   def test_create_dummy
