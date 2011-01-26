@@ -12,7 +12,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :address
       t.string :city
       t.string :state
-      t.string :zip      
+      t.string :zip
+      t.string :lat
+      t.string :lng
       t.timestamps
     end
     add_index :users, :email

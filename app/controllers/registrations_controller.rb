@@ -3,27 +3,26 @@ class RegistrationsController < ApplicationController
   before_filter :build_address, :only => [:new, :index, :create]
   
   def index
-    @address.current_step = 0
+    # ...
   end
   
   def new
-    @address.current_step = 0
+    # ...
   end
   
   def create
-    
     if @address.valid?
-      @address.next_step
-      
       @areas = @address.closest_regions
+      if @areas.empty?
+        flash.now[:alert] = "Sorry, we couldn't find any neighbourhoods close to you!"
+        render :action => :index
+      else
+        @selected_area = @areas.shift
+        @address.area_id = @selected_area.id
       
-      @selected_area = @areas.shift
-      @user = User.new(
-        :address => @address.address,
-        :city => @address.city,
-        :state => @address.state,
-        :area_id => @selected_area.id
-      )
+        @user = User.new(:address_attributes => @address)
+        @user.memberships.build(:area_id => @selected_area.id)
+      end
     else
       render :action => :index
     end

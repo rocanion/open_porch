@@ -1,6 +1,35 @@
-%h1 Join your Neighborhood Forum
+.tabbed
+  %ul.tabs
+    %li 1. Confirm neighborhood
+    %li.active 2. Account details
+    %li 3. Sign up complete
+  .clear.whitebox.padded
+    .left
+      %h1 Enter your account details
+      %h3
+        Your account will be created  in the
+        %br/
+        %strong= @area.name
+        neighbourhood forum
+      = content_for :head do
+        = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+        = javascript_include_tag 'google_maps'
 
-= debug session[:registration_step]
-= formatted_form_for @user do |f|
-  = render :partial => "registration_step_#{@user.current_registration_step}", :locals => {:f => f}
-  = f.submit 'Continue', :cancel_url => (@user.first_registration_step? ? '' : f.submit('Back', :name => 'back_button'))
+
+      = content_for :doc_ready do
+        initialize(document.getElementById("map_canvas"), #{@user.lat}, #{@user.lng});
+        add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
+      #map_canvas{:style => 'width:300px; height:200px'}
+    .right
+      %label Address
+      %p= @user.full_address
+      = formatted_form_for @user do |f|
+        = f.hidden_field :address
+        = f.hidden_field :city
+        = f.hidden_field :state
+        = f.hidden_field :lat
+        = f.hidden_field :lng
+        = f.fields_for :memberships do |membership|
+          = membership.hidden_field :area_id
+        = render :partial => "form", :locals => {:f => f}
+        = f.submit 'Create your Account'

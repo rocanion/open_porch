@@ -8,10 +8,6 @@ class MembershipTest < ActiveSupport::TestCase
   end
   
   def test_validations
-    # Presence
-    membership = Membership.create_dummy(:user => nil, :area => nil)
-    assert membership.errors[:user_id].include?("can't be blank")
-    assert membership.errors[:area_id].include?("can't be blank")
     # Uniqueness
     membership = Membership.create_dummy
     assert_created membership

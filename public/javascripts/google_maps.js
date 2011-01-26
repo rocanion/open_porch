@@ -45,7 +45,7 @@ function pan_to_address(address) {
   });
 }
 
-function add_region(coordinates, style) {
+function add_region(area_id, coordinates, style) {
   switch(style) {
     case 'selected':
       var polygon = new google.maps.Polygon({
@@ -54,7 +54,9 @@ function add_region(coordinates, style) {
         strokeOpacity: 0.8,
         strokeWeight: 2,
         fillColor: "#FF0000",
-        fillOpacity: 0.35
+        fillOpacity: 0.35,
+        area_id: area_id,
+        area_selected: true
       });
       break;
     default:
@@ -65,13 +67,37 @@ function add_region(coordinates, style) {
         strokeWeight: 2,
         fillColor: "#6666FF",
         fillOpacity: 0.1,
-        mouseover: function(a, b, c){
-          console.log(a)
-          console.log(b)
-          console.log(c)
-        }
+        area_id: area_id,
+        area_selected: false
       });
   }
 
-  polygon.setMap(map); 
+  polygon.setMap(map);
+  
+  // Activate
+  google.maps.event.addListener(polygon, 'mouseover', function() {
+    polygon.setOptions({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35
+    })
+    $('#area_' + area_id).css('border', 'solid #000 1px');
+  });
+
+  // Deactivate
+  google.maps.event.addListener(polygon, 'mouseout', function() {
+    if(polygon.area_selected == false) {
+      polygon.setOptions({
+        strokeColor: "#0000FF",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#6666FF",
+        fillOpacity: 0.1
+      });
+    }
+    $('#area_' + area_id).css('border', 'none');
+  });
+  
 }

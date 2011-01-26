@@ -6,8 +6,6 @@ class User < ActiveRecord::Base
   
   # == Attributes =====================================================
   
-  attr_accessor :area_id
-  
   attr_protected :role
 
   # == Extensions ===========================================================
@@ -55,6 +53,8 @@ class User < ActiveRecord::Base
     :dependent => :destroy
   has_many :areas,
     :through => :memberships
+
+  accepts_nested_attributes_for :memberships, :allow_destroy => true
   
   # == Scopes ===============================================================
 
@@ -66,12 +66,27 @@ class User < ActiveRecord::Base
 
   # == Instance Methods =====================================================
   
-  def password_required?
-    self.new_record?
+  def address_attributes=(address_attr)
+    if address_attr.is_a?(Address)
+      self.address = address_attr.address
+      self.city = address_attr.city
+      self.state = address_attr.state
+      self.lat = address_attr.lat
+      self.lng = address_attr.lng
+    end
+  end
+  
+  def full_address
+    [self.address, self.city, self.state].join(', ')
   end
   
 protected
   def assign_role
     self.role = 'regular_user'
   end
+  
+  def password_required?
+    self.new_record?
+  end
+  
 end

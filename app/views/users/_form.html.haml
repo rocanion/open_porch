@@ -1,25 +1,5 @@
-= content_for :head do
-  = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
-  = javascript_include_tag 'google_maps'
-    
-
-= content_for :doc_ready do
-  initialize(document.getElementById("map_canvas"), #{@map_center.lat}, #{@map_center.lng});
-  
 = f.text_field :first_name
 = f.text_field :last_name
 = f.text_field :email
 = f.password_field :password, :autocomplete => :off
 = f.password_field :password_confirmation
-
-%h3 What is your neighbourhood
-%table
-  %tr
-    %td
-      = f.text_field :address
-      = f.text_field :city
-      = f.text_field :state
-      = button_to_function('find in map', "pan_to_address([$('#user_address').val(), $('#user_city').val(), $('#user_zip').val(), $('#user_state').val()].join(', '))")
-    %td
-      #map_canvas{:style => 'width:300px; height:300px'}
-
