@@ -4,9 +4,9 @@
     %meta{"http-equiv" => "Content-Type", "content" => "text/html;charset=utf-8"}/
     = render(:partial => 'layouts/head')
 
-  %body{:class => "#{params[:controller].underscore}_#{params[:action]}".idify}
+  %body{:class => "#{params[:controller]}_#{params[:action]}".idify}
     .wrapper
-      = render(:partial => 'layouts/header')
+      = render(:partial => 'layouts/admin/header')
 
       .main_content
         = render :partial => 'layouts/flash_message'

@@ -10,26 +10,30 @@
   - @areas.each do |area|
     add_region([#{area.border_coordinates}])
 
-%h1 Confirm your Neighbourhood
-%p The red icons mark your address. Please select the option that has a red outline surrounding your address (zoom in/out with the [+]/[-] buttons on the maps). If you're on a border, pick the one that most feels like your neighborhood.
+.tabbed
+  %ul.tabs
+    %li.active 1. Confirm neighborhood
+    %li 2. Account details
+    %li 3. Sign up complete
+  .clear.whitebox.padded
+    .left
+      %h2 Enter your account details
+      %h3 #{@address.address} is currently in: <strong>#{@selected_area.name}</strong>
+      %ul.list
+        - @areas.each_with_index do |area, i|
+          %li
+            .name #{i+1}) #{area.name}
+            .action
+              = link_to 'View info', ''
+              |
+              = link_to 'Select this one', ''
 
-= @address.full
+      = form_for @user, :url => registrations_path do |f|
+        = f.hidden_field :address
+        = f.hidden_field :city
+        = f.hidden_field :state
+        = f.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}
+        = f.submit 'Sign Up'
 
-- @areas.each do |area|
-  .area
-    = area.name
-    = link_to 'Select this one', ''
-
-
-= formatted_form_for @user, :url => registrations_path do |f|
-  = f.hidden_field :address
-  = f.hidden_field :city
-  = f.hidden_field :state
-  = f.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}
-  = f.submit 'Sign Up'
-        
-#map_canvas{:style => 'width:300px; height:300px'}
-
-  
-
-
+    .right        
+      #map_canvas{:style => 'width:400px; height:400px'}

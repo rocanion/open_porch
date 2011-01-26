@@ -38,7 +38,7 @@ class Area < ActiveRecord::Base
   
   def coordinates=(points)
     if points.present?
-      raw = self.coordinates.split(/\r\n*/).collect{|c| [c.split(/,/)[0].to_f, c.split(/,/)[1].to_f]}
+      raw = points.split(/\r\n*/).collect{|c| [c.split(/,/)[0].to_f, c.split(/,/)[1].to_f]}
       self.border = Polygon.from_coordinates([raw])
     end
   end
