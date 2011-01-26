@@ -7,6 +7,6 @@ OpenPorch::Application.routes.draw do
     resources :users
   end
   
-  root :to => 'sessions#new', :as => 'login'
+  root :to => 'sessions#new', :as => 'login', :as => :get
   
 end
