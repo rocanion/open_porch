@@ -1,6 +1,8 @@
 OpenPorch::Application.routes.draw do
 
   resources :registrations
+  resources :users
+  
   resources :areas
   
   namespace :admin do

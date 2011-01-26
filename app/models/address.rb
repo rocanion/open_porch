@@ -4,13 +4,12 @@ class Address
 
   # == Constants ============================================================
   
-  REGISTRATION_STEPS = 3
-  
   # == Attributes =====================================================
   
   # == Attribute ==========================================================
 
-  attr_accessor :address, :city, :state, :current_step
+  attr_accessor :address, :city, :state, :area_id
+  attr_accessor :lat, :lng
   
   # == Validations ==========================================================
 
@@ -33,35 +32,22 @@ class Address
     [self.address, self.city, self.state].join(', ')
   end
   
-  def location
-    @location ||= MultiGeocoder.geocode(self.full)
-  end
-  
   def closest_regions
+    self.geolocate
     point = Point.new()
-    point.set_x_y(self.location.lat, self.location.lng)
+    point.set_x_y(self.lat, self.lng)
     Area.closest_from(point, 400)
   end
   
+protected
   
-  def current_step
-    @current_step || 1
-  end
-  
-  def first_step?
-    self.current_step == 1
-  end
-  
-  def last_step?
-    self.current_step == REGISTRATION_STEPS
-  end
-  
-  def next_step
-    self.current_step = self.current_step >= REGISTRATION_STEPS ? 1 : self.current_step + 1
-  end
-  
-  def prev_step
-    self.current_step = self.current_step <= 1 ? REGISTRATION_STEPS : self.current_step - 1
+  def geolocate
+    @location ||= begin
+      loc = MultiGeocoder.geocode(self.full)
+      self.lat = loc.lat
+      self.lng = loc.lng
+      loc
+    end
   end
   
 end

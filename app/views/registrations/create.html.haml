@@ -4,32 +4,38 @@
 
 
 = content_for :doc_ready do
-  initialize(document.getElementById("map_canvas"), #{@address.location.lat}, #{@address.location.lng});
-  center_marker = add_marker(#{@address.location.lat}, #{@address.location.lng}, '#{@address.full}');
-  add_region([#{@selected_area.border_coordinates}], 'selected')
+  initialize(document.getElementById("map_canvas"), #{@address.lat}, #{@address.lng});
+  center_marker = add_marker(#{@address.lat}, #{@address.lng}, '#{@address.full}');
+  add_region(#{@selected_area.id}, [#{@selected_area.border_coordinates}], 'selected')
   - @areas.each do |area|
-    add_region([#{area.border_coordinates}])
+    add_region(#{area.id}, [#{area.border_coordinates}])
+
 
 %h1 Confirm your Neighbourhood
+
 %p The red icons mark your address. Please select the option that has a red outline surrounding your address (zoom in/out with the [+]/[-] buttons on the maps). If you're on a border, pick the one that most feels like your neighborhood.
 
-= @address.full
+%p
+  = @address.full
+  %br/
+  is currently in 
+  = @selected_area.name
 
-- @areas.each do |area|
-  .area
+- ([@selected_area]+@areas).each do |area|
+  .area{:id => dom_id(area)}
     = area.name
-    = link_to 'Select this one', ''
+    = link_to_function 'Select this one', "$('#user_area_id').val(#{area.id})"
 
 
-= formatted_form_for @user, :url => registrations_path do |f|
+= formatted_form_for @user, :url => new_user_path, :html => {:method => :get} do |f|
   = f.hidden_field :address
   = f.hidden_field :city
   = f.hidden_field :state
-  = f.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}
-  = f.submit 'Sign Up'
+  = f.hidden_field :lat
+  = f.hidden_field :lng
+  - f.fields_for :memberships do |membership|
+    = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}
+  = f.submit 'Next step', :cancel_url => link_to('Previous', :back)
         
 #map_canvas{:style => 'width:300px; height:300px'}
-
-  
-
 
