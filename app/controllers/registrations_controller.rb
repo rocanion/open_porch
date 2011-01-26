@@ -13,11 +13,16 @@ class RegistrationsController < ApplicationController
   def create
     if @address.valid?
       @areas = @address.closest_regions
-      @selected_area = @areas.shift
-      @address.area_id = @selected_area.id
+      if @areas.empty?
+        flash.now[:alert] = "Sorry, we couldn't find any neighbourhoods close to you!"
+        render :action => :index
+      else
+        @selected_area = @areas.shift
+        @address.area_id = @selected_area.id
       
-      @user = User.new(:address_attributes => @address)
-      @user.memberships.build(:area_id => @selected_area.id)
+        @user = User.new(:address_attributes => @address)
+        @user.memberships.build(:area_id => @selected_area.id)
+      end
     else
       render :action => :index
     end

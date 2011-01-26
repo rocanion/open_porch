@@ -9,7 +9,7 @@ class Address
   # == Attribute ==========================================================
 
   attr_accessor :address, :city, :state, :area_id
-  attr_accessor :lat, :lng
+  attr_accessor :location, :lat, :lng
   
   # == Validations ==========================================================
 
@@ -33,10 +33,14 @@ class Address
   end
   
   def closest_regions
-    self.geolocate
-    point = Point.new()
-    point.set_x_y(self.lat, self.lng)
-    Area.closest_from(point, 400)
+    location = self.geolocate
+    if location.all.length > 1 || location.street_address.nil?
+      []
+    else
+      point = Point.new()
+      point.set_x_y(self.lat, self.lng)
+      Area.closest_from(point, 400)
+    end
   end
   
 protected

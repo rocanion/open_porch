@@ -33,7 +33,7 @@
   = f.hidden_field :state
   = f.hidden_field :lat
   = f.hidden_field :lng
-  - f.fields_for :memberships do |membership|
+  = f.fields_for :memberships do |membership|
     = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}
   = f.submit 'Next step', :cancel_url => link_to('Previous', :back)
         

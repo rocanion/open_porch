@@ -26,8 +26,8 @@ class Area < ActiveRecord::Base
   # == Scopes ===============================================================
   
   scope :closest_from, lambda {|point, distance| 
-    where("ST_DWithin(border, ST_GeomFromText('SRID=4326;POINT(#{point.text_representation})'), #{distance})").
-    order("ST_Distance(border, ST_GeomFromText('SRID=4326;POINT(#{point.text_representation})'))")
+    where("ST_DWithin(border, ST_GeomFromEWKT('SRID=4326;POINT(#{point.text_representation})'), #{distance})").
+    order("ST_Distance(border, ST_GeomFromEWKT('SRID=4326;POINT(#{point.text_representation})'))")
   }
   
   # == Callbacks ============================================================

@@ -14,6 +14,7 @@ group :test do
   gem "rcov"
   gem 'test_dummy'
   gem 'faker'
+  gem 'mocha'
 end
 
 

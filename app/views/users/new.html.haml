@@ -2,7 +2,10 @@
 
 = formatted_form_for @user do |f|
   %p
+    Your account will be created  in the
+    %br/
     = @user.full_address
+    neighbourhood forum
   
   = f.hidden_field :address
   = f.hidden_field :city
@@ -13,7 +16,4 @@
     = membership.hidden_field :area_id
 
   = render :partial => "form", :locals => {:f => f}
-  = f.submit 'Submit'
-  
-  
-= debug @user
+  = f.submit 'Create your Account'
