@@ -11,3 +11,4 @@ docs/.DS_Store
 public/stylesheets/*
 coverage/*
 .rvmrc
+rcov/*
