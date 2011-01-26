@@ -1,4 +1,9 @@
 class Area < ActiveRecord::Base
+  
+  # == Attributes ===========================================================
+  
+  attr_accessor :coordinates
+  
   # == Constants ============================================================
   
   # == Extensions ===========================================================
@@ -24,15 +29,31 @@ class Area < ActiveRecord::Base
     where("ST_DWithin(border, ST_GeomFromText('SRID=4326;POINT(#{point.text_representation})'), #{distance})").
     order("ST_Distance(border, ST_GeomFromText('SRID=4326;POINT(#{point.text_representation})'))")
   }
+  
   # == Callbacks ============================================================
   
   # == Class Methods ========================================================
   
   # == Instance Methods =====================================================
   
+  def coordinates=(points)
+    if points.present?
+      raw = self.coordinates.split(/\r\n*/).collect{|c| [c.split(/,/)[0].to_f, c.split(/,/)[1].to_f]}
+      self.border = Polygon.from_coordinates([raw])
+    end
+  end
+  
+  def coordinates
+    if self.border.present?
+      self.border.first.points.collect{|p| "#{p.x},#{p.y}"}.join("\r\n")
+    end
+  end
+  
   # Returns a Point object
   def center
-    border.envelope.center
+    if self.border.present?
+      border.envelope.center
+    end
   end
   
   def border_coordinates
