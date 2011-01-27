@@ -34,6 +34,7 @@ class Address
   
   def closest_regions
     location = self.geolocate
+    Rails.logger.info location.to_yaml
     if location.all.length > 1 || location.street_address.nil?
       []
     else
@@ -47,7 +48,7 @@ protected
   
   def geolocate
     @location ||= begin
-      loc = MultiGeocoder.geocode(self.full)
+      loc = Geokit::Geocoders::GoogleGeocoder.geocode(self.full)
       self.lat = loc.lat
       self.lng = loc.lng
       loc

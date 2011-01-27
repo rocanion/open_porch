@@ -5,7 +5,7 @@
 
 = content_for :doc_ready do
   initialize(document.getElementById("map_canvas"), #{@address.lat}, #{@address.lng});
-  center_marker = add_marker(#{@address.lat}, #{@address.lng}, '#{@address.full}');
+  add_marker(#{@address.lat}, #{@address.lng}, '#{@address.full}');
   add_region(#{@selected_area.id}, [#{@selected_area.border_coordinates}], 'selected')
   - @areas.each do |area|
     add_region(#{area.id}, [#{area.border_coordinates}])
@@ -23,14 +23,15 @@
         %br/
         is currently in 
         %strong= @selected_area.name
-      %ul.list
+      %ul.list.areas
+        
         - ([@selected_area]+@areas).each_with_index do |area, i|
-          %li{:id => dom_id(area)}
+          %li{:id => dom_id(area), :class => (area == @selected_area ? 'selected' : '')}
             .name #{i+1}) #{area.name}
             .action
               = link_to 'View info', ''
               |
-              = link_to_function 'Select this one', "$('#user_area_id').val(#{area.id})"
+              = link_to_function 'Select this one', "select_region(#{area.id})"
 
       = form_for @user, :url => new_user_path, :html => {:method => :get} do |f|
         = f.hidden_field :address
@@ -39,7 +40,7 @@
         = f.hidden_field :lat
         = f.hidden_field :lng
         = f.fields_for :memberships do |membership|
-          = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}
+          = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}, {}, {:id => 'user_area_id'}
         = f.submit 'Next step'
         or
         = link_to('Previous', :back)

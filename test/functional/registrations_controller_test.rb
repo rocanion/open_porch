@@ -26,7 +26,7 @@ class RegistrationsControllerTest < ActionController::TestCase
         [44.450713, -73.227265]
       ]])
     )
-    MultiGeocoder.expects(:geocode).returns(success_geocode(44.4533518, -73.2219273))
+    Geokit::Geocoders::GoogleGeocoder.expects(:geocode).returns(success_geocode(44.4533518, -73.2219273))
     
     post :create, :address => {:address=>"123 Fake St", :city=>"Burlington", :state=>"Vermont"}
     assert assigns(:areas).empty?

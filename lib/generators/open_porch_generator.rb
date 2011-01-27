@@ -11,10 +11,15 @@ class OpenPorchGenerator < Rails::Generators::Base
       migration_template migration, "db/migrate/#{filename}"
     end
   end
-
+  
   def self.next_migration_number(dirname)
     orm = Rails.configuration.generators.options[:rails][:orm]
     require "rails/generators/#{orm}"
     "#{orm.to_s.camelize}::Generators::Base".constantize.next_migration_number(dirname)
+  end
+  
+  def generate_static_files
+    directory 'app/views/stylesheets', 'app/views/stylesheets'
+    directory 'public/javascripts', 'public/javascripts'
   end
 end
