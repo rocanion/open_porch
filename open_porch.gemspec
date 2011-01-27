@@ -32,7 +32,6 @@ Gem::Specification.new do |s|
     "app/controllers/sessions_controller.rb",
     "app/controllers/users_controller.rb",
     "app/helpers/application_helper.rb",
-    "app/helpers/areas_helper.rb",
     "app/mailers/user_mailer.rb",
     "app/models/address.rb",
     "app/models/area.rb",

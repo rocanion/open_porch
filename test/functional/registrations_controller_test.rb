@@ -38,8 +38,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   def test_create_with_invalid_address
     Address.any_instance.stubs(:closest_regions).returns([])
     post :create, :address => {:address=>"123 Fake St"}
-    assert_response :success
-    assert_template 'index'
+    assert_redirected_to root_path
     assert !assigns(:address).valid?
   end
   
@@ -47,8 +46,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     Address.any_instance.stubs(:closest_regions).returns([])
     post :create, :address => {:address=>"123 Fake St", :city=>"Burlington", :state=>"Vermont"}
     assert_equal flash.now[:alert], "Sorry, we couldn't find any neighbourhoods close to you!"
-    assert_response :success
-    assert_template 'index'
+    assert_redirected_to root_path
   end
 
 protected

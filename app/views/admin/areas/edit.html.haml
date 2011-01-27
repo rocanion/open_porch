@@ -1,39 +1,25 @@
 .tabbed
   = render :partial => 'layouts/admin/nav'
   .clear.whitebox.padded
+    %h1 Edit Area
+
     .left
-      %h1 Edit Area
+
+      = formatted_form_for @area, :url => [:admin, @area] do |f|
+        = render :partial => 'form', :locals => {:f => f}
+        
+        
+    .right
 
       - if @area.border.present?
         = content_for :head do
           = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
-  
-        :javascript
-          function initialize() {
-            var latlng = new google.maps.LatLng(#{@area.center.x}, #{@area.center.y});
-            var myOptions = {
-              zoom: 10,
-              center: latlng,
-              mapTypeId: google.maps.MapTypeId.ROADMAP,
-              scaleControl: true
-            };
-            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    
-            var marker = new google.maps.Marker({
-                position: latlng, 
-                map: map, 
-                title:"You are here!"
-            });
-      
-            #{draw_areas([@area])}
-          }
-
+          = javascript_include_tag 'google_maps'
+          
         = content_for :doc_ready do
-          initialize();
-
-      %h1 Areas
+          initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
+          add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
+  
       
-      #map_canvas{:style => 'width:50%; height:500px'}
-
-      = formatted_form_for @area, :url => [:admin, @area] do |f|
-        = render :partial => 'form', :locals => {:f => f}
+      #map_canvas{:style => 'width:400px; height:400px; float: right'}
+      
