@@ -3,6 +3,12 @@ class OpenPorchGenerator < Rails::Generators::Base
 
   source_root File.expand_path('../../..', __FILE__)
   
+  
+  def generate_static_files
+    directory 'app/views/stylesheets', 'app/views/stylesheets'
+    directory 'public/javascripts', 'public/javascripts'
+  end
+
   def generate_migration
     migrations = Dir.glob(File.expand_path('db/migrate/*.rb', self.class.source_root))
     
@@ -11,7 +17,7 @@ class OpenPorchGenerator < Rails::Generators::Base
       migration_template migration, "db/migrate/#{filename}"
     end
   end
-
+  
   def self.next_migration_number(dirname)
     orm = Rails.configuration.generators.options[:rails][:orm]
     require "rails/generators/#{orm}"

@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{open_porch}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
-  s.date = %q{2011-01-26}
+  s.date = %q{2011-01-27}
   s.description = %q{}
   s.email = %q{jack@theworkinggroup.ca}
   s.extra_rdoc_files = [
@@ -170,44 +170,44 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<pg>, ["= 0.10.1"])
       s.add_runtime_dependency(%q<haml>, ["= 3.0.25"])
       s.add_runtime_dependency(%q<spatial_adapter>, ["= 1.2.0"])
-      s.add_runtime_dependency(%q<wristband>, [">= 0"])
+      s.add_runtime_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_runtime_dependency(%q<formatted_form>, [">= 0"])
       s.add_runtime_dependency(%q<geokit>, ["= 1.5.0"])
-      s.add_runtime_dependency(%q<rails>, [">= 3.0.3"])
-      s.add_runtime_dependency(%q<pg>, [">= 0.10.1"])
-      s.add_runtime_dependency(%q<haml>, [">= 3.0.25"])
-      s.add_runtime_dependency(%q<spatial_adapter>, [">= 1.2.0"])
-      s.add_runtime_dependency(%q<wristband>, [">= 1.0.0"])
-      s.add_runtime_dependency(%q<geokit>, [">= 1.5.0"])
+      s.add_runtime_dependency(%q<rails>, ["= 3.0.3"])
+      s.add_runtime_dependency(%q<pg>, ["= 0.10.1"])
+      s.add_runtime_dependency(%q<haml>, ["= 3.0.25"])
+      s.add_runtime_dependency(%q<spatial_adapter>, ["= 1.2.0"])
+      s.add_runtime_dependency(%q<wristband>, ["= 1.0.2"])
+      s.add_runtime_dependency(%q<geokit>, ["= 1.5.0"])
     else
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
       s.add_dependency(%q<haml>, ["= 3.0.25"])
       s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
-      s.add_dependency(%q<wristband>, [">= 0"])
+      s.add_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_dependency(%q<formatted_form>, [">= 0"])
       s.add_dependency(%q<geokit>, ["= 1.5.0"])
-      s.add_dependency(%q<rails>, [">= 3.0.3"])
-      s.add_dependency(%q<pg>, [">= 0.10.1"])
-      s.add_dependency(%q<haml>, [">= 3.0.25"])
-      s.add_dependency(%q<spatial_adapter>, [">= 1.2.0"])
-      s.add_dependency(%q<wristband>, [">= 1.0.0"])
-      s.add_dependency(%q<geokit>, [">= 1.5.0"])
+      s.add_dependency(%q<rails>, ["= 3.0.3"])
+      s.add_dependency(%q<pg>, ["= 0.10.1"])
+      s.add_dependency(%q<haml>, ["= 3.0.25"])
+      s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
+      s.add_dependency(%q<wristband>, ["= 1.0.2"])
+      s.add_dependency(%q<geokit>, ["= 1.5.0"])
     end
   else
     s.add_dependency(%q<rails>, ["= 3.0.3"])
     s.add_dependency(%q<pg>, ["= 0.10.1"])
     s.add_dependency(%q<haml>, ["= 3.0.25"])
     s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
-    s.add_dependency(%q<wristband>, [">= 0"])
+    s.add_dependency(%q<wristband>, ["= 1.0.2"])
     s.add_dependency(%q<formatted_form>, [">= 0"])
     s.add_dependency(%q<geokit>, ["= 1.5.0"])
-    s.add_dependency(%q<rails>, [">= 3.0.3"])
-    s.add_dependency(%q<pg>, [">= 0.10.1"])
-    s.add_dependency(%q<haml>, [">= 3.0.25"])
-    s.add_dependency(%q<spatial_adapter>, [">= 1.2.0"])
-    s.add_dependency(%q<wristband>, [">= 1.0.0"])
-    s.add_dependency(%q<geokit>, [">= 1.5.0"])
+    s.add_dependency(%q<rails>, ["= 3.0.3"])
+    s.add_dependency(%q<pg>, ["= 0.10.1"])
+    s.add_dependency(%q<haml>, ["= 3.0.25"])
+    s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
+    s.add_dependency(%q<wristband>, ["= 1.0.2"])
+    s.add_dependency(%q<geokit>, ["= 1.5.0"])
   end
 end
 

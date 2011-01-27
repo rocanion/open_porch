@@ -1,7 +1,7 @@
 var map = null;
 var center_marker = null;
 var geocoder = new google.maps.Geocoder();
-
+var regions = new Array()
 
 function initialize(id, center_lat, center_lng) {
   map = new google.maps.Map(id, {
@@ -45,7 +45,7 @@ function pan_to_address(address) {
   });
 }
 
-function add_region(area_id, coordinates, style) {
+function add_region(region_id, coordinates, style) {
   switch(style) {
     case 'selected':
       var polygon = new google.maps.Polygon({
@@ -55,7 +55,7 @@ function add_region(area_id, coordinates, style) {
         strokeWeight: 2,
         fillColor: "#FF0000",
         fillOpacity: 0.35,
-        area_id: area_id,
+        region_id: region_id,
         area_selected: true
       });
       break;
@@ -67,37 +67,69 @@ function add_region(area_id, coordinates, style) {
         strokeWeight: 2,
         fillColor: "#6666FF",
         fillOpacity: 0.1,
-        area_id: area_id,
+        region_id: region_id,
         area_selected: false
       });
   }
-
+  regions.push(polygon);
   polygon.setMap(map);
   
   // Activate
   google.maps.event.addListener(polygon, 'mouseover', function() {
-    polygon.setOptions({
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35
-    })
-    $('#area_' + area_id).css('border', 'solid #000 1px');
+    if(polygon.area_selected == false) {
+      mouseover_region(polygon);
+    }
   });
 
   // Deactivate
   google.maps.event.addListener(polygon, 'mouseout', function() {
     if(polygon.area_selected == false) {
-      polygon.setOptions({
-        strokeColor: "#0000FF",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#6666FF",
-        fillOpacity: 0.1
-      });
+      mouseout_region(polygon);
     }
-    $('#area_' + area_id).css('border', 'none');
+  });
+
+  // Select
+  google.maps.event.addListener(polygon, 'click', function() {
+    select_region(polygon.region_id)
+  });
+}
+
+function mouseover_region(polygon) {
+  polygon.setOptions({
+    strokeColor: "#FF0000",
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "#FF0000",
+    fillOpacity: 0.35,
+  });
+  $('#area_' + polygon.region_id).addClass('hover');
+}
+
+
+function mouseout_region(polygon) {
+  polygon.setOptions({
+    strokeColor: "#0000FF",
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: "#6666FF",
+    fillOpacity: 0.1
+  });
+  $('#area_' + polygon.region_id).removeClass('hover');
+}
+
+
+function select_region(region_id) {
+  $.each(regions, function(){
+    if(this.region_id == region_id) {
+      this.setOptions({area_selected: true});
+      mouseover_region(this);
+    } else {
+      this.setOptions({area_selected: false});
+      mouseout_region(this);
+    }
   });
   
+  $('ul.areas li').removeClass('selected');
+  $('#area_' + region_id).addClass('selected');
+  $('#user_area_id').val(region_id);
 }
