@@ -2,7 +2,7 @@
   = render :partial => 'layouts/account_nav'
   .clear.whitebox.padded
     .left
-      %h1 Post a message
+      %h2 Post a message
       %h3 to the #{@area.name} Neighborhood Forum
       = formatted_form_for @post, :url => area_posts_path(@area) do |f|
         = f.text_field :title

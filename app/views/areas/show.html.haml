@@ -3,8 +3,10 @@
   .clear.whitebox.padded
     .left
       %h1= @area.name
-      %h3 #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
-      %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
+      %h3
+        #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
+        %br/
+        Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
       
       - if logged_in?
         %ul.list
@@ -38,4 +40,4 @@
         = content_for :doc_ready do
           initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
           add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
-        #map_canvas{:style => 'width:300px; height:400px'}
+        #map_canvas{:style => 'width:200px; height:300px'}

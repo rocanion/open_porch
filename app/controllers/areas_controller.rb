@@ -5,14 +5,16 @@ class AreasController < ApplicationController
     :only => :show
 
   def show
-    unless logged_in?
-      @session_user = SessionUser.new
-    end
   end
 
 protected
   def load_area
-    @area = Area.find(params[:id])
+    if logged_in?
+      @area = current_user.areas.find(params[:id])
+    else
+      @session_user = SessionUser.new
+      @area = Area.find(params[:id])
+    end
   rescue ActiveRecord::RecordNotFound
     render :text => 'Area not found', :status => 404
   end
