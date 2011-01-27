@@ -189,6 +189,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<spatial_adapter>, ["= 1.2.0"])
       s.add_runtime_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_runtime_dependency(%q<geokit>, ["= 1.5.0"])
+      s.add_runtime_dependency(%q<active_link_to>, ["= 0.0.6"])
     else
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
@@ -204,6 +205,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
       s.add_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_dependency(%q<geokit>, ["= 1.5.0"])
+      s.add_dependency(%q<active_link_to>, ["= 0.0.6"])
     end
   else
     s.add_dependency(%q<rails>, ["= 3.0.3"])
@@ -220,6 +222,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
     s.add_dependency(%q<wristband>, ["= 1.0.2"])
     s.add_dependency(%q<geokit>, ["= 1.5.0"])
+    s.add_dependency(%q<active_link_to>, ["= 0.0.6"])
   end
 end
 
