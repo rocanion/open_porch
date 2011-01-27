@@ -4,14 +4,11 @@ class OpenPorchGenerator < Rails::Generators::Base
   source_root File.expand_path('../../..', __FILE__)
   
   def generate_migration
-    destination   = File.expand_path('db/migrate/01_create_open_porch.rb', self.destination_root)
-    migration_dir = File.dirname(destination)
-    destination   = self.class.migration_exists?(migration_dir, 'create_open_porch')
-
-    if destination
-      puts "\e[0m\e[31mFound existing create_open_porch.rb migration. Remove it if you want to regenerate.\e[0m"
-    else
-      migration_template 'db/migrate/01_create_open_porch.rb', 'db/migrate/create_open_porch.rb'
+    migrations = Dir.glob(File.expand_path('db/migrate/*.rb', self.class.source_root))
+    
+    migrations.each do |migration|
+      filename = File.basename(migration).gsub(/\d+_/, '')
+      migration_template migration, "db/migrate/#{filename}"
     end
   end
 
