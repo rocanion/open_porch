@@ -10,7 +10,8 @@ class Admin::UsersController < Admin::BaseController
   end
   
   def update
-    @user.update_attributes!(params[:user])
+    @user.send(:attributes=, params[:user], false)
+    @user.save!
     redirect_to([:admin, :users], :notice => 'User has been successfully updated.')
   rescue ActiveRecord::RecordInvalid
    render :action => :edit

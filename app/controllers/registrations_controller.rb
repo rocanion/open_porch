@@ -14,8 +14,8 @@ class RegistrationsController < ApplicationController
     if @address.valid?
       @areas = @address.closest_regions
       if @areas.empty?
-        flash.now[:alert] = "Sorry, we couldn't find any neighbourhoods close to you!"
-        render :action => :index
+        flash[:alert] = "Sorry, we couldn't find any neighbourhoods close to you!"
+        redirect_to root_path
       else
         @selected_area = @areas.shift
         @address.area_id = @selected_area.id
@@ -24,7 +24,7 @@ class RegistrationsController < ApplicationController
         @user.memberships.build(:area_id => @selected_area.id)
       end
     else
-      render :action => :index
+      redirect_to root_path
     end
   end
   

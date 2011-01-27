@@ -2,16 +2,12 @@
   = render :partial => 'layouts/admin/nav'
   .clear.whitebox.padded
     .left
-      %h1 Users
-
-      %table
-        %tr
-          %th E-mail
-          %th
+      %h2 Users
+      %ul.list
         - @users.each do |user|
-          %tr
-            %td= user.email
-            %td
+          %li
+            %h4 #{user.full_name} (#{mail_to(user.email)}) - #{user.role.humanize}
+            .action
               = link_to 'edit', [:edit, :admin, user]
               |
               = link_to 'delete', admin_user_path(user), :method => :delete, :confirm => 'Are you sure you want to delete this user?'
