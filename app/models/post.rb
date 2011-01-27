@@ -9,5 +9,15 @@ class Post < ActiveRecord::Base
   
   belongs_to :area
   belongs_to :user
+
+  # == Callbacks ============================================================
+
+  after_create :send_post
+
+  # == Instance Methods =====================================================
+
+  def send_post
+    UserMailer.new_post(self).deliver
+  end
   
 end

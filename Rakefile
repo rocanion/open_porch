@@ -21,5 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency('spatial_adapter', '1.2.0')
   gem.add_dependency('wristband', '1.0.2')
   gem.add_dependency('geokit', '1.5.0')
+  gem.add_dependency('active_link_to', '0.0.6')
+  
 end
 Jeweler::RubygemsDotOrgTasks.new
