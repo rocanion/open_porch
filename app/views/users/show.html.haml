@@ -1,6 +1,37 @@
-%h1= "Hi #{current_user.email}"
-
-- if logged_in?
-  = link_to 'Logout', logout_path
-- else
-  = link_to 'Login', login_path
+.tabbed
+  %ul.tabs
+    %li Your Neighborhood Forum
+    %li Archives
+    %li Post a Message
+    %li.active Your Profile
+    %li.logout= link_to 'logout', logout_path
+  .clear.whitebox.padded
+    .left
+      %h2 Your Profile
+      .list_header.clear
+        .left
+          %h3 Account details
+        .right
+          %h5= link_to 'Edit Details', edit_user_path(current_user)
+      %ul.list
+        %li
+          .label
+            %label Address
+          .value
+            = current_user.full_address
+        %li
+          .label
+            %label First Name
+          .value
+            = current_user.first_name
+        %li
+          .label
+            %label Last Name
+          .value
+            = current_user.last_name
+        %li
+          .label
+            %label Email Address
+          .value
+            = current_user.email
+    .right
