@@ -95,8 +95,10 @@ Gem::Specification.new do |s|
     "doc/README_FOR_APP",
     "lib/generators/open_porch_generator.rb",
     "lib/open_porch.rb",
+    "lib/open_porch/engine.rb",
     "lib/tasks/.gitkeep",
     "lib/tasks/rcov.rake",
+    "open_porch.gemspec",
     "public/404.html",
     "public/422.html",
     "public/500.html",
@@ -176,6 +178,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<haml>, [">= 3.0.25"])
       s.add_runtime_dependency(%q<spatial_adapter>, [">= 1.2.0"])
       s.add_runtime_dependency(%q<wristband>, [">= 1.0.0"])
+      s.add_runtime_dependency(%q<geokit>, [">= 1.5.0"])
     else
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
@@ -189,6 +192,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<haml>, [">= 3.0.25"])
       s.add_dependency(%q<spatial_adapter>, [">= 1.2.0"])
       s.add_dependency(%q<wristband>, [">= 1.0.0"])
+      s.add_dependency(%q<geokit>, [">= 1.5.0"])
     end
   else
     s.add_dependency(%q<rails>, ["= 3.0.3"])
@@ -203,6 +207,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<haml>, [">= 3.0.25"])
     s.add_dependency(%q<spatial_adapter>, [">= 1.2.0"])
     s.add_dependency(%q<wristband>, [">= 1.0.0"])
+    s.add_dependency(%q<geokit>, [">= 1.5.0"])
   end
 end
 
