@@ -7,5 +7,13 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(:to => user.email, :subject => "You have requested a new password")
   end
+
+  def new_post(post)
+    @post = post
+    mail(
+      :subject => "New post for #{post.area.name}",
+      :to => post.area.users.collect(&:email)
+    )
+  end
   
 end

@@ -15,4 +15,5 @@ class UserMailerTest < ActionMailer::TestCase
       assert_equal user.email, response.to[0]
     end
   end
+
 end
