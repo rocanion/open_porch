@@ -9,6 +9,7 @@
       = render(:partial => 'layouts/header')
 
       .main_content
+        = render(:partial => 'layouts/flash_message')
         = yield
   
       = render(:partial => 'layouts/footer')

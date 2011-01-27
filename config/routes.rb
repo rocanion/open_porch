@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :posts, :only => [:new, :create]
   end
   
+  get '/admin' => 'admin/areas#index'
   namespace :admin do
     resources :areas
     resources :users

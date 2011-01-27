@@ -11,7 +11,8 @@ class PasswordsController < ApplicationController
     user = User.find_by_email!(params[:email])
     user.reset_perishable_token!
     UserMailer.password_reset(user).deliver
-    redirect_to login_path, :notice => 'Email to reset password successfully sent.'
+    flash[:notice] = 'Email to reset password successfully sent.'
+    redirect_to login_path
   rescue ActiveRecord::RecordNotFound
     flash.now[:alert] = 'Your email was not found. Did you mistype?'
     render :action => :new
@@ -24,7 +25,8 @@ class PasswordsController < ApplicationController
   def update
     @user.update_attributes!(params[:user].merge(:perishable_token => nil))
     login_as_user(@user)
-    redirect_to user_path(@user), :notice => 'Your password was successfully updated!'
+    flash[:notice] = 'Your password was successfully updated!'
+    redirect_to user_path(@user)
   rescue ActiveRecord::RecordInvalid
     flash[:notice] = 'An error occurred. Please try again.'
     redirect_to login_path
