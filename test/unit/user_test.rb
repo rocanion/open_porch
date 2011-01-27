@@ -9,7 +9,9 @@ class UserTest < ActiveSupport::TestCase
       :password_confirmation => 'tester',
       :address => 'street 1',
       :city => 'Burlington',
-      :state => 'Vermont'
+      :state => 'Vermont',
+      :first_name => 'John',
+      :last_name => 'Tester'
     )
     user.save
     assert_created user
@@ -18,7 +20,7 @@ class UserTest < ActiveSupport::TestCase
   def test_create_requirements
     user = User.create
   
-    assert_errors_on user, :email, :password, :address, :city, :state
+    assert_errors_on user, :email, :password, :address, :city, :state, :first_name, :last_name
     assert user.errors[:email].include?("Please enter your email address")
     assert user.errors[:email].include?("The email address you entered is not valid")
     assert user.errors[:email].include?("The email address you entered is to short")

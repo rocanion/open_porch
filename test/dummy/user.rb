@@ -18,4 +18,12 @@ TestDummy.declare(User) do
   dummy :state do
     Faker::Address.us_state
   end
+  
+  dummy :first_name do
+    Faker::Name.first_name
+  end
+  
+  dummy :last_name do
+    Faker::Name.last_name
+  end
 end

@@ -38,7 +38,9 @@ class UsersControllerTest < ActionController::TestCase
         :password_confirmation => 'tester',
         :address=>"123 Fake St", 
         :city=>"Burlington", 
-        :state=>"Vermont", 
+        :state=>"Vermont",
+        :first_name => 'John',
+        :last_name => 'Tester', 
         :memberships_attributes=>{"0"=>{:area_id => @area.id}}
       }
       assert_redirected_to assigns(:user)
