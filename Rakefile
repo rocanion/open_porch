@@ -19,7 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency('pg', '0.10.1')
   gem.add_dependency('haml', '3.0.25')
   gem.add_dependency('spatial_adapter', '1.2.0')
-  gem.add_dependency('wristband', '1.0.0')
+  gem.add_dependency('wristband', '1.0.2')
   gem.add_dependency('geokit', '1.5.0')
 end
 Jeweler::RubygemsDotOrgTasks.new
