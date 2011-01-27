@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "app/controllers/application_controller.rb",
     "app/controllers/areas_controller.rb",
     "app/controllers/passwords_controller.rb",
+    "app/controllers/posts_controller.rb",
     "app/controllers/registrations_controller.rb",
     "app/controllers/sessions_controller.rb",
     "app/controllers/users_controller.rb",
@@ -36,6 +37,7 @@ Gem::Specification.new do |s|
     "app/models/address.rb",
     "app/models/area.rb",
     "app/models/membership.rb",
+    "app/models/post.rb",
     "app/models/session_user.rb",
     "app/models/user.rb",
     "app/views/admin/areas/_form.html.haml",
@@ -46,6 +48,8 @@ Gem::Specification.new do |s|
     "app/views/admin/users/edit.html.haml",
     "app/views/admin/users/index.html.haml",
     "app/views/areas/index.html.haml",
+    "app/views/areas/show.html.haml",
+    "app/views/layouts/_account_nav.html.haml",
     "app/views/layouts/_flash_message.html.haml",
     "app/views/layouts/_footer.html.haml",
     "app/views/layouts/_head.html.haml",
@@ -55,6 +59,7 @@ Gem::Specification.new do |s|
     "app/views/layouts/application.html.haml",
     "app/views/passwords/edit.html.haml",
     "app/views/passwords/new.html.haml",
+    "app/views/posts/new.html.haml",
     "app/views/registrations/_address_form.html.haml",
     "app/views/registrations/create.html.haml",
     "app/views/registrations/index.html.haml",
@@ -65,9 +70,12 @@ Gem::Specification.new do |s|
     "app/views/stylesheets/reset.sass",
     "app/views/stylesheets/structure.sass",
     "app/views/stylesheets/typography.sass",
+    "app/views/user_mailer/new_post.html.haml",
+    "app/views/user_mailer/new_post.text.haml",
     "app/views/user_mailer/password_reset.html.haml",
     "app/views/user_mailer/password_reset.text.haml",
     "app/views/users/_form.html.haml",
+    "app/views/users/edit.html.haml",
     "app/views/users/new.html.haml",
     "app/views/users/show.html.haml",
     "config.ru",
@@ -91,6 +99,7 @@ Gem::Specification.new do |s|
     "db/migrate/01_create_areas.rb",
     "db/migrate/02_create_users.rb",
     "db/migrate/03_create_memberships.rb",
+    "db/migrate/04_create_posts.rb",
     "db/seeds.rb",
     "doc/README_FOR_APP",
     "lib/generators/open_porch_generator.rb",
@@ -117,6 +126,7 @@ Gem::Specification.new do |s|
     "test/functional/admin/users_controller_test.rb",
     "test/functional/areas_controller_test.rb",
     "test/functional/passwords_controller_test.rb",
+    "test/functional/posts_controller_test.rb",
     "test/functional/registrations_controller_test.rb",
     "test/functional/sessions_controller_test.rb",
     "test/functional/users_controller_test.rb",
@@ -124,9 +134,8 @@ Gem::Specification.new do |s|
     "test/test_helper.rb",
     "test/unit/address_test.rb",
     "test/unit/area_test.rb",
-    "test/unit/helpers/areas_helper_test.rb",
-    "test/unit/helpers/registrations_helper_test.rb",
     "test/unit/membership_test.rb",
+    "test/unit/post_test.rb",
     "test/unit/session_user_test.rb",
     "test/unit/user_mailer_test.rb",
     "test/unit/user_test.rb",
@@ -146,6 +155,7 @@ Gem::Specification.new do |s|
     "test/functional/admin/users_controller_test.rb",
     "test/functional/areas_controller_test.rb",
     "test/functional/passwords_controller_test.rb",
+    "test/functional/posts_controller_test.rb",
     "test/functional/registrations_controller_test.rb",
     "test/functional/sessions_controller_test.rb",
     "test/functional/users_controller_test.rb",
@@ -153,9 +163,8 @@ Gem::Specification.new do |s|
     "test/test_helper.rb",
     "test/unit/address_test.rb",
     "test/unit/area_test.rb",
-    "test/unit/helpers/areas_helper_test.rb",
-    "test/unit/helpers/registrations_helper_test.rb",
     "test/unit/membership_test.rb",
+    "test/unit/post_test.rb",
     "test/unit/session_user_test.rb",
     "test/unit/user_mailer_test.rb",
     "test/unit/user_test.rb"
@@ -173,6 +182,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_runtime_dependency(%q<formatted_form>, [">= 0"])
       s.add_runtime_dependency(%q<geokit>, ["= 1.5.0"])
+      s.add_runtime_dependency(%q<active_link_to>, ["= 0.0.6"])
       s.add_runtime_dependency(%q<rails>, ["= 3.0.3"])
       s.add_runtime_dependency(%q<pg>, ["= 0.10.1"])
       s.add_runtime_dependency(%q<haml>, ["= 3.0.25"])
@@ -187,6 +197,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_dependency(%q<formatted_form>, [">= 0"])
       s.add_dependency(%q<geokit>, ["= 1.5.0"])
+      s.add_dependency(%q<active_link_to>, ["= 0.0.6"])
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
       s.add_dependency(%q<haml>, ["= 3.0.25"])
@@ -202,6 +213,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<wristband>, ["= 1.0.2"])
     s.add_dependency(%q<formatted_form>, [">= 0"])
     s.add_dependency(%q<geokit>, ["= 1.5.0"])
+    s.add_dependency(%q<active_link_to>, ["= 0.0.6"])
     s.add_dependency(%q<rails>, ["= 3.0.3"])
     s.add_dependency(%q<pg>, ["= 0.10.1"])
     s.add_dependency(%q<haml>, ["= 3.0.25"])
