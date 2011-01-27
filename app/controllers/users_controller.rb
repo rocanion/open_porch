@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   skip_before_filter :login_required, :only => [:new, :create]
   before_filter :redirect_if_logged_in, :only => [ :new, :create ]
   before_filter :build_user, :only => [:new, :create]
+  before_filter :load_user, :only => [:edit, :update]
   
   def new
     # ...
@@ -15,6 +16,16 @@ class UsersController < ApplicationController
     render :action => :new
   end
   
+  def edit
+  end
+  
+  def update
+    @user.update_attributes!(params[:user])
+    redirect_to user_path(@user)
+  rescue ActiveRecord::RecordInvalid
+    render :action => :edit
+  end
+  
   
 protected
   def build_user
@@ -24,7 +35,10 @@ protected
     else
       @area = @user.memberships.first.area
     end
-    
+  end
+  
+  def load_user
+    @user = current_user
   end
   
   def redirect_if_logged_in

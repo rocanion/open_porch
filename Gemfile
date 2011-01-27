@@ -7,6 +7,7 @@ gem 'spatial_adapter', '1.2.0', :require => 'spatial_adapter/postgresql'
 gem 'wristband', :git => 'git@github.com:twg/wristband.git'
 gem 'formatted_form', :git => 'git@github.com:twg/formatted_form.git'
 gem 'geokit', '1.5.0'
+gem 'active_link_to', '0.0.6'
 
 group :test do
   gem "bundler"
