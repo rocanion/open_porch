@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :registrations
   resources :users
   
-  resources :areas
+  resources :areas do
+    resources :posts, :only => [:new, :create]
+  end
   
   namespace :admin do
     resources :areas

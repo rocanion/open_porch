@@ -14,6 +14,8 @@ class Area < ActiveRecord::Base
     :dependent => :destroy
   has_many :users,
     :through => :memberships
+  has_many :posts,
+    :dependent => :destroy
   
   # == Validations ==========================================================
   

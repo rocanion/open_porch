@@ -1,6 +1,5 @@
 %ul.tabs
-  %li= active_link_to 'Your Neighborhood Forum', area_path(current_user.areas.first)
-  %li= active_link_to 'Archives', '/archives'
-  %li= active_link_to 'Post a Message', '/todo'
-  %li= active_link_to 'Your Profile', user_path(current_user)
+  %li= active_link_to 'Your Neighborhood Forum', area_path(current_user.areas.first), :active => { :when => :self_only }
+  %li= active_link_to 'Post a Message', new_area_post_path(current_user.areas.first)
+  %li= active_link_to 'Your Profile', user_path(current_user), :active => { :when => :self_only }
   %li.logout= link_to 'logout', logout_path

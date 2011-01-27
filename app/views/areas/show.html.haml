@@ -5,6 +5,17 @@
       %h1= @area.name
       %h3 #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
       %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
+      
+      %ul.list
+        - @area.posts.each do |post|
+          %li
+            %h4= post.title
+            %p.meta
+              By <strong>#{post.user.full_name}</strong>, #{post.user.address}
+              %br/
+              #{post.created_at.to_s(:long)}
+            = simple_format post.content
+    
     .right
       = content_for :head do
         = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"

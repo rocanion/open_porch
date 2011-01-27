@@ -1,16 +1,18 @@
-%h1 Login
+.tabbed
+  .clear.whitebox.padded
+    %h1 Login
+    .left
+      = formatted_form_for @session_user, :url => login_path do |f|
+        = f.text_field :email, :label => 'Email address'
+        = f.password_field :password
+        = f.check_box :remember_me, :label => 'Remember me when I come back'
+        = f.submit 'Log In'
+    .right
+      %p
+        Did you forget your password?
+        = link_to 'Recover it here.', new_password_path
 
-= formatted_form_for @session_user, :url => login_path do |f|
-  = f.text_field :email, :label => 'Email address'
-  = f.password_field :password
-  = f.check_box :remember_me, :label => 'Remember me when I come back'
-  = f.submit 'Log In'
-  
-%p
-  Did you forget your password?
-  = link_to 'Recover it here.', new_password_path
 
-
-%p
-  Don't have an account yet?
-  = link_to 'Register here.', root_path
+      %p
+        Don't have an account yet?
+        = link_to 'Register here.', root_path

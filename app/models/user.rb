@@ -47,13 +47,18 @@ class User < ActiveRecord::Base
       :message => 'Please enter your full address'
     }
   
+  validates :first_name, :last_name,
+    :presence => true
+    
   # == Relationships ========================================================
   
   has_many :memberships,
     :dependent => :destroy
   has_many :areas,
     :through => :memberships
-
+  has_many :posts,
+    :dependent => :destroy
+  
   accepts_nested_attributes_for :memberships, :allow_destroy => true
   
   # == Scopes ===============================================================
@@ -78,6 +83,10 @@ class User < ActiveRecord::Base
   
   def full_address
     [self.address, self.city, self.state].join(', ')
+  end
+  
+  def full_name
+    [first_name, last_name].join(' ')
   end
   
 protected
