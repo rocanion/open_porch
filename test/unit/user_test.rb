@@ -34,4 +34,22 @@ class UserTest < ActiveSupport::TestCase
     assert_created user
   end
   
+  def test_cascade_deletions
+    user = a User
+    assert_created user
+    membership = user.memberships.create_dummy
+    membership = user.posts.create_dummy
+    assert_created membership
+    assert_difference ['User.count', 'Membership.count', 'Post.count'], -1 do
+      user.destroy
+    end
+  end
+  
+  def test_member_of?
+    user = a User
+    assert_created user
+    membership = user.memberships.create_dummy
+    assert user.member_of?(membership.area)
+  end
+  
 end

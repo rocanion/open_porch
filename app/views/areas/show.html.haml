@@ -6,23 +6,36 @@
       %h3 #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
       %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
       
-      %ul.list
-        - @area.posts.each do |post|
-          %li
-            %h4= post.title
-            %p.meta
-              By <strong>#{post.user.full_name}</strong>, #{post.user.address}
-              %br/
-              #{post.created_at.to_s(:long)}
-            = simple_format post.content
-    
-    .right
-      = content_for :head do
-        = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
-        = javascript_include_tag 'google_maps'
+      - if logged_in?
+        %ul.list
+          - @area.posts.each do |post|
+            %li
+              %h4= post.title
+              %p.meta
+                By <strong>#{post.user.full_name}</strong>, #{post.user.address}
+                %br/
+                #{post.created_at.to_s(:long)}
+              = simple_format post.content
+      - else
+        %h3 
+          Only registered members can read and participate in
+          %br/
+          this neighbourhood forum. Area you a member?
+        %h2 Login
+        = formatted_form_for @session_user, :url => login_path do |f|
+          = f.text_field :email, :label => 'Email address'
+          = f.password_field :password
+          = f.check_box :remember_me, :label => 'Remember me when I come back'
+          = f.submit 'Log In'
+
+    - if @area.border.present?
+      .right
+        = content_for :head do
+          = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+          = javascript_include_tag 'google_maps'
 
 
-      = content_for :doc_ready do
-        initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
-        add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
-      #map_canvas{:style => 'width:300px; height:400px'}
+        = content_for :doc_ready do
+          initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
+          add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
+        #map_canvas{:style => 'width:300px; height:400px'}

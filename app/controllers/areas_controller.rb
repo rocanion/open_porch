@@ -1,12 +1,13 @@
 class AreasController < ApplicationController
+  skip_before_filter :login_required,
+    :only => :show
   before_filter :load_area,
     :only => :show
-    
-  def index
-    @areas = Area.closest_from(Area.first.center, 400)
-  end
-  
+
   def show
+    unless logged_in?
+      @session_user = SessionUser.new
+    end
   end
 
 protected

@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class AreasControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+
+  def test_get_show
+    area = an Area
+    get :show, :id => area
+    assert_response :success
+    assert_template :show 
   end
+
 end

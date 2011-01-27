@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
     [first_name, last_name].join(' ')
   end
   
+  def member_of?(area)
+    self.areas.include?(area)
+  end
+  
 protected
   def assign_role
     self.role = 'regular_user'
