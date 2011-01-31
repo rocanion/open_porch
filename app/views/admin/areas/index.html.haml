@@ -1,14 +1,12 @@
-.tabbed
-  = render :partial => 'layouts/admin/nav'
-  .clear.whitebox.padded
-    .left
-      %h2 Areas
-      %h5= link_to 'Create new area', [:new, :admin, :area]
-      %ul.list
-        - @areas.each do |area|
-          %li
-            %h4 #{area.name} in #{area.city}, #{area.state}
-            .action
-              = link_to 'edit', [:edit, :admin, area]
-              |
-              = link_to 'delete', admin_area_path(area), :method => :delete, :confirm => 'Are you sure you want to delete this area?'
+%h2 Areas
+%h5
+  = link_to 'Create new area', [:new, :admin, :area]
+  = link_to 'Edit borders', edit_borders_admin_areas_path
+%ul.list
+  - @areas.each do |area|
+    %li
+      %h4 #{area.name} in #{area.city}, #{area.state}
+      .action
+        = link_to 'edit', [:edit, :admin, area]
+        |
+        = link_to 'delete', admin_area_path(area), :method => :delete, :confirm => 'Are you sure you want to delete this area?'

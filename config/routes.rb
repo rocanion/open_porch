@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   
   get '/admin' => 'admin/areas#index'
   namespace :admin do
-    resources :areas
+    resources :areas do
+      collection do
+        get :edit_borders
+        post :bulk_update
+      end
+    end
     resources :users
   end
   

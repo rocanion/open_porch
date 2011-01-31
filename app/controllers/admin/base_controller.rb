@@ -1,6 +1,6 @@
 class Admin::BaseController < ApplicationController
   layout 'admin'
-  before_filter :login_required, :require_admin
+  before_filter :require_admin
 
 protected
   def require_admin
