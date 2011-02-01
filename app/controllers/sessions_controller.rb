@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def create
     if @session_user.save
       login(@session_user)
-      redirect_to(user_path(current_user), :notice => "Welcome, you are now logged in.")
+      redirect_to(user_path, :notice => "Welcome, you are now logged in.")
     else
       flash.now[:alert] = 'Login failed. Did you mistype?'
       render :action => :new
