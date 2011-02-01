@@ -1,6 +1,9 @@
 - if logged_in?
   %ul.tabs
-    %li= active_link_to 'Your Neighborhood Forum', area_path(current_user.areas.first), :active => { :when => :self_only }
-    %li= active_link_to 'Post a Message', new_area_post_path(current_user.areas.first)
-    %li= active_link_to 'Your Profile', user_path(current_user), :active => { :when => :self_only }
+    %li{:class => active_class(area_path(current_user.areas.first), :when => :self_only ) }
+      = link_to 'Your Neighborhood Forum', area_path(current_user.areas.first)
+    %li{:class => active_class(area_posts_path(current_user.areas.first),  :when => :self ) }
+      = link_to 'Post a Message', new_area_post_path(current_user.areas.first)
+    %li{:class => active_class(user_path)}
+      = link_to 'Your Profile', user_path
     %li.logout= link_to 'logout', logout_path

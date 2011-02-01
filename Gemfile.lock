@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git@github.com:twg/wristband.git
-  revision: d536cecc8acea0a5f3c02122a7e1985299ac0025
+  revision: 6ed0af9a97d0063e18ce6ac9dc80557ae0da4b51
   specs:
     wristband (1.0.2)
       formatted_form (>= 1.0.0)
@@ -118,4 +118,4 @@ DEPENDENCIES
   rcov
   spatial_adapter (= 1.2.0)
   test_dummy
-  wristband (= 1.0.2)!
+  wristband!

@@ -23,7 +23,7 @@ class SessionsControllerTest < ActionController::TestCase
     post :create, :session_user => { :email => @regular_user.email, :password => @regular_user.password }
     assert_equal "Welcome, you are now logged in.", flash[:notice]
     assert_equal session[:user_id], @regular_user.id
-    assert_redirected_to user_path(@regular_user)
+    assert_redirected_to user_path
     assert @controller.logged_in?
     assert_equal @controller.current_user, @regular_user
   end

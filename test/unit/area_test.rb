@@ -16,7 +16,7 @@ class AreaTest < ActiveSupport::TestCase
   end
   
   def test_create_dummy
-    area = a Area
+    area = an Area
     assert_created area
   end
   
@@ -24,7 +24,8 @@ class AreaTest < ActiveSupport::TestCase
     area = an Area
     assert_created area
     membership = area.memberships.create_dummy
-    membership = area.posts.create_dummy
+    post = area.posts.create_dummy
+    assert_created post
     assert_created membership
     assert_difference ['Area.count', 'Membership.count', 'Post.count'], -1 do
       area.destroy

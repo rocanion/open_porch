@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def create
     @user.save!
     login_as_user(@user)
-    redirect_to(@user, :notice => 'Welcome')
+    redirect_to(user_path, :notice => 'Welcome')
   rescue ActiveRecord::RecordInvalid
     render :action => :new
   end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   
   def update
     @user.update_attributes!(params[:user])
-    redirect_to user_path(@user)
+    redirect_to user_path
   rescue ActiveRecord::RecordInvalid
     render :action => :edit
   end

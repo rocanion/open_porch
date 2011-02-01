@@ -1,32 +1,30 @@
-.tabbed
-  = render :partial => 'layouts/account_nav'
-  .clear.whitebox.padded
-    .left
-      %h2 Your Profile
-      .list_header.clear
-        .left
-          %h3 Account details
-        .right
-          %h5= link_to 'Edit Details', edit_user_path(current_user)
-      %ul.list
-        %li
-          .label
-            %label Address
-          .value
-            = current_user.full_address
-        %li
-          .label
-            %label First Name
-          .value
-            = current_user.first_name
-        %li
-          .label
-            %label Last Name
-          .value
-            = current_user.last_name
-        %li
-          .label
-            %label Email Address
-          .value
-            = current_user.email
-    .right
+= render :partial => 'layouts/account_nav'
+
+.columns
+  .left_column
+    %h2 Your Profile
+    .list_header
+      %h3 Account details
+      %h5= link_to 'Edit Details', edit_user_path
+
+    %ul.list
+      %li
+        .label
+          %label Address
+        .value
+          = current_user.full_address
+      %li
+        .label
+          %label First Name
+        .value
+          = current_user.first_name
+      %li
+        .label
+          %label Last Name
+        .value
+          = current_user.last_name
+      %li
+        .label
+          %label Email Address
+        .value
+          = current_user.email
