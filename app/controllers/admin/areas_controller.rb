@@ -1,4 +1,5 @@
 class Admin::AreasController < Admin::BaseController
+  before_filter :has_authority
   before_filter :build_area,
     :only => [:new, :create]
   before_filter :load_area,
@@ -42,9 +43,15 @@ protected
     @area = Area.new(params[:area])
   end
   
-  def load_area
+  def load_area    
     @area = Area.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render :text => 'Area not found', :status => 404
+  end
+  
+  def has_authority
+    if (!user.has_authority_to?(:manage_areas))
+      redirect_to(user_path(current_user), :alert => "You're not authorized to access that page.") 
+    end
   end
 end

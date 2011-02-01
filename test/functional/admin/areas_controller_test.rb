@@ -13,6 +13,13 @@ class Admin::AreasControllerTest < ActionController::TestCase
     assert_redirected_to user_path(session[:user_id])
   end
   
+  def test_require_admin
+    login_as(:ocm)
+    get :index
+    assert_equal "You're not authorized to access that page.", flash[:alert]
+    assert_redirected_to user_path(session[:user_id])
+  end
+  
   def test_get_index
     get :index
     assert_response :success
