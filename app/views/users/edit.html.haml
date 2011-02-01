@@ -1,11 +1,10 @@
-.tabbed
-  = render :partial => 'layouts/account_nav'
-  .clear.whitebox.padded
-    .left
-      %h2 Edit your details
-      = formatted_form_for @user, :url => user_path(@user) do |f|
-        = f.text_field :email
-        = f.password_field :password, :autocomplete => :off
-        = f.password_field :password_confirmation, :autocomplete => :off
-        = f.submit 'Save', :cancel_url => link_to('cancel', user_path(@user))
-    .right
+= render :partial => 'layouts/account_nav'
+
+.columns
+  .left_column
+    %h2 Edit your details
+    = formatted_form_for @user, :url => user_path(@user) do |f|
+      = f.text_field :email
+      = f.password_field :password, :autocomplete => :off
+      = f.password_field :password_confirmation, :autocomplete => :off
+      = f.submit 'Save', :cancel_url => link_to('cancel', user_path(@user))

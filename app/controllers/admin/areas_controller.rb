@@ -2,7 +2,7 @@ class Admin::AreasController < Admin::BaseController
   before_filter :build_area,
     :only => [:new, :create]
   before_filter :load_area,
-    :except => [:index, :new, :create]
+    :except => [:index, :new, :create, :edit_borders]
   
   def index
     @areas = Area.all
@@ -19,6 +19,10 @@ class Admin::AreasController < Admin::BaseController
   end
   
   def edit
+  end
+  
+  def edit_borders
+    
   end
   
   def update

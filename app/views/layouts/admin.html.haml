@@ -1,15 +1,14 @@
-!!! html
+!!! 5
 %html
   %head
     %meta{"http-equiv" => "Content-Type", "content" => "text/html;charset=utf-8"}/
     = render(:partial => 'layouts/head')
 
-  %body{:class => "#{params[:controller]}_#{params[:action]}".idify}
-    .wrapper
-      = render(:partial => 'layouts/admin/header')
-
+  %body
+    .wrapper{:class => "#{params[:controller]}_#{params[:action]}".idify}
       .main_content
-        = render :partial => 'layouts/flash_message'
-        = yield
+        = render :partial => 'layouts/admin/nav'
+        .columns
+          = yield
   
       = render(:partial => 'layouts/footer')

@@ -1,8 +1,4 @@
-.tabbed
-  = render :partial => 'layouts/admin/nav'
-  .clear.whitebox.padded
-    .left
-      %h1 Create new area
+%h1 Create new area
 
-      = formatted_form_for @area, :url => [:admin, :areas] do |f|
-        = render :partial => 'form', :locals => {:f => f}
+= formatted_form_for @area, :url => [:admin, :areas] do |f|
+  = render :partial => 'form', :locals => {:f => f}
