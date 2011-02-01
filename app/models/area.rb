@@ -14,6 +14,8 @@ class Area < ActiveRecord::Base
     :through => :memberships
   has_many :posts,
     :dependent => :destroy
+  has_one :area_sequence  ,
+    :dependent => :destroy
   
   # == Validations ==========================================================
   
@@ -31,6 +33,8 @@ class Area < ActiveRecord::Base
   }
   
   # == Callbacks ============================================================
+  
+  after_create :create_sequence
   
   # == Class Methods ========================================================
   
@@ -69,4 +73,8 @@ class Area < ActiveRecord::Base
     @border_coordinates ||= border.rings.first.points.collect{|point| "new google.maps.LatLng(#{point.x}, #{point.y})"}.join(',')
   end
   
+protected
+  def create_sequence
+    self.create_area_sequence(:sequence_number => 0)
+  end
 end
