@@ -2,8 +2,8 @@ class Admin::AreasController < Admin::BaseController
   before_filter :build_area,
     :only => [:new, :create]
   before_filter :load_area,
-    :except => [:index, :new, :create, :edit_borders]
-  
+    :except => [:index, :new, :create, :edit_borders, :bulk_update]
+    
   def index
     @areas = Area.all
   end
@@ -22,7 +22,7 @@ class Admin::AreasController < Admin::BaseController
   end
   
   def edit_borders
-    
+    @areas = Area.all
   end
   
   def update
@@ -30,6 +30,17 @@ class Admin::AreasController < Admin::BaseController
     redirect_to([:admin, :areas], :notice => 'Area has been successfully updated.')
   rescue ActiveRecord::RecordInvalid
     render :action => :edit
+  end
+  
+  def bulk_update
+    params[:areas].each do |index, area_params|
+      area = Area.find(area_params[:id])
+      area.coordinates = area_params[:coordinates]
+      area.save!
+    end
+    render :js => "alert('Saved!')"
+  # rescue ActiveRecord::RecordInvalid
+  #   render :js => "alert('Error!')"
   end
   
   def destroy
