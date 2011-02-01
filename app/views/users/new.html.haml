@@ -1,38 +1,39 @@
-.tabbed
-  %ul.steps
-    %li 1. Confirm neighborhood
-    %li.active 2. Account details
-    %li 3. Sign up complete
-  .clear.whitebox.padded
-    .left
-      %h2
-        Enter your
-        %br/
-        account details
-      %h3
-        Your account will be created  in the
-        %br/
-        %strong= @area.name
-        neighbourhood forum
-      = content_for :head do
-        = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
-        = javascript_include_tag 'google_maps'
+%ul.tabs
+  %li 1. Confirm neighborhood
+  %li.active 2. Account details
+  %li 3. Sign up complete
+
+.columns
+  .left_column
+    %h2
+      Enter your
+      %br/
+      account details
+    %h3
+      Your account will be created  in the
+      %br/
+      %strong= @area.name
+      neighbourhood forum
+    = content_for :head do
+      = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+      = javascript_include_tag 'google_maps'
 
 
-      = content_for :doc_ready do
-        initialize(document.getElementById("map_canvas"), #{@user.lat}, #{@user.lng});
-        add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
-      #map_canvas{:style => 'width:300px; height:200px'}
-    .right
-      %label Address
-      %p= @user.full_address
-      = formatted_form_for @user do |f|
-        = f.hidden_field :address
-        = f.hidden_field :city
-        = f.hidden_field :state
-        = f.hidden_field :lat
-        = f.hidden_field :lng
-        = f.fields_for :memberships do |membership|
-          = membership.hidden_field :area_id
-        = render :partial => "form", :locals => {:f => f}
-        = f.submit 'Create your Account'
+    = content_for :doc_ready do
+      initialize(document.getElementById("map_canvas"), #{@user.lat}, #{@user.lng});
+      add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
+    #map_canvas{:style => 'width:500px; height:300px'}
+
+  .right_column
+    %label Address
+    %p= @user.full_address
+    = formatted_form_for @user do |f|
+      = f.hidden_field :address
+      = f.hidden_field :city
+      = f.hidden_field :state
+      = f.hidden_field :lat
+      = f.hidden_field :lng
+      = f.fields_for :memberships do |membership|
+        = membership.hidden_field :area_id
+      = render :partial => "form", :locals => {:f => f}
+      = f.submit 'Create your Account'

@@ -1,5 +1,4 @@
-.left
-  %h1 Edit User
+%h1 Edit User
 
-  = formatted_form_for @user, :url => [:admin, @user] do |f|
-    = render :partial => 'form', :locals => {:f => f}
+= formatted_form_for @user, :url => [:admin, @user] do |f|
+  = render :partial => 'form', :locals => {:f => f}

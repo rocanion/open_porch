@@ -10,40 +10,40 @@
   - @areas.each do |area|
     add_region(#{area.id}, [#{area.border_coordinates}])
 
-.tabbed
-  %ul.steps
-    %li.active 1. Confirm neighborhood
-    %li 2. Account details
-    %li 3. Sign up complete
-  .clear.whitebox.padded
-    .left
-      %h2 Confirm your neighborhood
-      %h3
-        = @address.full
-        %br/
-        is currently in 
-        %strong= @selected_area.name
-      %ul.list.areas
-        
-        - ([@selected_area]+@areas).each_with_index do |area, i|
-          %li{:id => dom_id(area), :class => (area == @selected_area ? 'selected' : '')}
-            .name #{i+1}) #{area.name}
-            .action
-              = link_to 'View info', ''
-              |
-              = link_to_function 'Select this one', "select_region(#{area.id})"
+%ul.tabs
+  %li.active 1. Confirm neighborhood
+  %li 2. Account details
+  %li 3. Sign up complete
 
-      = form_for @user, :url => new_user_path, :html => {:method => :get} do |f|
-        = f.hidden_field :address
-        = f.hidden_field :city
-        = f.hidden_field :state
-        = f.hidden_field :lat
-        = f.hidden_field :lng
-        = f.fields_for :memberships do |membership|
-          = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}, {}, {:id => 'user_area_id'}
-        = f.submit 'Next step'
-        or
-        = link_to('Previous', :back)
+.columns
+  .left_column
+    %h2 Confirm your neighborhood
+    %h3
+      = @address.full
+      %br/
+      is currently in 
+      %strong= @selected_area.name
+    %ul.list.areas
+      
+      - ([@selected_area]+@areas).each_with_index do |area, i|
+        %li{:id => dom_id(area), :class => (area == @selected_area ? 'selected' : '')}
+          .name #{i+1}) #{area.name}
+          .action
+            = link_to 'View info', ''
+            |
+            = link_to_function 'Select this one', "select_region(#{area.id})"
 
-    .right        
-      #map_canvas{:style => 'width:400px; height:400px'}
+    = form_for @user, :url => new_user_path, :html => {:method => :get} do |f|
+      = f.hidden_field :address
+      = f.hidden_field :city
+      = f.hidden_field :state
+      = f.hidden_field :lat
+      = f.hidden_field :lng
+      = f.fields_for :memberships do |membership|
+        = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}, {}, {:id => 'user_area_id'}
+      = f.submit 'Next step'
+      or
+      = link_to('Previous', :back)
+
+  .right_column      
+    #map_canvas{:style => 'width:260px; height:400px'}
