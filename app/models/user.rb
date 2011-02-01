@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
 
   # == Extensions ===========================================================
 
-  wristband :roles => ROLES
+  wristband :has_authorities => true, :roles => ROLES
 
   # == Validations ==========================================================
 
