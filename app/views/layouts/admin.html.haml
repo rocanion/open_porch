@@ -7,7 +7,6 @@
   %body
     .wrapper{:class => "#{params[:controller]}_#{params[:action]}".idify}
       .main_content
-        = render(:partial => 'layouts/flash_message')
         = render :partial => 'layouts/admin/nav'
         .columns
           = yield
