@@ -38,6 +38,13 @@
       }
       var map = new google.maps.Map(map_container.get(0), options.map_options);
       render_controls(map);
+      
+      // Right click to add a new point
+      google.maps.event.addDomListener(map, 'rightclick', function(event) {
+        if(confirm('Add new point?')) {
+          add_new_point(event.latLng);
+        }
+      });
       return map;
     }
     
@@ -97,11 +104,13 @@
           if(!polygon.is_selected) {
             mouseover_region(polygon);
           }
+          $('.region_details').html($('<h4>'+ options.regions[polygon.region_index].name +'</h4>'))
         });
         google.maps.event.addListener(polygon, 'mouseout', function() {
           if(!polygon.is_selected) {
             mouseout_region(polygon);
           }
+          $('.region_details').html();
         });
         google.maps.event.addListener(polygon, 'click', function() {
           console.log(options.selected_polygon.has_changed)
@@ -204,9 +213,7 @@
           options.regions[polygon.region_index].points = new_points;
           
           // Reset buttons state
-          options.save_btn.addClass('disabled');
-          options.reset_btn.addClass('disabled');
-          polygon.has_changed = false;
+          set_polygon_changed(polygon, false)
           
           // Notify the user
           obj.prepend($('<div class="flash_message notice">Saved!</div>'));
@@ -217,6 +224,49 @@
       });
     }
 
+    function add_new_point(latLng) {
+      var polygon = options.selected_polygon;
+      
+      // Collect the distances between the new point and every polygon vertex
+      var distances = new Array();
+      polygon.getPath().forEach(function(poly_latLng, index){
+        distances.push({
+          index: index, 
+          distance: google.maps.geometry.spherical.computeDistanceBetween(latLng, poly_latLng)
+        });
+      });
+      // Sort the distances
+      distances.sort(function(a,b){
+        return a.distance - b.distance;
+      });
+      
+      
+      var coordinates = new Array();
+      var added_new_coordinate = false;
+      polygon.getPath().forEach(function(poly_latLng, index){
+        coordinates.push(poly_latLng);
+        if(!added_new_coordinate && (index == distances[0].index || index == distances[1].index)) {
+          coordinates.push(latLng);
+          added_new_coordinate = true;
+        }
+      });
+      polygon.setPath(coordinates);
+      set_polygon_changed(polygon, true)
+      delete_vertices();
+      prepare_for_edit(polygon)
+    }
+    
+    function set_polygon_changed(polygon, changed) {
+      if(changed) {
+        polygon.has_changed = true;
+        options.save_btn.removeClass('disabled');
+        options.reset_btn.removeClass('disabled');
+      } else {
+        options.save_btn.addClass('disabled');
+        options.reset_btn.addClass('disabled');
+        polygon.has_changed = false;
+      }
+    }
   };
 })(jQuery);
 
