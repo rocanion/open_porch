@@ -14,7 +14,7 @@ class Area < ActiveRecord::Base
     :through => :memberships
   has_many :posts,
     :dependent => :destroy
-  has_one :area_sequence  ,
+  has_one :issue_number,
     :dependent => :destroy
   
   # == Validations ==========================================================
@@ -34,7 +34,7 @@ class Area < ActiveRecord::Base
   
   # == Callbacks ============================================================
   
-  after_create :create_sequence
+  after_create :initialize_issue_numbers
   
   # == Class Methods ========================================================
   
@@ -74,7 +74,7 @@ class Area < ActiveRecord::Base
   end
   
 protected
-  def create_sequence
-    self.create_area_sequence(:sequence_number => 0)
+  def initialize_issue_numbers
+    self.create_issue_number(:sequence_number => 0)
   end
 end

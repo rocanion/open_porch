@@ -39,8 +39,8 @@ class Admin::AreasController < Admin::BaseController
       area.save!
     end
     render :js => "alert('Saved!')"
-  # rescue ActiveRecord::RecordInvalid
-  #   render :js => "alert('Error!')"
+  rescue ActiveRecord::RecordInvalid
+    render :js => "alert('Error!')"
   end
   
   def destroy
