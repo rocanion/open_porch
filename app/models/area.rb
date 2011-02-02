@@ -36,6 +36,28 @@ class Area < ActiveRecord::Base
   
   # == Instance Methods =====================================================
   
+  def coordinates=(points)
+    coords = points.collect{|k, v| [v[0].to_f, v[1].to_f]}
+    self.border = Polygon.from_coordinates([coords + [coords.first]])
+  end
+  
+  def coordinates
+    if self.border.present?
+      self.border.first.points.collect{|p| "#{p.x},#{p.y}"}.join("\r\n")
+    end
+  end
+  
+  # Returns an array with coordinates
+  # removing the last (repeated) point
+  def to_a
+    if self.border.present?
+      {
+        :id => self.id,
+        :points => self.border.first.points[0..-2].collect{|p| [p.x, p.y]}
+      }
+    end
+  end
+  
   # Returns a Point object
   def center
     if self.border.present?

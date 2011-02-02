@@ -4,6 +4,6 @@
       = link_to 'Your Neighborhood Forum', area_path(current_user.areas.first)
     %li{:class => active_class(area_posts_path(current_user.areas.first),  :when => :self ) }
       = link_to 'Post a Message', new_area_post_path(current_user.areas.first)
-    %li{:class => active_class(user_path(current_user))}
-      = link_to 'Your Profile', user_path(current_user)
+    %li{:class => active_class(user_path)}
+      = link_to 'Your Profile', user_path
     %li.logout= link_to 'logout', logout_path

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
   resources :passwords, :only => [:new, :create, :edit, :update]
-  post '/login' => 'sessions#create'
-  get '/login' => 'sessions#new'
-  get '/logout' => 'sessions#destroy'
+  post  '/login' => 'sessions#create'
+  get   '/login' => 'sessions#new'
+  get   '/logout' => 'sessions#destroy'
 
   resources :registrations
   resource  :user

@@ -27,7 +27,7 @@
   .right_column
     %label Address
     %p= @user.full_address
-    = formatted_form_for @user do |f|
+    = formatted_form_for @user, :url => user_path do |f|
       = f.hidden_field :address
       = f.hidden_field :city
       = f.hidden_field :state

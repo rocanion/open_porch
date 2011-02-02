@@ -1,0 +1,24 @@
+= content_for :head do
+  = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+  = javascript_include_tag 'region_editor'
+
+
+:javascript
+  $(document).ready(function() {
+    $('#editor').RegionEditor({
+      update_url: '#{bulk_update_admin_areas_path}',
+      form_authenticity_token: '#{form_authenticity_token}',
+      map_style: 'width:100%;height:500px', 
+      center: {
+        lat: #{@areas.first.center.x}, 
+        lng: #{@areas.first.center.y}
+      }, 
+      regions: #{@areas.collect(&:to_a).to_json.html_safe}, 
+      selected_region_id: #{@areas.first.id}
+    });
+  });
+
+
+#editor
+
+
