@@ -14,6 +14,8 @@ class Area < ActiveRecord::Base
     :through => :memberships
   has_many :posts,
     :dependent => :destroy
+  has_one :issue_number,
+    :dependent => :destroy
   
   # == Validations ==========================================================
   
@@ -31,6 +33,8 @@ class Area < ActiveRecord::Base
   }
   
   # == Callbacks ============================================================
+  
+  after_create :initialize_issue_numbers
   
   # == Class Methods ========================================================
   
@@ -69,4 +73,8 @@ class Area < ActiveRecord::Base
     @border_coordinates ||= border.rings.first.points.collect{|point| "new google.maps.LatLng(#{point.x}, #{point.y})"}.join(',')
   end
   
+protected
+  def initialize_issue_numbers
+    self.create_issue_number(:sequence_number => 0)
+  end
 end
