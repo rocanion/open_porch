@@ -1,13 +1,11 @@
 class Admin::Areas::BaseController < ApplicationController
-  layout 'admin'
-  before_check :allow_if_admin!
-  before_filter :require_admin
+  layout 'admin/areas'
+  before_filter :load_users
 
 protected
-  
-  def allow_if_admin!
-    if (@user.is_admin?)
-      allow!
-    end
+  def load_users
+    @users = User.all.for(params[:area_id])
+  rescue ActiveRecord::RecordNotFound
+    render :text => 'Area not found', :status => 404
   end
 end

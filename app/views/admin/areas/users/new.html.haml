@@ -1,0 +1,4 @@
+%h1 Add new user to #{@area.name}
+
+= formatted_form_for @membership, :url => [:admin, :areas] do |f|
+  = render :partial => 'form', :locals => {:f => f}

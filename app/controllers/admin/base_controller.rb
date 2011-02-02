@@ -1,13 +1,11 @@
 class Admin::BaseController < ApplicationController
   layout 'admin'
-  before_check :allow_if_admin!
   before_filter :require_admin
 
 protected
-  
-  def allow_if_admin!
-    if (@user.is_admin?)
-      allow!
+  def require_admin
+    unless current_user.is_admin?
+      redirect_to(user_path(current_user), :alert => "You're not authorized to access that page.") 
     end
   end
 end
