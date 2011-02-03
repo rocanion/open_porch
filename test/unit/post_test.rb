@@ -3,13 +3,14 @@ require 'test_helper'
 class PostTest < ActiveSupport::TestCase
   
   def test_create_defaults
-    post = Post.create(
-      :title => 'Test Post',
-      :content => 'Lorem ipsum dolor sit amet',
-      :user => (a User),
-      :area => (an Area)
-    )
-    assert_created post
+    assert_difference ['Post.count', 'Issue.count'], 1 do
+      post = Post.create(
+        :title => 'Test Post',
+        :content => 'Lorem ipsum dolor sit amet',
+        :user => (a User),
+        :area => (an Area)
+      )
+    end
   end
   
   def test_create_requirements

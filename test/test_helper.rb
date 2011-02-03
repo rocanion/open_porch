@@ -5,6 +5,7 @@ require 'rails/test_help'
 class ActiveSupport::TestCase
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures = false
+  include ActionMailer::TestHelper
   
   def data_path(name)
     File.expand_path(File.join('test', 'data', name), Rails.root)

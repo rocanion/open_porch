@@ -6,4 +6,6 @@
       = link_to 'Post a Message', new_area_post_path(current_user.areas.first)
     %li{:class => active_class(user_path)}
       = link_to 'Your Profile', user_path
-    %li.logout= link_to 'logout', logout_path
+    %li.right= link_to 'logout', logout_path
+    - if current_user.is_admin?
+      %li.right= link_to  'admin', admin_path
