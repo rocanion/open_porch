@@ -1,10 +1,9 @@
-class Admin::Areas::BaseController < ApplicationController
-  layout 'admin/areas'
-  before_filter :load_users
+class Admin::Areas::BaseController < Admin::BaseController
+  before_filter :load_area
 
 protected
-  def load_users
-    @users = User.all.for(params[:area_id])
+  def load_area
+    @area = Area.find(params[:area_id])
   rescue ActiveRecord::RecordNotFound
     render :text => 'Area not found', :status => 404
   end

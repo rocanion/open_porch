@@ -27,12 +27,21 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert_template :edit
   end
   
-  def test_update
+  def test_update_from_users
     user = a User
-    put :update, :id => user, :user => { :email => 'user@domain.com' }
+    put :update, :id => user, :user => { :email => 'user@domain.com' }, :area_id => nil
     user.reload
     assert_equal 'user@domain.com', user.email
     assert_redirected_to admin_users_path
+  end
+  
+  def test_update_from_areas
+    area = an Area
+    user = a User
+    put :update, :id => user, :user => { :email => 'user@domain.com' }, :area_id => area
+    user.reload
+    assert_equal 'user@domain.com', user.email
+    assert_redirected_to admin_area_memberships_path(area)
   end
   
   def test_update_fails
