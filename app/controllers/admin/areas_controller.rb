@@ -13,7 +13,14 @@ class Admin::AreasController < Admin::BaseController
   
   def create
     @area.save!
-    redirect_to([:admin, :areas], :notice => 'Area has been successfully created.')
+    respond_to do |format|
+      format.html do
+        redirect_to([:admin, :areas], :notice => 'Area has been successfully created.')
+      end
+      format.js do
+        render :text => @area.id
+      end
+    end
   rescue ActiveRecord::RecordInvalid
     render :action => :new
   end

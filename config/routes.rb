@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :registrations
   resource  :user
   
-  resources :areas do
+  resources :areas, :only => :show do
     resources :posts, :only => [:new, :create]
   end
   
