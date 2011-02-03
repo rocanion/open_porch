@@ -97,6 +97,8 @@
 
         if(region.id == options.selected_region_id) {
           prepare_for_edit(polygon);
+          $('.region_details').html(options.regions[options.selected_polygon.region_index].name);
+          
         }
         
         // Polygon events
@@ -104,21 +106,26 @@
           if(!polygon.is_selected) {
             mouseover_region(polygon);
           }
-          $('.region_details').html($('<h4>'+ options.regions[polygon.region_index].name +'</h4>'))
+          $('.region_details').html(options.regions[polygon.region_index].name)
         });
         google.maps.event.addListener(polygon, 'mouseout', function() {
           if(!polygon.is_selected) {
             mouseout_region(polygon);
           }
-          $('.region_details').html();
+          $('.region_details').html(options.regions[options.selected_polygon.region_index].name)
         });
         google.maps.event.addListener(polygon, 'click', function() {
-          console.log(options.selected_polygon.has_changed)
-          if(options.selected_polygon.has_changed && confirm('The region has changed. Do you want to save changes?')) {
-            save_changes(options.selected_polygon);
+          if(!polygon.is_selected) {
+            if(options.selected_polygon.has_changed) {
+              if(confirm('This region has changed. Discard changes?')) {
+                reset_polygon(options.selected_polygon);
+                prepare_for_edit(polygon);
+              }
+            } else {
+              reset_polygon(options.selected_polygon);
+              prepare_for_edit(polygon);
+            }
           }
-          reset_polygon(options.selected_polygon);
-          prepare_for_edit(polygon);
         });
         
       });
@@ -148,7 +155,13 @@
 
       // Add vertex handlers to the polygon
       polygon.getPath().forEach(function(latlng, index){
-        options.vertices.push(new VertexWidget(map, polygon, index));
+        var vertex = new VertexWidget(map, polygon, index);
+        options.vertices.push(vertex);
+        
+        // Right click to delete this vertex
+        google.maps.event.addDomListener(vertex.marker, 'rightclick', function(event) {
+          delete_point(polygon, index);
+        });
       });
       
       // Change color
@@ -171,7 +184,7 @@
       options.vertices = new Array();
     }
     
-    // Returns a polygon to it's original coordinater
+    // Returns a polygon to it's original coordinates
     function reset_polygon(polygon) {
       var coordinates = new Array();
       $.each(options.regions[polygon.region_index].points, function(){
@@ -179,9 +192,7 @@
       });
       polygon.setPath(coordinates);
       delete_vertices();
-      options.save_btn.addClass('disabled');
-      options.reset_btn.addClass('disabled');
-      polygon.has_changed = false;
+      set_polygon_changed(polygon, false)
       
       // Change color
       polygon.setOptions({
@@ -189,7 +200,8 @@
         strokeOpacity: 0.8,
         strokeWeight: 2,
         fillColor: "#6666FF",
-        fillOpacity: 0.1
+        fillOpacity: 0.1,
+        is_selected: false
       })
     }
 
@@ -224,6 +236,7 @@
       });
     }
 
+    // Adds a new point to the selected polygon
     function add_new_point(latLng) {
       var polygon = options.selected_polygon;
       
@@ -235,11 +248,11 @@
           distance: google.maps.geometry.spherical.computeDistanceBetween(latLng, poly_latLng)
         });
       });
+
       // Sort the distances
       distances.sort(function(a,b){
         return a.distance - b.distance;
       });
-      
       
       var coordinates = new Array();
       var added_new_coordinate = false;
@@ -256,6 +269,19 @@
       prepare_for_edit(polygon)
     }
     
+    // Deletes a point from a polygon
+    function delete_point(polygon, index) {
+      if(polygon.getPath().getLength() == 3) {
+        alert('Cannot delete this point. A region must have at least 3 points.');
+      } else if(confirm('Delete this point?')) {
+        polygon.getPath().removeAt(index);
+        delete_vertices(polygon);
+        prepare_for_edit(polygon);
+        set_polygon_changed(polygon, true)
+      }
+    }
+    
+    // Sets the status of a polygon and the control buttons
     function set_polygon_changed(polygon, changed) {
       if(changed) {
         polygon.has_changed = true;
@@ -290,6 +316,7 @@ function VertexWidget(map, polygon, index) {
 
   // Bind the marker map property to the VertexWidget map property
   marker.bindTo('map', this);
+  marker.bindTo('rightclick', this);
 
   // Bind the marker position property to the polygon binder
   marker.bindTo('position', polygon.binder, index.toString());

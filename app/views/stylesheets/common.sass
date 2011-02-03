@@ -33,7 +33,7 @@ ul.tabs
     color: #2D212D
     a
       color: #2D212D
-  li.logout
+  li.right
     float: right
     background: none
     a
@@ -56,10 +56,14 @@ ul.list
   margin-bottom: 10px
   .label
     margin-bottom: 5px
+  .errors, .description
+    font: 11px/20px Arial, sans-serif
+    letter-spacing: 1px
   .errors
     color: red
-    font-size: 12px
-    padding-top: 5px
+  .description
+    font-style: italic
+    color: #6E666E
     
 .form_element.text_field_element, .form_element.password_field_element
   input
@@ -79,19 +83,5 @@ ul.list
 
 #map_canvas
   border: 2px solid #2D212D
-  
-  .flash_message
-    position: absolute
-    z-index: 100
-    padding: 2px 5px
-    margin: 5px 0px 0px 70px
-    font: 12px/12px Arial,sans-serif
-    float: none
-    border: solid #000 1px
-    background-color: #c4d2a6
-    color: #fff
-  .flash_message.alert
-    background-color: #f2d9d9
-    color: #c21a1a
   
   

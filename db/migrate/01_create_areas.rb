@@ -8,6 +8,7 @@ class CreateAreas < ActiveRecord::Migration
       t.string :slug
       t.integer :last_issue_number
       t.integer :households
+      t.integer :send_mode, :default => 0
       t.column :border, :polygon, :geographic => true, :srid => 4326
       t.timestamps
     end

@@ -4,7 +4,6 @@ TestDummy.declare(Post) do
   
   dummy :title do
     Faker::Lorem.sentence
-    
   end
   
   dummy :content do

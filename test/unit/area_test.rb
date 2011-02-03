@@ -8,6 +8,7 @@ class AreaTest < ActiveSupport::TestCase
       :slug => 'test-area'
     )
     assert_created area
+    assert_equal Area::SEND_MODES[:immediate], area.send_mode
   end
   
   def test_create_requirements
@@ -24,10 +25,11 @@ class AreaTest < ActiveSupport::TestCase
     area = an Area
     assert_created area
     membership = area.memberships.create_dummy
-    post = area.posts.create_dummy
-    assert_created post
     assert_created membership
-    assert_difference ['Area.count', 'Membership.count', 'Post.count'], -1 do
+    post = area.posts.create_dummy  
+    assert_created post
+    area.reload
+    assert_difference ['Area.count', 'Membership.count', 'Post.count', 'Issue.count'], -1 do
       area.destroy
     end
   end
