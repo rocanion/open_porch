@@ -38,9 +38,9 @@ class Admin::AreasController < Admin::BaseController
       area.coordinates = area_params[:coordinates]
       area.save!
     end
-    render :js => "alert('Saved!')"
+    render :nothing => true, :status => :ok
   rescue ActiveRecord::RecordInvalid
-    render :js => "alert('Error!')"
+    render :nothing => true, :status => :bad_request
   end
   
   def destroy

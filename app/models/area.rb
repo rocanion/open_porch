@@ -67,6 +67,7 @@ class Area < ActiveRecord::Base
     if self.border.present?
       {
         :id => self.id,
+        :name => self.name,
         :points => self.border.first.points[0..-2].collect{|p| [p.x, p.y]}
       }
     end
