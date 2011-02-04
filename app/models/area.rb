@@ -30,10 +30,13 @@ class Area < ActiveRecord::Base
     :presence => {:message => 'Please enter the name of this area'}
   validates :slug,
     :presence => true,
-    :uniqueness  => true
+    :uniqueness  => true,
+    :if => :published?
+  
   validates :send_mode,
     :presence => true,
-    :inclusion => SEND_MODES.values
+    :inclusion => SEND_MODES.values,
+    :if => :published?
     
   # == Scopes ===============================================================
   

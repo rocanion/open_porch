@@ -16,6 +16,7 @@
         scaleControl: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       },
+      map_style: 'width:100%;height:500px', 
       colors : {
         red: '#aa4643',
         blue: '#4572a7'
@@ -39,9 +40,7 @@
       editor.append(map_container);
       
       // Setting the center of the map
-      if(options.center != null) {
-        options.map_options.center = new google.maps.LatLng(options.center.lat, options.center.lng);
-      }
+      options.map_options.center = new google.maps.LatLng(options.center.lat, options.center.lng);
       
       // Creating the map
       var map = new google.maps.Map(map_container.get(0), options.map_options);
@@ -313,8 +312,7 @@
           setTimeout(function(){
             $('.flash_message.notice').fadeOut('slow', function(){$(this).remove()});
           }, 5000);
-        },
-        'json'
+        }
       );
     }
     
@@ -431,7 +429,6 @@
         animation: google.maps.Animation.DROP,
         clickable: (options.vertices.length == 0)
       });
-      console.log('-' + options.vertices.length);
       
       options.vertices.push(marker);
       

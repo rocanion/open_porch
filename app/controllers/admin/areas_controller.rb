@@ -30,6 +30,7 @@ class Admin::AreasController < Admin::BaseController
   
   def edit_borders
     @areas = Area.all
+    @selected_area = @areas.detect{|area| area.id == params[:id].to_i}
   end
   
   def update
@@ -45,7 +46,7 @@ class Admin::AreasController < Admin::BaseController
       area.coordinates = area_params[:coordinates]
       area.save!
     end
-    render :nothing => true, :status => :ok
+    render :nothing => true
   rescue ActiveRecord::RecordInvalid
     render :nothing => true, :status => :bad_request
   end

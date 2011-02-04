@@ -5,15 +5,14 @@
   :javascript
     $(document).ready(function() {
       $('#map_canvas').RegionEditor({
-        update_url: '#{bulk_update_admin_areas_path}',
         create_url: '#{admin_areas_path}',
-        map_style: 'width:100%;height:500px', 
-        center: {
-          lat: #{@areas.first.center.x}, 
-          lng: #{@areas.first.center.y}
-        }, 
+        update_url: '#{bulk_update_admin_areas_path}',
         regions: #{@areas.collect(&:to_a).to_json}, 
-        selected_region_id: #{@areas.first.id}
+        selected_region_id: #{@selected_area.id},
+        center: {
+          lat: #{@selected_area.center.x}, 
+          lng: #{@selected_area.center.y}
+        }
       });
     });
 

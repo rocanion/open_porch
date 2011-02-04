@@ -15,8 +15,10 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => redirect('/admin/users')
     resources :areas do
-      collection do
+      member do
         get :edit_borders
+      end
+      collection do
         post :bulk_update
       end
       resources :memberships, :controller => 'areas/memberships'

@@ -1,0 +1,4 @@
+%h1 Create new region
+
+= formatted_form_for @area, :url => [:admin, :areas] do |f|
+  = render :partial => 'form', :locals => {:f => f}
