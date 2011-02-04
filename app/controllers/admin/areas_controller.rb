@@ -1,4 +1,5 @@
 class Admin::AreasController < Admin::BaseController
+  before_filter :require_authority_to_manage_areas
   before_filter :build_area,
     :only => [:new, :create]
   before_filter :load_area,

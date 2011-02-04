@@ -1,5 +1,6 @@
 class RegistrationsController < ApplicationController
   skip_before_filter :login_required
+  before_filter :redirect_if_logged_in
   before_filter :build_address, :only => [:new, :index, :create]
   
   def index

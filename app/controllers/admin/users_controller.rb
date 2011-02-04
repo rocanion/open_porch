@@ -1,4 +1,5 @@
 class Admin::UsersController < Admin::BaseController
+  before_filter :require_authority_to_manage_users
   before_filter :load_user,
     :except => [:index]
   

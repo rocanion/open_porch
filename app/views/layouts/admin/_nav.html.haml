@@ -1,6 +1,9 @@
 %ul.tabs
-  %li{:class => active_class(admin_users_path)}
-    = link_to 'Users', admin_users_path
-  %li{:class => active_class(admin_areas_path)}
-    = link_to 'Areas', admin_areas_path
+  - if current_user.has_authority_to?(:manage_users)
+    %li{:class => active_class(admin_users_path)}
+      = link_to 'Users', admin_users_path
+
+  - if current_user.has_authority_to?(:manage_areas)
+    %li{:class => active_class(admin_areas_path)}
+      = link_to 'Areas', admin_areas_path
 

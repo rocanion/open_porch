@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   
   namespace :admin do
-    get '/' => redirect('/admin/users')
+    get '/' => redirect('/admin/areas')
     resources :areas do
       member do
         get :edit_borders

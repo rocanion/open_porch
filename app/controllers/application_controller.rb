@@ -8,4 +8,8 @@ protected
     redirect_to login_path unless logged_in?
   end
   
+  def redirect_if_logged_in
+    redirect_to area_path(current_user.areas.first) if logged_in?
+  end
+  
 end

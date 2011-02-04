@@ -1,4 +1,5 @@
 class Admin::Areas::BaseController < Admin::BaseController
+  before_filter :require_authority_to_manage_areas
   before_filter :load_area
 
 protected
