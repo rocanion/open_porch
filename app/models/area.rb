@@ -55,6 +55,7 @@ class Area < ActiveRecord::Base
   
   def coordinates=(points)
     coords = points.collect{|k, v| [v[0].to_f, v[1].to_f]}
+    raise coords.to_yaml
     self.border = Polygon.from_coordinates([coords + [coords.first]])
   end
   

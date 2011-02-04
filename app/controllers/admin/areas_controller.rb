@@ -26,6 +26,7 @@ class Admin::AreasController < Admin::BaseController
   end
   
   def edit
+    # ...
   end
   
   def edit_borders
