@@ -1,3 +1,15 @@
-%h1 Join your Neighbourhood Forum
+= content_for :head do
+  = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+  = javascript_include_tag 'google_maps'
 
-= render :partial => 'address_form'
+
+= content_for :doc_ready do
+  initialize(document.getElementById("map_canvas"), #{@address.lat}, #{@address.lng});
+
+.columns
+  .left_column
+    %h2 Find your address on the map
+    = render :partial => 'address_form'
+    
+  .right_column      
+    #map_canvas{:style => 'width:260px; height:400px'}
