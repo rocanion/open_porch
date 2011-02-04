@@ -25,6 +25,7 @@ class RegistrationsController < ApplicationController
         @user.memberships.build(:area_id => @selected_area.id)
       end
     else
+      flash[:alert] = "Please enter a valid address"
       redirect_to root_path
     end
   end

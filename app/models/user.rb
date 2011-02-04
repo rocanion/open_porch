@@ -14,6 +14,12 @@ class User < ActiveRecord::Base
   wristband :has_authorities => true, :roles => ROLES
 
   # == Validations ==========================================================
+  
+  validates :first_name,
+    :presence => {:message => 'Please enter your first name'}
+  
+    validates :last_name,
+      :presence => {:message => 'Please enter your last name'}
 
   validates :email,
     :presence => {:message => 'Please enter your email address'},
@@ -47,9 +53,6 @@ class User < ActiveRecord::Base
     :presence => {
       :message => 'Please enter your full address'
     }
-  
-  validates :first_name, :last_name,
-    :presence => true
     
   # == Relationships ========================================================
   

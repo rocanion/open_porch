@@ -29,7 +29,7 @@
         %li{:id => dom_id(area), :class => (area == @selected_area ? 'selected' : '')}
           .name #{i+1}) #{area.name}
           .action
-            = link_to 'View info', ''
+            = link_to 'View info', '#'
             |
             = link_to_function 'Select this one', "select_region(#{area.id})"
 
@@ -40,7 +40,7 @@
       = f.hidden_field :lat
       = f.hidden_field :lng
       = f.fields_for :memberships do |membership|
-        = membership.select :area_id, ([@selected_area]+@areas).collect{|a| [a.name, a.id]}, {}, {:id => 'user_area_id'}
+        = membership.hidden_field :area_id, :id => 'user_area_id'
       = f.submit 'Next step'
       or
       = link_to('Previous', :back)

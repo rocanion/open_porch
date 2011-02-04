@@ -1,3 +1,5 @@
+= render(:partial => 'layouts/flash_message')
+
 = formatted_form_for @address, :url => registrations_path do |f|
   = f.text_field :address
   = f.text_field :city

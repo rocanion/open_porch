@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   
   def update
     @user.update_attributes!(params[:user])
-    redirect_to user_path
+    redirect_to(user_path, :notice => 'Your profile has been updated')
   rescue ActiveRecord::RecordInvalid
     render :action => :edit
   end

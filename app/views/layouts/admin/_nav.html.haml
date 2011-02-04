@@ -7,3 +7,7 @@
     %li{:class => active_class(admin_areas_path)}
       = link_to 'Areas', admin_areas_path
 
+  %li.right= link_to 'logout', logout_path
+  %li.right= link_to 'Your Profile', user_path(current_user)
+  
+  
