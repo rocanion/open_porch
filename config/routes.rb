@@ -12,13 +12,14 @@ Rails.application.routes.draw do
     resources :posts, :only => [:new, :create]
   end
   
-  get '/admin' => 'admin/areas#index'
   namespace :admin do
+    get '/' => redirect('/admin/users')
     resources :areas do
       collection do
         get :edit_borders
         post :bulk_update
       end
+      resources :memberships, :controller => 'areas/memberships'
     end
     resources :users
   end

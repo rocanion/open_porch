@@ -9,15 +9,19 @@ class Post < ActiveRecord::Base
   
   belongs_to :area
   belongs_to :user
+  belongs_to :issue
 
   # == Callbacks ============================================================
 
-  after_create :send_post
+  after_create :create_issue
 
   # == Instance Methods =====================================================
 
-  def send_post
-    UserMailer.new_post(self).deliver
+protected
+  def create_issue
+    if self.area.send_mode?(:immediate)
+      self.issue = self.area.issues.create(:subject => self.title)
+      self.save
+    end
   end
-  
 end

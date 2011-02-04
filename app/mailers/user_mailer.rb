@@ -8,11 +8,11 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "You have requested a new password")
   end
 
-  def new_post(post)
-    @post = post
+  def new_issue(issue)
+    @issue = issue
     mail(
-      :subject => "New post for #{post.area.name}",
-      :to => post.area.users.collect(&:email)
+      :subject => "#{issue.area.name}: #{issue.subject}",
+      :to => issue.area.users.collect(&:email)
     )
   end
   

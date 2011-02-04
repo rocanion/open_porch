@@ -2,13 +2,14 @@ class User < ActiveRecord::Base
   
   # == Constants ============================================================
   
-  ROLES = %w{admin regular_user}
+  ROLES = %w{admin regular_user ocm}
   
   # == Attributes =====================================================
   
   attr_protected :role
 
   # == Extensions ===========================================================
+
 
   wristband :has_authorities => true, :roles => ROLES
 

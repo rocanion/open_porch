@@ -4,6 +4,11 @@ class Area < ActiveRecord::Base
   
   # == Constants ============================================================
   
+  SEND_MODES = {
+    :immediate  => 0,
+    :batched    => 1
+  }.freeze
+  
   # == Extensions ===========================================================
   
   # == Relationships ========================================================
@@ -16,15 +21,20 @@ class Area < ActiveRecord::Base
     :dependent => :destroy
   has_one :issue_number,
     :dependent => :destroy
+  has_many :issues,
+    :dependent => :destroy
   
   # == Validations ==========================================================
   
   validates :name,
     :presence => {:message => 'Please enter the name of this area'}
-  # validates :slug,
-  #   :presence => true,
-  #   :uniqueness  => true
-  
+  validates :slug,
+    :presence => true,
+    :uniqueness  => true
+  validates :send_mode,
+    :presence => true,
+    :inclusion => SEND_MODES.values
+    
   # == Scopes ===============================================================
   
   scope :closest_from, lambda {|point, distance| 
@@ -67,6 +77,10 @@ class Area < ActiveRecord::Base
   
   def border_coordinates
     @border_coordinates ||= border.rings.first.points.collect{|point| "new google.maps.LatLng(#{point.x}, #{point.y})"}.join(',')
+  end
+  
+  def send_mode?(mode)
+    self.send_mode == SEND_MODES[mode]
   end
   
 protected
