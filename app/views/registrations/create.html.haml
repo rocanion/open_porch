@@ -4,7 +4,7 @@
 
 
 = content_for :doc_ready do
-  initialize(document.getElementById("map_canvas"), #{@address.lat}, #{@address.lng});
+  initialize_gmap(document.getElementById("map_canvas"), #{@address.lat}, #{@address.lng}, {}, #{@selected_area.bounds.to_json});
   add_marker(#{@address.lat}, #{@address.lng}, '#{@address.full}');
   add_region(#{@selected_area.id}, [#{@selected_area.border_coordinates}], 'selected')
   - @areas.each do |area|

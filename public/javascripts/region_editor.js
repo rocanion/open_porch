@@ -42,9 +42,18 @@
       // Setting the center of the map
       options.map_options.center = new google.maps.LatLng(options.center.lat, options.center.lng);
       
+      
       // Creating the map
       var map = new google.maps.Map(map_container.get(0), options.map_options);
       render_controls(map);
+
+      // Adjusting the zoom level if bounds were provided
+      if (options.bounds != null) {
+        map.fitBounds(new google.maps.LatLngBounds(
+          new google.maps.LatLng(options.bounds[0][0], options.bounds[0][1]),
+          new google.maps.LatLng(options.bounds[1][0], options.bounds[1][1])
+        ));
+      }
       
       // Right click to add a new point to the selected region (EDIT_MODE)
       google.maps.event.addDomListener(map, 'rightclick', function(event) {

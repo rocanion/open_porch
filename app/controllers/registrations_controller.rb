@@ -29,7 +29,7 @@ class RegistrationsController < ApplicationController
       redirect_to root_path
     end
   rescue ActiveRecord::StatementInvalid
-    flash[:alert] = "Sorry, we couldn't find any neighbourhoods close to you!"
+    flash[:alert] = "Sorry, we couldn't find the address you specified"
     render :action => :new
   end
   

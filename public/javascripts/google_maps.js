@@ -2,24 +2,43 @@ var map = null;
 var center_marker = null;
 var geocoder = new google.maps.Geocoder();
 var regions = new Array()
+var colors = {
+  red: '#aa4643',
+  blue: '#4572a7'
+}
 
-function initialize(id, center_lat, center_lng) {
-  map = new google.maps.Map(id, {
+function initialize_gmap(id, center_lat, center_lng, options, bounds) {
+  var defaults = {
     zoom: 14,
     center: new google.maps.LatLng(center_lat, center_lng),
     mapTypeControl: false,
     streetViewControl: false,
     scaleControl: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
+  }
+  var options = $.extend(defaults, options);
+  
+  map = new google.maps.Map(id, options);
+  
+  // Adjusting the zoom level if bounds were provided
+  if (bounds != null) {
+    console.log(bounds)
+    map.fitBounds(new google.maps.LatLngBounds(
+      new google.maps.LatLng(bounds[0][0], bounds[0][1]),
+      new google.maps.LatLng(bounds[1][0], bounds[1][1])
+    ));
+  }
 }
 
-function add_marker(lat, lng, title){
-  return new google.maps.Marker({
+function add_marker(lat, lng, title, options){
+  var defaults = {
     position: new google.maps.LatLng(lat, lng), 
     map: map, 
     title: title
-  });
+  }
+  var options = $.extend(defaults, options);
+  
+  return new google.maps.Marker(options);
 }
 
 function delete_marker(marker) {
@@ -50,10 +69,10 @@ function add_region(region_id, coordinates, style) {
     case 'selected':
       var polygon = new google.maps.Polygon({
         paths: coordinates,
-        strokeColor: "#FF0000",
+        strokeColor: colors.red,
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: "#FF0000",
+        fillColor: colors.red,
         fillOpacity: 0.35,
         region_id: region_id,
         area_selected: true
@@ -62,10 +81,10 @@ function add_region(region_id, coordinates, style) {
     default:
       var polygon = new google.maps.Polygon({
         paths: coordinates,
-        strokeColor: "#0000FF",
+        strokeColor: colors.blue,
         strokeOpacity: 0.8,
         strokeWeight: 2,
-        fillColor: "#6666FF",
+        fillColor: colors.blue,
         fillOpacity: 0.1,
         region_id: region_id,
         area_selected: false
@@ -96,10 +115,10 @@ function add_region(region_id, coordinates, style) {
 
 function mouseover_region(polygon) {
   polygon.setOptions({
-    strokeColor: "#FF0000",
+    strokeColor: colors.red,
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#FF0000",
+    fillColor: colors.red,
     fillOpacity: 0.35,
   });
   $('#area_' + polygon.region_id).addClass('hover');
@@ -108,10 +127,10 @@ function mouseover_region(polygon) {
 
 function mouseout_region(polygon) {
   polygon.setOptions({
-    strokeColor: "#0000FF",
+    strokeColor: colors.blue,
     strokeOpacity: 0.8,
     strokeWeight: 2,
-    fillColor: "#6666FF",
+    fillColor: colors.blue,
     fillOpacity: 0.1
   });
   $('#area_' + polygon.region_id).removeClass('hover');

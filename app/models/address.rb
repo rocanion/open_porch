@@ -34,7 +34,6 @@ class Address
   
   def closest_regions
     location = self.geolocate
-    Rails.logger.info location.to_yaml
     if location.all.length > 1 || location.street_address.nil?
       []
     else

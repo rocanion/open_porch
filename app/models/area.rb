@@ -78,6 +78,14 @@ class Area < ActiveRecord::Base
     end
   end
   
+  def bounds
+    return [] unless self.border.present?
+    [
+      [self.border.envelope.lower_corner.x, self.border.envelope.lower_corner.y],
+      [self.border.envelope.upper_corner.x, self.border.envelope.upper_corner.y]
+    ]
+  end
+  
   def border_coordinates
     @border_coordinates ||= border.rings.first.points.collect{|point| "new google.maps.LatLng(#{point.x}, #{point.y})"}.join(',')
   end

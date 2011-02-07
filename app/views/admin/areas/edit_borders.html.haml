@@ -12,10 +12,10 @@
         center: {
           lat: #{@selected_area.center.x}, 
           lng: #{@selected_area.center.y}
-        }
+        },
+        bounds: #{@selected_area.bounds.to_json}
       });
     });
-
 
 #map_canvas
   .region_details
