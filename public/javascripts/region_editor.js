@@ -175,12 +175,13 @@
       }
       
       // mouseover event
-      google.maps.event.addListener(polygon, 'mouseover', function() {
+      google.maps.event.addListener(polygon, 'mouseover', function(event) {
         if(!polygon.is_selected && options.mode == EDIT_MODE) {
           set_polygon_style(polygon, 'mouseover');
         }
-        $('.region_details').html(options.regions[polygon.region_index].name)
+        $('.region_details').html(options.regions[polygon.region_index].name);
       });
+
       // mouseout event
       google.maps.event.addListener(polygon, 'mouseout', function() {
         if(!polygon.is_selected && options.mode == EDIT_MODE) {
@@ -202,6 +203,7 @@
           }
         }
       });
+      
     }
 
     // -------------------------
@@ -243,20 +245,27 @@
     // Adds handlers to each vertex of a polygon so it can be edited
     // -------------------------
     function prepare_for_edit(polygon) {
-      polygon.binder = new MVCArrayBinder(polygon, options.save_btn, options.reset_btn);
-
       // Add vertex handlers to the polygon
       polygon.getPath().forEach(function(latlng, index){
-        var vertex = new VertexWidget(map, polygon, index);
+        var vertex = new BorderHandler(map, polygon, index, options);
         options.vertices.push(vertex);
         
         // Shift + click to delete this vertex
         google.maps.event.addDomListener(vertex.marker, 'click', function(event) {
           if(event.shiftKey) {
             delete_point(polygon, index);
+          // [TODO] Finish region snap
+          // } else {
+          //   if(vertex.circle == null) {
+          //     vertex.create_circle();
+          //   } else {
+          //     vertex.delete_circle();
+          //   }
           }
         });
+
       });
+
       set_polygon_style(polygon, 'selected', { is_selected: true });
       options.selected_polygon = polygon;
     }
@@ -365,31 +374,47 @@
       );
     }
 
+
+    
     // -------------------------
     // Adds a new point to the selected polygon
     // -------------------------
     function add_new_point_to_polygon(latLng) {
       var polygon = options.selected_polygon;
-      
-      // Collect the distances between the new point and every polygon vertex
-      var distances = new Array();
-      polygon.getPath().forEach(function(poly_latLng, index){
-        distances.push({
-          index: index, 
-          distance: google.maps.geometry.spherical.computeDistanceBetween(latLng, poly_latLng)
-        });
-      });
+      var path = polygon.getPath();
+      var distance = {value: 10000, points: null};
+      var point_indexes = null;
+      var poly = null;
+      var flightPlanCoordinates = [
+        path.getAt(0),
+        path.getAt(1)
+      ];
 
-      // Sort the distances
-      distances.sort(function(a,b){
-        return a.distance - b.distance;
+      // Collect the distances between the new point and every polygon vertex
+      path.forEach(function(poly_latLng, index){
+        points = [index, index + 1];
+        if(index + 1 >= path.getLength()) {
+          points = [index, 0];
+        }
+        p1 = path.getAt(points[0]);
+        p2 = path.getAt(points[1]);
+        d = dotLineLength(latLng.lat(), latLng.lng(), p1.lat(), p1.lng(), p2.lat(), p2.lng(), true);
+        if(d < distance.value) {
+          distance = {value: d, points: points};
+        }
       });
       
       var coordinates = new Array();
       var added_new_coordinate = false;
-      polygon.getPath().forEach(function(poly_latLng, index){
+      path.forEach(function(poly_latLng, index){
         coordinates.push(poly_latLng);
-        if(!added_new_coordinate && (index == distances[0].index || index == distances[1].index)) {
+
+        points = [index, index + 1];
+        if(index + 1 >= path.getLength()) {
+          points = [index, 0];
+        }
+  
+        if(!added_new_coordinate && (points[0] == distance.points[0] && points[1] == distance.points[1])) {
           coordinates.push(latLng);
           added_new_coordinate = true;
         }
@@ -398,6 +423,36 @@
       set_polygon_changed_status(polygon, true)
       delete_vertices();
       prepare_for_edit(polygon)
+
+
+      
+      // // Collect the distances between the new point and every polygon vertex
+      // var distances = new Array();
+      // polygon.getPath().forEach(function(poly_latLng, index){
+      //   distances.push({
+      //     index: index, 
+      //     distance: google.maps.geometry.spherical.computeDistanceBetween(latLng, poly_latLng)
+      //   });
+      // });
+      // 
+      // // Sort the distances
+      // distances.sort(function(a,b){
+      //   return a.distance - b.distance;
+      // });
+      // 
+      // var coordinates = new Array();
+      // var added_new_coordinate = false;
+      // polygon.getPath().forEach(function(poly_latLng, index){
+      //   coordinates.push(poly_latLng);
+      //   if(!added_new_coordinate && (index == distances[0].index || index == distances[1].index)) {
+      //     coordinates.push(latLng);
+      //     added_new_coordinate = true;
+      //   }
+      // });
+      // polygon.setPath(coordinates);
+      // set_polygon_changed_status(polygon, true)
+      // delete_vertices();
+      // prepare_for_edit(polygon)
     }
     
     // -------------------------
@@ -471,57 +526,121 @@
  *    {int} index: The index of the point on the polygon to bind to
  * Ref: http://code.google.com/apis/maps/articles/mvcfun.html
  --------------------------------------------------------------*/
-function VertexWidget(map, polygon, index) {
+function BorderHandler(map, polygon, index, options) {
+  var me = this;
+  this.map = map;
+  this.circle = null;
   this.set('map', map);
   this.set('position', polygon.getPath().getAt(index));
-  
-  var marker = new google.maps.Marker({
-    draggable: true,
-    title: 'Move me!'
+  this.set('marker', new google.maps.Marker({draggable: true,  title: 'index: '+index}));
+  this.marker.bindTo('map', this);
+  this.marker.bindTo('position', this)
+
+  google.maps.event.addListener(this.marker, 'drag', function() {
+    if(polygon.has_changed == false) {
+      polygon.has_changed = true;
+      options.save_btn.removeClass('disabled');
+      options.reset_btn.removeClass('disabled');
+    }
+    // update the polygon vertex
+    polygon.getPath().setAt(index, this.get('position'));
+    
+    // Update the center of the circle
+    if(me.circle != null) {
+      me.circle.set('center', this.get('position'))
+    }
   });
-  this.set('marker', marker);
-
-  // Bind the marker map property to the VertexWidget map property
-  marker.bindTo('map', this);
-  marker.bindTo('rightclick', this);
-
-  // Bind the marker position property to the polygon binder
-  marker.bindTo('position', polygon.binder, index.toString());
 }
-VertexWidget.prototype = new google.maps.MVCObject();
 
+BorderHandler.prototype = new google.maps.MVCObject();
+
+BorderHandler.prototype.create_circle = function(){
+  if(this.circle == null) {
+    this.circle = new RadiusWidget();
+    this.circle.bindTo('map', this);
+    this.circle.bindTo('center', this, 'position');
+    this.bindTo('distance', this.circle);
+    this.bindTo('bounds', this.circle);
+  }
+}
+
+BorderHandler.prototype.delete_circle = function(){
+  if(this.circle != null) {
+    this.circle.unbind('map');
+    this.circle.circle.setMap(null);
+    this.circle.sizer.setMap(null);
+    this.circle = null;
+  };
+}
 
 
 /* --------------------------------------------------------------
- * Use bindTo to allow dynamic drag of markers to refresh poly.
- * Ref: http://code.google.com/apis/maps/articles/mvcfun.html
+ * A radius widget that adds a circle to a map and centers on a marker.
  --------------------------------------------------------------*/
-function MVCArrayBinder(polygon, save_btn, reset_btn){
-  this.polygon_ = polygon;
-  this.array_ = polygon.getPath();
-  this.save_btn_ = save_btn;
-  this.reset_btn_ = reset_btn;
+function RadiusWidget() {
+  this.circle = new google.maps.Circle({
+    strokeWeight: 2
+  });
+  this.set('distance', 1);
+  this.bindTo('bounds', this.circle);
+  this.circle.bindTo('center', this);
+  this.circle.bindTo('map', this);
+  this.circle.bindTo('radius', this);
+  this.addSizer_();
 }
+RadiusWidget.prototype = new google.maps.MVCObject();
 
-MVCArrayBinder.prototype = new google.maps.MVCObject();
+// Update the radius when the distance has changed.
+RadiusWidget.prototype.distance_changed = function() {
+  this.set('radius', this.get('distance') * 1000);
+};
 
-MVCArrayBinder.prototype.get = function(key) {
-  if (!isNaN(parseInt(key))){
-    return this.array_.getAt(parseInt(key));
-  } else {
-    this.array_.get(key);
-  }
-}
+RadiusWidget.prototype.addSizer_ = function() {
+  var me = this;
+  this.sizer = new google.maps.Marker({
+    draggable: true,
+    title: 'Drag me!'
+  });
 
-MVCArrayBinder.prototype.set = function(key, val) {
-  if(this.polygon_.has_changed == false) {
-    this.polygon_.has_changed = true;
-    this.save_btn_.removeClass('disabled');
-    this.reset_btn_.removeClass('disabled');
+  this.sizer.bindTo('map', this);
+  this.sizer.bindTo('position', this, 'sizer_position');
+
+  google.maps.event.addListener(this.sizer, 'drag', function() {
+    var pos = me.get('sizer_position');
+    var center = me.get('center');
+    var distance = google.maps.geometry.spherical.computeDistanceBetween(center, pos) / 1000
+    me.set('distance', distance);
+  });
+};
+
+RadiusWidget.prototype.center_changed = function() {
+  var bounds = this.get('bounds');
+
+  // Bounds might not always be set so check that it exists first.
+  if (bounds) {
+    var lng = bounds.getNorthEast().lng();
+
+    // Put the sizer at center, right on the circle.
+    var position = new google.maps.LatLng(this.get('center').lat(), lng);
+    this.set('sizer_position', position);
   }
-  if (!isNaN(parseInt(key))){
-    this.array_.setAt(parseInt(key), val);
-  } else {
-    this.array_.set(key, val);
+};
+
+dotLineLength = function(x, y, x0, y0, x1, y1, o){
+  function lineLength(x, y, x0, y0){
+    return Math.sqrt((x -= x0) * x + (y -= y0) * y);
   }
-}
+  if(o && !(o = function(x, y, x0, y0, x1, y1){
+    if(!(x1 - x0)) return {x: x0, y: y};
+    else if(!(y1 - y0)) return {x: x, y: y0};
+    var left, tg = -1 / ((y1 - y0) / (x1 - x0));
+    return {x: left = (x1 * (x * tg - y + y0) + x0 * (x * - tg + y - y1)) / (tg * (x1 - x0) + y0 - y1), y: tg * left - tg * x + y};
+  }(x, y, x0, y0, x1, y1), o.x >= Math.min(x0, x1) && o.x <= Math.max(x0, x1) && o.y >= Math.min(y0, y1) && o.y <= Math.max(y0, y1))){
+    var l1 = lineLength(x, y, x0, y0), l2 = lineLength(x, y, x1, y1);
+    return l1 > l2 ? l2 : l1;
+  }
+  else {
+    var a = y0 - y1, b = x1 - x0, c = x0 * y1 - y0 * x1;
+    return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
+  }
+};

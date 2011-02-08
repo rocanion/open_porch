@@ -6,7 +6,7 @@ class Admin::AreasController < Admin::BaseController
     :except => [:index, :new, :create, :edit_borders, :bulk_update]
     
   def index
-    @areas = Area.all
+    @areas = Area.order(:name).all
   end
   
   def new

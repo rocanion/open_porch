@@ -1,0 +1,11 @@
+!!! 5
+%html{:style => 'height: 100%'}
+  %head
+    %meta{"http-equiv" => "Content-Type", "content" => "text/html;charset=utf-8"}/
+    = render(:partial => 'layouts/head')
+
+  %body{:style => 'height: 100%'}
+    .wrapper{:class => "#{params[:controller]}_#{params[:action]}".idify}
+      = yield
+
+
