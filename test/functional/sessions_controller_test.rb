@@ -3,10 +3,16 @@ require 'test_helper'
 class SessionsControllerTest < ActionController::TestCase
   def setup
     @regular_user = a User
-    @regular_user.update_attribute(:role, 'regular_user')
     assert_created @regular_user
-    
+
+    @regular_user.update_attribute(:role, 'regular_user')
     assert !@regular_user.is_admin?
+
+    area = an Area
+    assert_created area
+
+    @regular_user.areas << area
+    assert_equal area, @regular_user.areas.first
   end
 
   # >> Login -----------------------------------------------------------
@@ -51,7 +57,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal @controller.current_user, @regular_user
 
     get :new
-    assert_redirected_to user_path(@regular_user)
+    assert_redirected_to user_path
   end
   
   def test_create_redirects_if_logged_in
@@ -61,7 +67,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal @controller.current_user, @regular_user
     
     post :create, :session_user => { :email => @regular_user.email, :password => @regular_user.password }
-    assert_redirected_to user_path(@regular_user)
+    assert_redirected_to user_path
   end
   
   # >> Logout -----------------------------------------------------------

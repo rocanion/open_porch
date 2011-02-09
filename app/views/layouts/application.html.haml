@@ -7,6 +7,8 @@
   %body
     .wrapper{:class => "#{params[:controller]}_#{params[:action]}".idify}
       .main_content
+        - unless params[:controller] == 'registrations'
+          = render(:partial => 'layouts/flash_message')
         = yield
   
       = render(:partial => 'layouts/footer')

@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   resources :registrations
   resource  :user
   
-  resources :areas do
+  resources :areas, :only => :show do
     resources :posts, :only => [:new, :create]
   end
   
   namespace :admin do
-    get '/' => redirect('/admin/users')
+    get '/' => redirect('/admin/areas')
     resources :areas do
       resources :issues do
         member do
@@ -21,10 +21,13 @@ Rails.application.routes.draw do
           post :remove_posts
         end
       end
-      collection do
+      member do
         get :edit_borders
+      end
+      collection do
         post :bulk_update
       end
+      resources :memberships, :controller => 'areas/memberships'
     end
     resources :users
     resources :posts

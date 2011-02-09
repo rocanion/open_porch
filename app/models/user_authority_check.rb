@@ -1,7 +1,14 @@
 class UserAuthorityCheck < AuthorityCheck
-  def wear_shoes?
+  
+  def manage_users?
     unless (@user.is_admin?)
-      fail!("Only people with names that start with 'A' can wear shoes.")
+      fail!("You don't have permission do manage users.") 
+    end
+  end
+  
+  def manage_areas?
+    unless (@user.is_admin? || @user.is_content_manager?)
+      fail!("You don't have permission do manage users.") 
     end
   end
 end

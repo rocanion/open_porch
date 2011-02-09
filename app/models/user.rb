@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   
   # == Constants ============================================================
   
-  ROLES = %w{admin regular_user}
+  ROLES = %w{admin regular_user content_manager}
   
   # == Attributes =====================================================
   
@@ -10,9 +10,16 @@ class User < ActiveRecord::Base
 
   # == Extensions ===========================================================
 
+
   wristband :has_authorities => true, :roles => ROLES
 
   # == Validations ==========================================================
+  
+  validates :first_name,
+    :presence => {:message => 'Please enter your first name'}
+  
+    validates :last_name,
+      :presence => {:message => 'Please enter your last name'}
 
   validates :email,
     :presence => {:message => 'Please enter your email address'},
@@ -46,9 +53,6 @@ class User < ActiveRecord::Base
     :presence => {
       :message => 'Please enter your full address'
     }
-  
-  validates :first_name, :last_name,
-    :presence => true
     
   # == Relationships ========================================================
   

@@ -3,5 +3,6 @@
 = f.text_area :description
 = f.text_field :city
 = f.text_field :state
+= f.check_box :published
 = f.select :send_mode, Area::SEND_MODES, :desc => 'Issues send mode. Immediate means lorem ipsum dolor sit amet and Batched means officia deserunt.'
 = f.submit 'Save', :cancel_url => link_to('cancel', admin_areas_path)

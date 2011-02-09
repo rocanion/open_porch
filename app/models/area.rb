@@ -30,10 +30,13 @@ class Area < ActiveRecord::Base
     :presence => {:message => 'Please enter the name of this area'}
   validates :slug,
     :presence => true,
-    :uniqueness  => true
+    :uniqueness  => true,
+    :if => :published?
+  
   validates :send_mode,
     :presence => true,
-    :inclusion => SEND_MODES.values
+    :inclusion => SEND_MODES.values,
+    :if => :published?
     
   # == Scopes ===============================================================
   
@@ -55,11 +58,6 @@ class Area < ActiveRecord::Base
     self.border = Polygon.from_coordinates([coords + [coords.first]])
   end
   
-  def coordinates
-    if self.border.present?
-      self.border.first.points.collect{|p| "#{p.x},#{p.y}"}.join("\r\n")
-    end
-  end
   
   # Returns an array with coordinates
   # removing the last (repeated) point
@@ -78,6 +76,14 @@ class Area < ActiveRecord::Base
     if self.border.present?
       border.envelope.center
     end
+  end
+  
+  def bounds
+    return [] unless self.border.present?
+    [
+      [self.border.envelope.lower_corner.x, self.border.envelope.lower_corner.y],
+      [self.border.envelope.upper_corner.x, self.border.envelope.upper_corner.y]
+    ]
   end
   
   def border_coordinates

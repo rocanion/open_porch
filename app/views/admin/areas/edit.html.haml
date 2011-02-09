@@ -1,5 +1,5 @@
 .columns
-  %h1 Edit Area
+  %h1 Edit #{@area.name}
 
   .left_column
 
@@ -18,6 +18,5 @@
         initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
         add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
 
-    
       #map_canvas{:style => 'width:260px; height:400px; float: right'}
   

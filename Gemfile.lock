@@ -68,7 +68,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mocha (0.9.10)
+    mocha (0.9.11)
       rake
     pg (0.10.1)
     polyglot (0.3.1)

@@ -5,6 +5,7 @@ class AreasController < ApplicationController
     :only => :show
 
   def show
+    # ...
   end
 
 protected

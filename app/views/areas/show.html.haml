@@ -38,6 +38,6 @@
 
 
       = content_for :doc_ready do
-        initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
+        initialize_gmap(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y}, {}, #{@area.bounds.to_json});
         add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
       #map_canvas{:style => 'width:280px; height:400px'}

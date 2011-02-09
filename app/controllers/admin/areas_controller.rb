@@ -1,11 +1,12 @@
 class Admin::AreasController < Admin::BaseController
+  before_filter :require_authority_to_manage_areas
   before_filter :build_area,
     :only => [:new, :create]
   before_filter :load_area,
     :except => [:index, :new, :create, :edit_borders, :bulk_update]
     
   def index
-    @areas = Area.all
+    @areas = Area.order(:name).all
   end
   
   def new
@@ -13,7 +14,14 @@ class Admin::AreasController < Admin::BaseController
   
   def create
     @area.save!
-    redirect_to([:admin, :areas], :notice => 'Area has been successfully created.')
+    respond_to do |format|
+      format.html do
+        redirect_to([:admin, :areas], :notice => 'Area has been successfully created.')
+      end
+      format.js do
+        render :text => @area.id
+      end
+    end
   rescue ActiveRecord::RecordInvalid
     render :action => :new
   end
@@ -22,10 +30,12 @@ class Admin::AreasController < Admin::BaseController
   end
   
   def edit
+    # ...
   end
   
   def edit_borders
     @areas = Area.all
+    @selected_area = @areas.detect{|area| area.id == params[:id].to_i}
   end
   
   def update
@@ -41,7 +51,7 @@ class Admin::AreasController < Admin::BaseController
       area.coordinates = area_params[:coordinates]
       area.save!
     end
-    render :nothing => true, :status => :ok
+    render :nothing => true
   rescue ActiveRecord::RecordInvalid
     render :nothing => true, :status => :bad_request
   end

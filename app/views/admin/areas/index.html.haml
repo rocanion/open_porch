@@ -1,18 +1,19 @@
 .columns
   %h2 Areas
-  %h5
-    = link_to 'Create new area', [:new, :admin, :area]
-    = link_to 'Edit borders', edit_borders_admin_areas_path
-  %table
-    %tr
-      %th Name
-      %th 
+  %ul.list
     - @areas.each do |area|
-      %tr
-        %td
-          = link_to admin_area_path(area) do
-            #{area.name} in #{area.city}, #{area.state}
-        %td
-          = link_to 'edit', [:edit, :admin, area]
+      %li
+        %h4
+          - if !area.published?
+            %em [draft]
+          = link_to area.name, [:edit, :admin, area]
+          - if area.city.present?
+            in #{area.city}
+          - if area.state.present?
+            , #{area.state}
+        .action
+          = link_to 'edit borders', [:edit_borders, :admin, area]
           |
           = link_to 'delete', admin_area_path(area), :method => :delete, :confirm => 'Are you sure you want to delete this area?'
+          |
+          = link_to 'view users', admin_area_memberships_path(area)

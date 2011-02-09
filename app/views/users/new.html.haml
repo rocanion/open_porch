@@ -20,8 +20,10 @@
 
 
     = content_for :doc_ready do
-      initialize(document.getElementById("map_canvas"), #{@user.lat}, #{@user.lng});
+      initialize_gmap(document.getElementById("map_canvas"), #{@user.lat}, #{@user.lng}, {}, #{@area.bounds.to_json});
       add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
+      add_marker(#{@user.lat}, #{@user.lng}, '#{@user.full_address}');
+
     #map_canvas{:style => 'width:500px; height:300px'}
 
   .right_column
