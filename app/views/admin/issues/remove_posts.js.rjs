@@ -1,0 +1,1 @@
+page << "move_posts_to(#{params[:posts].to_json}, '#new_posts')"

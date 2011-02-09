@@ -15,6 +15,10 @@ class Post < ActiveRecord::Base
 
   after_create :create_issue
 
+  # == Scope ================================================================
+  
+  scope :in_issue, lambda { |issue| where(:issue_id => issue) }
+
   # == Instance Methods =====================================================
 
 protected

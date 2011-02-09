@@ -1,22 +1,23 @@
-%h1 Edit Area
+.columns
+  %h1 Edit Area
 
-.left_column
+  .left_column
 
-  = formatted_form_for @area, :url => [:admin, @area] do |f|
-    = render :partial => 'form', :locals => {:f => f}
+    = formatted_form_for @area, :url => [:admin, @area] do |f|
+      = render :partial => 'form', :locals => {:f => f}
   
   
-.right_column
+  .right_column
 
-  - if @area.border.present?
-    = content_for :head do
-      = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
-      = javascript_include_tag 'google_maps'
+    - if @area.border.present?
+      = content_for :head do
+        = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
+        = javascript_include_tag 'google_maps'
     
-    = content_for :doc_ready do
-      initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
-      add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
+      = content_for :doc_ready do
+        initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
+        add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
 
     
-    #map_canvas{:style => 'width:260px; height:400px; float: right'}
+      #map_canvas{:style => 'width:260px; height:400px; float: right'}
   

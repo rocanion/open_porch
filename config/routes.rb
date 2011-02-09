@@ -15,12 +15,19 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => redirect('/admin/users')
     resources :areas do
+      resources :issues do
+        member do
+          post :add_posts
+          post :remove_posts
+        end
+      end
       collection do
         get :edit_borders
         post :bulk_update
       end
     end
     resources :users
+    resources :posts
   end
   
   root :to => 'registrations#index'

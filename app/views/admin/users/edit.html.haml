@@ -1,4 +1,6 @@
-%h1 Edit User
+.columns
 
-= formatted_form_for @user, :url => [:admin, @user] do |f|
-  = render :partial => 'form', :locals => {:f => f}
+  %h1 Edit User
+
+  = formatted_form_for @user, :url => [:admin, @user] do |f|
+    = render :partial => 'form', :locals => {:f => f}

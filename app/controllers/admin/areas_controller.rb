@@ -18,6 +18,9 @@ class Admin::AreasController < Admin::BaseController
     render :action => :new
   end
   
+  def show
+  end
+  
   def edit
   end
   

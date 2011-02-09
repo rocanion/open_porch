@@ -1,0 +1,21 @@
+.columns.half
+  %h2 Editing Issue ##{@issue.number}
+  %h3= @issue.subject
+
+  .left_column
+    - posts = @area.posts.in_issue(nil)
+    .posts#new_posts
+      .header
+        .select= check_box_tag "select_all", nil, false, { :id => nil }
+        .text New Messages
+      = render :partial => 'post', :collection => posts
+    = submit_tag 'Add', :id => 'add_posts', :style => posts.size.zero?? 'display:none' : nil, 'data-issue' => @issue.id, 'data-area' => @area.id
+
+  .right_column
+    - posts = @area.posts.in_issue(@issue)
+    .posts#issue_posts
+      .header
+        .select= check_box_tag 'select_all', nil, false, { :id => nil }
+        .text Prepared Messages
+      = render :partial => 'post', :collection => posts
+    = submit_tag 'Remove', :id => 'remove_posts', :style => posts.size.zero?? 'display:none' : nil, 'data-issue' => @issue.id, 'data-area' => @area.id

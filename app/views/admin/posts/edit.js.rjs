@@ -1,0 +1,1 @@
+page <<  "$('##{dom_id(@post, :content)}').html('#{escape_javascript(render(:partial => 'edit'))}')"

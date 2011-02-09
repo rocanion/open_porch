@@ -1,0 +1,1 @@
+page <<  "$('##{dom_id(@post)}').replaceWith('#{escape_javascript(render(:partial => 'admin/issues/post', :object => @post))}')"
