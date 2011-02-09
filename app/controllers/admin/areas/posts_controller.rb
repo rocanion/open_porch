@@ -1,4 +1,4 @@
-class Admin::PostsController < Admin::BaseController
+class Admin::Areas::PostsController < Admin::Areas::BaseController
   respond_to :js
   before_filter :load_post
   
@@ -14,7 +14,7 @@ class Admin::PostsController < Admin::BaseController
 
 protected
   def load_post
-    @post = Post.find(params[:id])
+    @post = @area.posts.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render :nothing => true, :status => 404
   end

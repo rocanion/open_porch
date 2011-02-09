@@ -1,5 +1,4 @@
-class Admin::IssuesController < Admin::BaseController
-  before_filter :load_area
+class Admin::Areas::IssuesController < Admin::Areas::BaseController
   before_filter :load_issue,
     :except => [:index, :new]
   
