@@ -10,7 +10,7 @@
       %th Sent at
     - @area.issues.each do |issue|
       %tr
-        %td= link_to issue.subject, edit_admin_area_issue_path(@area, issue)
+        %td= link_to "Issue ##{issue.number}", edit_admin_area_issue_path(@area, issue)
         %td
           - if issue.scheduled_at.present?
             = issue.scheduled_at.to_s(:long)

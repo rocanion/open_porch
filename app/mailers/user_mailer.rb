@@ -11,7 +11,7 @@ class UserMailer < ActionMailer::Base
   def new_issue(issue)
     @issue = issue
     mail(
-      :subject => "#{issue.area.name}: #{issue.subject}",
+      :subject => "[OpenPorch] #{issue.area.name}: Issue ##{issue.number}",
       :to => issue.area.users.collect(&:email)
     )
   end

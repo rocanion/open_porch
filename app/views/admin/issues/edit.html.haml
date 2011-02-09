@@ -1,6 +1,5 @@
 .columns.half
   %h2 Editing Issue ##{@issue.number}
-  %h3= @issue.subject
 
   .left_column
     - posts = @area.posts.in_issue(nil)

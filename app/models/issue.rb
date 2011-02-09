@@ -2,7 +2,7 @@ class Issue < ActiveRecord::Base
   
   # == Validations ==========================================================
   
-  validates :subject, :area_id,
+  validates :area_id,
     :presence => true
   
   validates :number,

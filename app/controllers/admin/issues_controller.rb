@@ -8,7 +8,7 @@ class Admin::IssuesController < Admin::BaseController
   end
   
   def new
-    @issue = @area.issues.create!(:subject => 'Untitled')
+    @issue = @area.issues.create!
     redirect_to edit_admin_area_issue_path(@area, @issue)
   end
 

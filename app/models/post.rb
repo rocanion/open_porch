@@ -24,7 +24,7 @@ class Post < ActiveRecord::Base
 protected
   def create_issue
     if self.area.send_mode?(:immediate)
-      self.issue = self.area.issues.create(:subject => self.title)
+      self.issue = self.area.issues.create
       self.save
     end
   end
