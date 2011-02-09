@@ -1,0 +1,20 @@
+.post[post]
+  .select= check_box_tag 'posts[]', post.id, false, {:id => nil}
+  .content{:id => dom_id(post, :content)}
+    %h6= link_to post.title, ''
+    .meta
+      Posted by
+      - if post.user.present?
+        = mail_to(post.user.email, post.user.full_name)
+      - else
+        (user removed)
+      = time_ago_in_words(post.created_at)
+      ago.
+    .text{:style => 'display: none'}
+      = simple_format post.content
+      = link_to 'edit', edit_admin_area_post_path(@area, post), :remote => true
+  .status
+    - if post.reviewed?
+      = image_tag('icons/post_reviewed.png', :title => "Reviewed by #{post.reviewed_by.full_name}")
+    - else
+      = image_tag('icons/post_new.png')

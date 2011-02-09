@@ -15,6 +15,13 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => redirect('/admin/areas')
     resources :areas do
+      resources :issues, :controller => 'areas/issues' do
+        member do
+          post :add_posts
+          post :remove_posts
+        end
+      end
+      resources :posts, :controller => 'areas/posts'
       member do
         get :edit_borders
       end

@@ -9,7 +9,6 @@
       .main_content
         = render :partial => 'layouts/flash_message'
         = render :partial => 'layouts/admin/nav'
-        .columns
-          = yield
+        = yield
   
       = render(:partial => 'layouts/footer')

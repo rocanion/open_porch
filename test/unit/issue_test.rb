@@ -5,7 +5,6 @@ class IssueTest < ActiveSupport::TestCase
   def test_create_defaults
     area = an Area
     issue = Issue.create(
-      :subject => 'Test issue',
       :area => area,
       :scheduled_at => 2.days.from_now
     )
@@ -15,7 +14,7 @@ class IssueTest < ActiveSupport::TestCase
   
   def test_create_requirements
     issue = Issue.create(:scheduled_at => 2.days.ago)
-    assert_errors_on issue, :subject, :area_id, :scheduled_at
+    assert_errors_on issue, :area_id, :scheduled_at
     assert issue.errors[:scheduled_at].include?("can't be in the past.")
   end
   
