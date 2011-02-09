@@ -6,6 +6,7 @@ class Admin::Areas::PostsController < Admin::Areas::BaseController
   end
   
   def update
+    @post.reviewed_by = current_user
     @post.update_attributes(params[:post])
   end
   

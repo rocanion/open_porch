@@ -10,7 +10,10 @@ class Post < ActiveRecord::Base
   belongs_to :area
   belongs_to :user
   belongs_to :issue
-
+  belongs_to :reviewed_by,
+    :class_name => 'User',
+    :foreign_key => :reviewed_by_id
+  
   # == Callbacks ============================================================
 
   after_create :create_issue
@@ -20,6 +23,10 @@ class Post < ActiveRecord::Base
   scope :in_issue, lambda { |issue| where(:issue_id => issue) }
 
   # == Instance Methods =====================================================
+
+  def reviewed?
+    self.reviewed_by.present?
+  end
 
 protected
   def create_issue
