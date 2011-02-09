@@ -15,4 +15,12 @@
         |
         = link_to 'delete', admin_area_path(area), :method => :delete, :confirm => 'Are you sure you want to delete this area?'
         |
-        = link_to 'view users', admin_area_memberships_path(area)
+        = link_to "view users (#{area.memberships_count})", admin_area_memberships_path(area)
+        | 
+        Households: #{area.households}
+        | 
+        Issues: #{area.issues_count}
+        - if last_issue = area.issues.last_sent.first
+          | 
+          Last issue sent on: #{last_issue.sent_at}
+        

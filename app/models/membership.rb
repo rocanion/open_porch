@@ -8,6 +8,7 @@ class Membership < ActiveRecord::Base
   # == Relationships ========================================================
   
   belongs_to :user
-  belongs_to :area
+  belongs_to :area, 
+    :counter_cache => true
   
 end
