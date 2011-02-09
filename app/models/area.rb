@@ -56,7 +56,7 @@ class Area < ActiveRecord::Base
     connection.select_rows("
       SELECT area_id, COUNT(posts.id) 
       FROM posts LEFT JOIN areas ON (posts.area_id = areas.id)
-      WHERE reviewed_by_id IS NULL
+      WHERE reviewed_by IS NULL
       GROUP BY area_id
     ").inject({}){|h, count| h[count[0].to_i] = count[1].to_i; h}
   end

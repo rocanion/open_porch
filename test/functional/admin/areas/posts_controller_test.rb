@@ -23,7 +23,7 @@ class Admin::Areas::PostsControllerTest < ActionController::TestCase
     assert post.reviewed_by.nil?
     xhr :put, :update, :area_id => post.area, :id => post, :post => {:title => 'New Title'}
     post.reload
-    assert_equal @controller.current_user, post.reviewed_by
+    assert_equal @controller.current_user.full_name, post.reviewed_by
     assert_response :success
   end
   

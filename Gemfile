@@ -10,6 +10,7 @@ gem 'geokit', '1.5.0'
 gem 'active_link_to', '0.0.6'
 gem "meta_where", '1.0.1'
 gem "meta_search", '1.0.1'
+gem "will_paginate", "~> 3.0.pre2"
 
 group :test do
   gem "bundler"

@@ -40,7 +40,7 @@ class Admin::AreasController < Admin::BaseController
   
   def edit_borders
     @areas = Area.all
-    @selected_area = @areas.detect{|area| area.id == params[:id].to_i}
+    @area = @selected_area = @areas.detect{|area| area.id == params[:id].to_i}
   end
   
   def update

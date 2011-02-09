@@ -1,11 +1,15 @@
 .columns
   = render :partial => 'admin/areas/nav'
   
-  %h2 Members of #{@area.name} in #{@area.city}, #{@area.state}
+  %h2 Members
   
-  %ul.list
+  %table
+    %tr
+      %th Name
+      %th Email
+      
     - @memberships.each do |membership|
-      %li
-        %h4 
-          =link_to membership.user.full_name, edit_admin_user_path(membership.user,  :area_id =>  @area.id)
-        .action
+      %tr
+        %td=link_to membership.user.full_name, edit_admin_user_path(membership.user,  :area_id =>  @area.id)
+        %td= membership.user.email
+  

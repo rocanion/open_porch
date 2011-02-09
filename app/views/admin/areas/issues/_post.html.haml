@@ -15,6 +15,6 @@
       = link_to 'edit', edit_admin_area_post_path(@area, post), :remote => true
   .status
     - if post.reviewed?
-      = image_tag('icons/post_reviewed.png', :title => "Reviewed by #{post.reviewed_by.full_name}")
+      = image_tag('icons/post_reviewed.png', :title => "Reviewed by #{post.reviewed_by}")
     - else
       = image_tag('icons/post_new.png')
