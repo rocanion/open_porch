@@ -1,4 +1,0 @@
-= formatted_form_for @post, :url => admin_post_path(@post), :remote => true do |f|
-  = f.text_field :title
-  = f.text_area :content
-  = f.submit 'Save', :cancel_url => link_to('cancel', admin_post_path(@post), :remote => true)

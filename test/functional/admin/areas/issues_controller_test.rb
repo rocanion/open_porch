@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Admin::IssuesControllerTest < ActionController::TestCase
+class Admin::Areas::IssuesControllerTest < ActionController::TestCase
   
   def setup
     login_as(:admin)

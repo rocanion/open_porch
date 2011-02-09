@@ -12,6 +12,9 @@
       ago.
     .text{:style => 'display: none'}
       = simple_format post.content
-      = link_to 'edit', edit_admin_post_path(post), :remote => true
+      = link_to 'edit', edit_admin_area_post_path(@area, post), :remote => true
   .status
-    [rev]
+    - if post.reviewed?
+      = image_tag('icons/post_reviewed.png', :title => "Reviewed by #{post.reviewed_by.full_name}")
+    - else
+      = image_tag('icons/post_new.png')
