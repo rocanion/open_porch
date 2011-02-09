@@ -1,27 +1,21 @@
 .columns
   %h2 Areas
-  %ul.list
+  %table
+    %tr
+      %th= sort_link @search, :name
+      %th= sort_link @search, :city, 'Location'
+      %th= sort_link @search, :memberships_count, 'Users'
+      %th= sort_link @search, :households
+      %th= sort_link @search, :issues_count, 'Issues'
+
     - @areas.each do |area|
-      %li
-        %h4
+      %tr
+        %td
           - if !area.published?
             %em [draft]
-          = link_to area.name, [:edit, :admin, area]
-          - if area.city.present?
-            in #{area.city}
-          - if area.state.present?
-            , #{area.state}
-        .action
-          = link_to 'edit borders', [:edit_borders, :admin, area]
-          |
-          = link_to 'delete', admin_area_path(area), :method => :delete, :confirm => 'Are you sure you want to delete this area?'
-          |
-          = link_to "view users (#{area.memberships_count})", admin_area_memberships_path(area)
-          | 
-          Households: #{area.households}
-          | 
-          Issues: #{area.issues_count}
-          - if last_issue = area.issues.last_sent.first
-            | 
-            Last issue sent on: #{last_issue.sent_at}
-        
+          = link_to area.name, [:admin, area]
+        %td= area.location
+        %td= area.memberships_count
+        %td= area.households
+        %td= area.issues_count
+              
