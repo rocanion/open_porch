@@ -1,20 +1,29 @@
+- content_for :head do
+  = javascript_include_tag 'issue_edit'
+  
 .columns.half
   %h2 Editing Issue ##{@issue.number}
 
   .left_column
-    - posts = @area.posts.in_issue(nil)
     .posts#new_posts
       .header
         .select= check_box_tag "select_all", nil, false, { :id => nil }
         .text New Messages
-      = render :partial => 'post', :collection => posts
-    = submit_tag 'Add', :id => 'add_posts', :style => posts.size.zero?? 'display:none' : nil, 'data-issue' => @issue.id, 'data-area' => @area.id
+      = render :partial => 'post', :collection => @new_posts
+    = submit_tag 'Add', :id => 'add_posts', :class => 'move_posts', :style => @new_posts.size.zero?? 'display:none' : nil
 
   .right_column
-    - posts = @area.posts.in_issue(@issue)
-    .posts#issue_posts
+    .posts#issue_posts.sortable
       .header
         .select= check_box_tag 'select_all', nil, false, { :id => nil }
         .text Prepared Messages
-      = render :partial => 'post', :collection => posts
-    = submit_tag 'Remove', :id => 'remove_posts', :style => posts.size.zero?? 'display:none' : nil, 'data-issue' => @issue.id, 'data-area' => @area.id
+      = render :partial => 'post', :collection => @issue_posts
+    = submit_tag 'Remove', :id => 'remove_posts', :class => 'move_posts', :style => @issue_posts.size.zero?? 'display:none' : nil
+
+.columns.half
+  .left_column
+  .right_column
+    %h3 Publishing
+    = formatted_form_for @issue, :url => admin_area_issue_path(@area) do |f|
+      = f.datetime_select :scheduled_at, :label => 'Publish at'
+      = f.submit 'Publish'

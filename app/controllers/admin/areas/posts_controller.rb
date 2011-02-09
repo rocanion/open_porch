@@ -1,6 +1,7 @@
 class Admin::Areas::PostsController < Admin::Areas::BaseController
   respond_to :js
-  before_filter :load_post
+  before_filter :load_post,
+    :except => :order
   
   def edit
   end
@@ -11,6 +12,15 @@ class Admin::Areas::PostsController < Admin::Areas::BaseController
   end
   
   def show
+  end
+  
+  def order
+    if params[:post].present?
+      params[:post].each_with_index do |post, i|
+        Post.update_all(['position = %d', i], ['id = %d', post])
+      end
+    end
+    render :nothing => true
   end
 
 protected
