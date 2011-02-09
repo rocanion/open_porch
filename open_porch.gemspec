@@ -250,8 +250,8 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_runtime_dependency(%q<geokit>, ["= 1.5.0"])
       s.add_runtime_dependency(%q<active_link_to>, ["= 0.0.6"])
-      s.add_runtime_dependency(%q<meta_where>, ["= 0.0.6"])
-      s.add_runtime_dependency(%q<meta_search>, ["= 0.0.6"])
+      s.add_runtime_dependency(%q<meta_where>, ["= 1.0.1"])
+      s.add_runtime_dependency(%q<meta_search>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
     else
       s.add_dependency(%q<rails>, ["= 3.0.3"])
@@ -272,8 +272,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<wristband>, ["= 1.0.2"])
       s.add_dependency(%q<geokit>, ["= 1.5.0"])
       s.add_dependency(%q<active_link_to>, ["= 0.0.6"])
-      s.add_dependency(%q<meta_where>, ["= 0.0.6"])
-      s.add_dependency(%q<meta_search>, ["= 0.0.6"])
+      s.add_dependency(%q<meta_where>, ["= 1.0.1"])
+      s.add_dependency(%q<meta_search>, ["= 1.0.1"])
       s.add_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
     end
   else
@@ -295,8 +295,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<wristband>, ["= 1.0.2"])
     s.add_dependency(%q<geokit>, ["= 1.5.0"])
     s.add_dependency(%q<active_link_to>, ["= 0.0.6"])
-    s.add_dependency(%q<meta_where>, ["= 0.0.6"])
-    s.add_dependency(%q<meta_search>, ["= 0.0.6"])
+    s.add_dependency(%q<meta_where>, ["= 1.0.1"])
+    s.add_dependency(%q<meta_search>, ["= 1.0.1"])
     s.add_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
   end
 end
