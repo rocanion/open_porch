@@ -1,0 +1,5 @@
+%ul.sub_nav
+  %li= active_link_to 'Current issue', [:admin, @area], :active => { :when => /admin\/areas\/\d*\/issues\/\d*\/edit/  }
+  %li= active_link_to 'Issues', [:admin, @area, :issues], :active => { :when => :self_only }
+  %li= active_link_to 'Memberships', [:admin, @area, :memberships]
+  %li= active_link_to 'Edit borders', [:edit_borders, :admin, @area]

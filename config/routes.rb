@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       resources :memberships, :controller => 'areas/memberships'
     end
     resources :users
+    resources :user_activity
   end
   
   root :to => 'registrations#index'

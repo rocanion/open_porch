@@ -1,0 +1,3 @@
+- if @user_activities != []
+  .user
+    = @user_activities.collect(&:name).join(', ') 

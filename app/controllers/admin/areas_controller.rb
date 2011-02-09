@@ -6,7 +6,11 @@ class Admin::AreasController < Admin::BaseController
     :except => [:index, :new, :create, :edit_borders, :bulk_update]
     
   def index
-    @areas = Area.order(:name).all
+    params[:search] ||= {}
+    params[:search][:meta_sort] ||= 'name'
+    @search = Area.search(params[:search])
+    @areas = @search.all
+    @new_posts = Area.newposts_count
   end
   
   def new
@@ -27,6 +31,7 @@ class Admin::AreasController < Admin::BaseController
   end
   
   def show
+    redirect_to [:edit, :admin, @area, @area.issues.last]
   end
   
   def edit

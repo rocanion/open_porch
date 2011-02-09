@@ -1,7 +1,7 @@
 .columns
+  = render :partial => 'admin/areas/nav'
+  
   %h2 #{@area.name}: Issues
-
-  %h5= link_to 'Add new', new_admin_area_issue_path(@area)
 
   %table
     %tr
