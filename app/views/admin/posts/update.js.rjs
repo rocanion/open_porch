@@ -1,0 +1,5 @@
+if @post.valid?
+  page <<  "$('##{dom_id(@post)}').replaceWith('#{escape_javascript(render(:partial => 'admin/issues/post', :object => @post))}')"
+else
+  page <<  "$('##{dom_id(@post, :content)}').html('#{escape_javascript(render(:partial => 'edit'))}')"
+end

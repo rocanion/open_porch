@@ -57,7 +57,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal @controller.current_user, @regular_user
 
     get :new
-    assert_redirected_to area_path(@regular_user.areas.first)
+    assert_redirected_to user_path
   end
   
   def test_create_redirects_if_logged_in
@@ -67,7 +67,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal @controller.current_user, @regular_user
     
     post :create, :session_user => { :email => @regular_user.email, :password => @regular_user.password }
-    assert_redirected_to area_path(@regular_user.areas.first)
+    assert_redirected_to user_path
   end
   
   # >> Logout -----------------------------------------------------------

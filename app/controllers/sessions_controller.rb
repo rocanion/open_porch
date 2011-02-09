@@ -22,4 +22,8 @@ protected
   def build_user_session
     @session_user = SessionUser.new(params[:session_user])
   end
+  
+  def redirect_if_logged_in
+    redirect_to user_path if logged_in?
+  end
 end

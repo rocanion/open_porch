@@ -2,7 +2,7 @@ class Issue < ActiveRecord::Base
   
   # == Validations ==========================================================
   
-  validates :subject, :area_id,
+  validates :area_id,
     :presence => true
   
   validates :number,
@@ -25,7 +25,7 @@ class Issue < ActiveRecord::Base
   # == Callbacks ============================================================
   
   before_create :set_issue_number
-  after_create :check_area_send_mode
+  after_create  :check_area_send_mode
   
   # == Instance Methods =====================================================
   
