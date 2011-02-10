@@ -24,9 +24,23 @@ class Admin::Areas::IssuesControllerTest < ActionController::TestCase
   
   def test_get_edit
     issue = an Issue
+    issue.update_attribute(:sent_at, nil)
     get :edit, :area_id => issue.area, :id => issue
     assert_response :success
     assert_template :edit
+  end
+  
+  def test_get_show
+    issue = an Issue
+    get :show, :area_id => issue.area, :id => issue
+    assert_response :success
+    assert_template :show
+  end
+  
+  def test_redirect_if_sent
+    issue = an Issue
+    get :edit, :area_id => issue.area, :id => issue
+    assert_redirected_to admin_area_issue_path(issue.area, issue)
   end
 
 end

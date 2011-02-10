@@ -1,6 +1,8 @@
 class Admin::Areas::IssuesController < Admin::Areas::BaseController
   before_filter :load_issue,
     :except => [:index, :new]
+  before_filter :block_edit_if_sent,
+    :except => [:index, :new, :show]
   
   def index
     @issues = @area.issues
@@ -14,6 +16,9 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
 
   def edit
     load_posts
+  end
+  
+  def show
   end
   
   def update
@@ -50,5 +55,11 @@ protected
   def load_posts
     @new_posts = @area.posts.in_issue(nil).order('created_at DESC')
     @issue_posts = @area.posts.in_issue(@issue).order('position')
+  end
+  
+  def block_edit_if_sent
+    if @issue.sent_at.present?
+      redirect_to admin_area_issue_path(@area, @issue) 
+    end
   end
 end

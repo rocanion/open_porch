@@ -1,0 +1,13 @@
+.columns  
+  = render :partial => 'admin/areas/nav'
+  = show_user_activity_for_url(request.url)
+  %h2 Issue ##{@issue.number} - #{@issue.sent_at.to_date.to_s(:long)}
+  %ul.list
+    - @issue.posts.each do |post|
+      %li
+        %h4= post.title
+        %p.meta
+          By <strong>#{post.user.full_name}</strong>, #{post.user.address}
+          %br/
+          #{post.created_at.to_s(:long)}
+        = simple_format post.content
