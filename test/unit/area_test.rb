@@ -42,4 +42,11 @@ class AreaTest < ActiveSupport::TestCase
     end
   end
   
+  def test_send_mode_name
+    area = an Area
+    assert_equal :immediate, area.send_mode_name
+    area.send_mode = Area::SEND_MODES[:batched]
+    assert_equal :batched, area.send_mode_name
+  end
+  
 end

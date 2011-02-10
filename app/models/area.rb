@@ -108,6 +108,10 @@ class Area < ActiveRecord::Base
     [self.city, self.state].join(', ')
   end
   
+  def send_mode_name
+    SEND_MODES.invert[self.send_mode]
+  end
+  
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)

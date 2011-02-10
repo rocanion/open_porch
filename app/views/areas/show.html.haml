@@ -5,7 +5,6 @@
     %h1= @area.name
     .stats
       %h3 #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
-      %h3 Forum started: <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
       %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
       %h3 Approx. households within boundary: <strong>#{@area.households}</strong>
     
