@@ -5,7 +5,7 @@ class AreasController < ApplicationController
     :only => :show
 
   def show
-    # ...
+    @issue = @area.issues.sent.last
   end
 
 protected

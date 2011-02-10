@@ -3,27 +3,32 @@
 .columns
   .left_column
     %h1= @area.name
-    %h3
-      #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
-      %br/
-      Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
+    .stats
+      %h3 #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
+      %h3 Forum started: <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
+      %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
+      %h3 Approx. households within boundary: <strong>#{@area.households}</strong>
     
     - if logged_in?
-      %ul.list
-        - @area.posts.each do |post|
-          %li
-            %h4= post.title
-            %p.meta
-              By <strong>#{post.user.full_name}</strong>, #{post.user.address}
-              %br/
-              #{post.created_at.to_s(:long)}
-            = simple_format post.content
+      - if @issue.present?
+        %h2 Issue #{@issue.number} - #{@issue.sent_at.to_date.to_s(:long)}
+        %ul.list
+          - @issue.posts.each do |post|
+            %li
+              %h4= post.title
+              %p.meta
+                By <strong>#{post.user.full_name}</strong>, #{post.user.address}
+                %br/
+                #{post.created_at.to_s(:long)}
+              = simple_format post.content
+      - else
+        %p No issues found
     - else
       %h3 
         Only registered members can read and participate in
         %br/
-        this neighbourhood forum. Area you a member?
-      %h2 Login
+        this neighbourhood forum. Are you a member?
+
       = formatted_form_for @session_user, :url => login_path do |f|
         = f.text_field :email, :label => 'Email address'
         = f.password_field :password

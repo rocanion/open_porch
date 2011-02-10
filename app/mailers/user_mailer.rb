@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     @issue = issue
     mail(
       :subject => "[OpenPorch] #{issue.number}-#{issue.area.name}",
-      :to => issue.area.users.collect(&:email)
+      :to => 'fpf@twg.ca' #issue.area.users.collect(&:email)
     )
   end
   

@@ -19,9 +19,13 @@ class Issue < ActiveRecord::Base
     :dependent => :destroy
 
   # == Scopes ===============================================================
-
-  scope :last_sent, order(:sent_at)
   
+  scope :sent, where('sent_at IS NOT NULL')
+
+  scope :scheduled_before, lambda { |t| 
+    where(['sent_at IS NULL AND scheduled_at <= ?', t])
+  }
+
   # == Callbacks ============================================================
   
   before_create :set_issue_number

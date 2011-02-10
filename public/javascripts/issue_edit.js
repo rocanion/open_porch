@@ -36,14 +36,17 @@ $(document).ready(function() {
 function move_posts_to(posts, dest_div) {
   $.each(posts, function(i, post) {
     $('#post_'+post).detach().appendTo(dest_div);
+
     $('input[type=checkbox]').attr('checked', false)
+
     if($('#new_posts').children('.post').length>0)
-        $('#add_posts').show();
-      else
-        $('#add_posts').hide();
+      $('#add_posts').show();
+    else
+      $('#add_posts').hide();
+      
     if($('#issue_posts').children('.post').length>0)
-        $('#remove_posts').show();
-      else
-        $('#remove_posts').hide();
+      $('#remove_posts').show();
+    else
+      $('#remove_posts').hide();
   })
 }
