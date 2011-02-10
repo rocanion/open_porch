@@ -7,6 +7,7 @@ class OpenPorchGenerator < Rails::Generators::Base
   def generate_static_files
     directory 'app/views/stylesheets', 'app/views/stylesheets'
     directory 'public/javascripts', 'public/javascripts'
+    directory 'public/images', 'public/images'
   end
 
   def generate_migration
