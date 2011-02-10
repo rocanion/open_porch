@@ -41,6 +41,18 @@ ul.tabs
     a
       background: none
       
+ul.sub_nav
+  overflow: hidden
+  li
+    float: left
+    line-height: 30px
+    margin-right: 10px
+    a
+      padding: 4px 5px
+    a.active
+      background-color: #00AFDB
+      color: #fff
+      
 ul.list
   margin-bottom: 20px
   line-height: 15px
@@ -63,6 +75,12 @@ table
     padding: 5px
   td
     vertical-align: top
+    border-bottom: 1px solid #ddd
+  th.center, td.center
+    text-align: center
+  tr.important
+    td
+      background: #ddd
 
 .form_element
   margin-bottom: 10px
@@ -122,3 +140,29 @@ table
     font-variant: small-caps
     font-size: 12px
     margin-right: 10px
+
+.pagination
+  font: 13px/20px Arial, sans-serif
+  margin-bottom: 10px
+  float: right
+  .previous_page, .next_page
+    background: #ebebeb
+    text-transform: uppercase
+    font-size: 11px
+  span, a, em
+    background-color: #ebebeb
+    font-size: 12px
+    line-height: 20px
+    padding: 4px 10px
+    text-decoration: none
+    margin: 0
+  .current
+    background-color: #404041
+    color: #fff
+    font-style: normal
+  a:hover
+    text-decoration: underline
+
+h2
+  .pagination
+    margin-top: 20px

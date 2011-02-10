@@ -4,6 +4,7 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
   
   def index
     @issues = @area.issues
+    
   end
   
   def new
@@ -12,9 +13,15 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
   end
 
   def edit
+    load_posts
   end
   
   def update
+    @issue.update_attributes!(params[:issue])
+    redirect_to edit_admin_area_issue_path(@area, @issue)
+  rescue ActiveRecord::RecordInvalid
+    load_posts
+    render :action => :edit
   end
 
   def add_posts
@@ -38,5 +45,10 @@ protected
     @issue = @area.issues.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render :text => 'Issue not found.', :status => 404
+  end
+  
+  def load_posts
+    @new_posts = @area.posts.in_issue(nil).order('created_at DESC')
+    @issue_posts = @area.posts.in_issue(@issue).order('position')
   end
 end

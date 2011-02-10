@@ -12,10 +12,15 @@ class Issue < ActiveRecord::Base
   
   # == Relationships ========================================================
   
-  belongs_to :area
+  belongs_to :area, 
+    :counter_cache => true
   
   has_many :posts,
     :dependent => :destroy
+
+  # == Scopes ===============================================================
+
+  scope :last_sent, order(:sent_at)
   
   # == Callbacks ============================================================
   

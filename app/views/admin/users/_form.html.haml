@@ -1,5 +1,5 @@
 = f.text_field :first_name
 = f.text_field :last_name
-= f.select :role, User::ROLES.collect{|r| [r.humanize, r]}
 = f.text_field :email
+= f.select :role, User::ROLES.collect{|r| [r.humanize, r]}
 = f.submit 'Save', :cancel_url => link_to('cancel', @return_url)

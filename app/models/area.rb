@@ -51,6 +51,16 @@ class Area < ActiveRecord::Base
   
   # == Class Methods ========================================================
   
+  # Return a hash with the form {area_id => posts.count}
+  def self.newposts_count
+    connection.select_rows("
+      SELECT area_id, COUNT(posts.id) 
+      FROM posts LEFT JOIN areas ON (posts.area_id = areas.id)
+      WHERE reviewed_by IS NULL
+      GROUP BY area_id
+    ").inject({}){|h, count| h[count[0].to_i] = count[1].to_i; h}
+  end
+  
   # == Instance Methods =====================================================
   
   def coordinates=(points)
@@ -92,6 +102,10 @@ class Area < ActiveRecord::Base
   
   def send_mode?(mode)
     self.send_mode == SEND_MODES[mode]
+  end
+  
+  def location
+    [self.city, self.state].join(', ')
   end
   
 protected

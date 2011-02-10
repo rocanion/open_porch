@@ -21,7 +21,11 @@ Rails.application.routes.draw do
           post :remove_posts
         end
       end
-      resources :posts, :controller => 'areas/posts'
+      resources :posts, :controller => 'areas/posts' do
+        collection do
+          put :order, :as => :order
+        end
+      end
       member do
         get :edit_borders
       end

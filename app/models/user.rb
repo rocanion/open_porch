@@ -73,6 +73,10 @@ class User < ActiveRecord::Base
   
   # == Class Methods ========================================================
 
+  def self.per_page
+    100
+  end
+
   # == Instance Methods =====================================================
   
   def address_attributes=(address_attr)

@@ -22,6 +22,9 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency('wristband', '1.0.2')
   gem.add_dependency('geokit', '1.5.0')
   gem.add_dependency('active_link_to', '0.0.6')
+  gem.add_dependency('meta_where', '1.0.1')
+  gem.add_dependency('meta_search', '1.0.1')
+  gem.add_dependency('will_paginate', "~> 3.0.pre2")
   
 end
 Jeweler::RubygemsDotOrgTasks.new
