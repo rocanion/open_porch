@@ -4,7 +4,8 @@ class Admin::UsersController < Admin::BaseController
     :except => [:index]
   
   def index
-    @users = User.paginate(:page => params[:page])
+    @search = User.search(params[:search])
+    @users = @search.paginate(:page => params[:page])
   end
   
   def edit

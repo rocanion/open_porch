@@ -1,9 +1,11 @@
 .columns
-  %h2 
-    = will_paginate @accounts
-    Users
+  %h2 Users
     
-
+  = will_paginate @accounts
+  = form_for @search, :url => [:admin, :users], :html => {:method => :get} do |f|
+    = f.label :email_or_name_search, 'Find by name or email'
+    = f.text_field :email_or_name_search
+    = f.submit 'Find'
 
   %table
     %tr

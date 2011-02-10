@@ -1,6 +1,6 @@
 .columns
-  %h1 Edit #{@area.name}
-
+  = render :partial => 'admin/areas/nav'
+  
   .left_column
 
     = formatted_form_for @area, :url => [:admin, @area] do |f|
@@ -15,7 +15,7 @@
         = javascript_include_tag 'google_maps'
     
       = content_for :doc_ready do
-        initialize(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y});
+        initialize_gmap(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y}, {}, #{@area.bounds.to_json});
         add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
 
       #map_canvas{:style => 'width:260px; height:400px; float: right'}
