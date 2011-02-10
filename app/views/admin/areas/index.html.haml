@@ -6,6 +6,7 @@
       %th= sort_link @search, :city, 'Location'
       %th.center= sort_link @search, :memberships_count, 'Users'
       %th.center= sort_link @search, :households
+      %th.center Send mode
       %th.center= sort_link @search, :issues_count, 'Issues'
       %th.center New posts
       
@@ -18,6 +19,7 @@
         %td= area.location
         %td.center= link_to area.memberships_count, [:admin, area, :memberships]
         %td.center= area.households
+        %td.center= Area::SEND_MODES[area.send_mode]
         %td.center= link_to area.issues_count, [:admin, area, :issues]
         %td.center= link_to @new_posts[area.id].to_s, [:admin, area]
               

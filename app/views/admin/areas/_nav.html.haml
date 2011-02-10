@@ -8,3 +8,4 @@
   %li= active_link_to 'Issues', [:admin, @area, :issues], :active => { :when => :self_only }
   %li= active_link_to 'Memberships', [:admin, @area, :memberships]
   %li= active_link_to 'Edit borders', [:edit_borders, :admin, @area]
+  %li= active_link_to 'Edit details', [:edit, :admin, @area], :active => { :when => :self_only }

@@ -67,6 +67,14 @@ class User < ActiveRecord::Base
   
   # == Scopes ===============================================================
 
+  # Search Scope
+  scope :email_or_name_search,
+    lambda {|str|
+      like_str = "%#{str}%"
+      where("email ILIKE ? OR ((first_name || ' ' || last_name) ILIKE ?)", like_str, like_str)
+    }
+  search_methods :email_or_name_search
+
   # == Callbacks ============================================================
 
   before_validation :assign_role, :on => :create
