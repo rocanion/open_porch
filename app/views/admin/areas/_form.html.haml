@@ -3,7 +3,7 @@
 = f.text_area :description
 = f.text_field :city
 = f.text_field :state
-= f.check_box :published
-= f.text_area :households
+= f.text_field :households
 = f.select :send_mode, Area::SEND_MODES
+= f.check_box :published
 = f.submit 'Save', :cancel_url => link_to('cancel', admin_areas_path)

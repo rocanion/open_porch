@@ -43,8 +43,8 @@ class UsersControllerTest < ActionController::TestCase
         :last_name => 'Tester', 
         :memberships_attributes=>{"0"=>{:area_id => @area.id}}
       }
-      assert_redirected_to user_path
-      assert_equal 'Welcome', flash[:notice]
+      assert_redirected_to area_path(@controller.current_user.areas.first)
+      assert_equal 'Welcome, you are now logged in.', flash[:notice]
       assert @controller.logged_in?
       assert_equal @controller.current_user, assigns(:user)
     end

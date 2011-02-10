@@ -22,7 +22,6 @@ function initialize_gmap(id, center_lat, center_lng, options, bounds) {
   
   // Adjusting the zoom level if bounds were provided
   if (bounds != null) {
-    console.log(bounds)
     map.fitBounds(new google.maps.LatLngBounds(
       new google.maps.LatLng(bounds[0][0], bounds[0][1]),
       new google.maps.LatLng(bounds[1][0], bounds[1][1])

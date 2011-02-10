@@ -1,5 +1,7 @@
 = f.text_field :first_name
 = f.text_field :last_name
 = f.text_field :email
+= f.password_field :password, :autocomplete => :off, :desc => 'Leave empty unless you want to change the password'
+= f.password_field :password_confirmation
 = f.select :role, User::ROLES.collect{|r| [r.humanize, r]}
 = f.submit 'Save', :cancel_url => link_to('cancel', @return_url)

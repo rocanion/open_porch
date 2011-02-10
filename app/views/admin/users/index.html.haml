@@ -4,7 +4,7 @@
   = will_paginate @accounts
   = form_for @search, :url => [:admin, :users], :html => {:method => :get} do |f|
     = f.label :email_or_name_search, 'Find by name or email'
-    = f.text_field :email_or_name_search
+    = f.text_field :email_or_name_search, :style => 'width: 150px'
     = f.submit 'Find'
 
   %table

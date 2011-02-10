@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def create
     @user.save!
     login_as_user(@user)
-    redirect_to(user_path, :notice => 'Welcome')
+    redirect_to(area_path(current_user.areas.first), :notice => "Welcome, you are now logged in.")
   rescue ActiveRecord::RecordInvalid
     render :action => :new
   end
