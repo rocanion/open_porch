@@ -1,3 +1,5 @@
-- @user_activities.each do |user|
-  .user
-    = user.name
+- unless @user_activities.empty?
+  Also on this page:
+  - @user_activities.each do |user|
+    .user
+      = user.name

@@ -27,6 +27,10 @@
 .columns.half
   .left_column
   .right_column
+    - if @issue.scheduled_at.present?
+      %label Currently Scheduled for: #{@issue.scheduled_at.to_s(:long)}
+      
+      
     %h3 Publishing
     = formatted_form_for @issue, :url => admin_area_issue_path(@area) do |f|
       = f.datetime_select :scheduled_at, :label => 'Publish at'

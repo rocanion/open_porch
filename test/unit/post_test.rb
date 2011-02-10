@@ -10,6 +10,7 @@ class PostTest < ActiveSupport::TestCase
         :user => (a User),
         :area => (an Area)
       )
+      assert post.area.send_mode?(:immediate)
     end
   end
   
@@ -19,8 +20,23 @@ class PostTest < ActiveSupport::TestCase
   end
   
   def test_create_dummy
-    post = a Post
-    assert_created post
+    area = Area.create_dummy(:send_mode => :batched)
+    assert_created area
+    assert area.issues.empty?
+
+    assert_difference ['Post.count', 'Issue.count'] do
+      post = area.posts.create_dummy
+      assert_created post
+      assert_equal post.area.id, area.id
+      assert post.area.send_mode?(:batched)
+    end
+
+    assert_difference 'Post.count' do
+      assert_no_difference 'Issue.count' do
+        post = area.posts.create_dummy
+        assert_created post
+      end
+    end
   end
   
 end
