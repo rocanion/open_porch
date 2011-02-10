@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{open_porch}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
-  s.date = %q{2011-02-09}
+  s.date = %q{2011-02-10}
   s.description = %q{}
   s.email = %q{jack@theworkinggroup.ca}
   s.extra_rdoc_files = [
@@ -58,6 +58,7 @@ Gem::Specification.new do |s|
     "app/views/admin/areas/issues/edit.html.haml",
     "app/views/admin/areas/issues/index.html.haml",
     "app/views/admin/areas/issues/remove_posts.js.rjs",
+    "app/views/admin/areas/issues/show.html.haml",
     "app/views/admin/areas/memberships/index.html.haml",
     "app/views/admin/areas/new.html.haml",
     "app/views/admin/areas/new.js.haml",
@@ -119,6 +120,7 @@ Gem::Specification.new do |s|
     "config/initializers/will_paginate.rb",
     "config/locales/en.yml",
     "config/routes.rb",
+    "config/schedule.rb",
     "db/migrate/01_create_areas.rb",
     "db/migrate/02_create_users.rb",
     "db/migrate/03_create_memberships.rb",
@@ -137,6 +139,7 @@ Gem::Specification.new do |s|
     "lib/open_porch.rb",
     "lib/open_porch/engine.rb",
     "lib/tasks/.gitkeep",
+    "lib/tasks/open_porch.rake",
     "lib/tasks/rcov.rake",
     "open_porch.gemspec",
     "public/404.html",
@@ -243,6 +246,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<meta_where>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<meta_search>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
+      s.add_runtime_dependency(%q<whenever>, ["= 0.6.2"])
       s.add_runtime_dependency(%q<rails>, ["= 3.0.3"])
       s.add_runtime_dependency(%q<pg>, ["= 0.10.1"])
       s.add_runtime_dependency(%q<haml>, ["= 3.0.25"])
@@ -265,6 +269,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<meta_where>, ["= 1.0.1"])
       s.add_dependency(%q<meta_search>, ["= 1.0.1"])
       s.add_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
+      s.add_dependency(%q<whenever>, ["= 0.6.2"])
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
       s.add_dependency(%q<haml>, ["= 3.0.25"])
@@ -288,6 +293,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<meta_where>, ["= 1.0.1"])
     s.add_dependency(%q<meta_search>, ["= 1.0.1"])
     s.add_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
+    s.add_dependency(%q<whenever>, ["= 0.6.2"])
     s.add_dependency(%q<rails>, ["= 3.0.3"])
     s.add_dependency(%q<pg>, ["= 0.10.1"])
     s.add_dependency(%q<haml>, ["= 3.0.25"])
