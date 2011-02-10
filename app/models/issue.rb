@@ -29,7 +29,6 @@ class Issue < ActiveRecord::Base
   # == Callbacks ============================================================
   
   before_create :set_issue_number
-  after_create  :check_area_send_mode
   
   # == Instance Methods =====================================================
   
@@ -47,9 +46,5 @@ protected
   
   def set_issue_number
     self.number = self.area.issue_number.next
-  end
-  
-  def check_area_send_mode
-    self.send! if self.area.send_mode?(:immediate)
   end
 end

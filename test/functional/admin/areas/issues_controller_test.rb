@@ -32,6 +32,7 @@ class Admin::Areas::IssuesControllerTest < ActionController::TestCase
   
   def test_get_show
     issue = an Issue
+    issue.update_attribute(:sent_at, Time.now)
     get :show, :area_id => issue.area, :id => issue
     assert_response :success
     assert_template :show
@@ -39,6 +40,7 @@ class Admin::Areas::IssuesControllerTest < ActionController::TestCase
   
   def test_redirect_if_sent
     issue = an Issue
+    issue.update_attribute(:sent_at, Time.now)
     get :edit, :area_id => issue.area, :id => issue
     assert_redirected_to admin_area_issue_path(issue.area, issue)
   end

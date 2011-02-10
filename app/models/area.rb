@@ -101,7 +101,7 @@ class Area < ActiveRecord::Base
   end
   
   def send_mode?(mode)
-    self.send_mode == SEND_MODES[mode]
+    self.send_mode.to_i == SEND_MODES[mode]
   end
   
   def location

@@ -28,8 +28,9 @@ class Post < ActiveRecord::Base
 protected
   def create_issue
     if self.area.send_mode?(:immediate)
-      self.issue = self.area.issues.create
+      self.issue = self.area.issues.create!
       self.save
+      self.issue.send! 
     elsif self.area.send_mode?(:batched) && self.area.current_issue.blank?
       self.area.issues.create
     end
