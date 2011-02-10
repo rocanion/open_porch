@@ -1,6 +1,10 @@
-.columns.half
-  %h2 Editing Issue ##{@issue.number}
+= content_for (:head) do 
+  = javascript_include_tag 'user_activity'
+= update_user_activity_for_url(request.url)
 
+.columns.half
+  = show_user_activity_for_url(request.url)
+  %h2 Editing Issue ##{@issue.number}
   .left_column
     - posts = @area.posts.in_issue(nil)
     .posts#new_posts

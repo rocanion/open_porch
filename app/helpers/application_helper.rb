@@ -8,20 +8,18 @@ module ApplicationHelper
   # content_for (:head) do 
   #   javascript_include_tag 'user_activity'
   # end
-    
-  def show_user_activity(options = {})
-    options[:url] ||= ''
-    options[:should_update] ||= false
-    
+  
+  def show_user_activity_for_url(url)
     content_for(:doc_ready) do
-      output = %{get_user_activity('#{current_user.full_name}', '#{options[:url]}', '#{UserActivity.EXPIRES*1000}');} # multiply by 1000 because javascript requires miliseconds
-      if (options[:should_update])
-        output += %{update_user_activity('#{current_user.full_name}', '#{options[:url]}', '#{UserActivity.EXPIRES*1000}');}
-      end      
-      raw output
+      raw %{get_user_activity('#{current_user.full_name}', '#{url}', '#{UserActivity::EXPIRES * 1000 }');} # multiply by 1000 because javascript requires miliseconds
+    end    
+    content_tag(:div, '', :id => "user_activity")
+  end
+  
+  def update_user_activity_for_url(url)
+    content_for(:doc_ready) do
+      raw %{update_user_activity('#{current_user.full_name}', '#{url}', '#{(UserActivity::EXPIRES-2) * 1000}');}
     end
-    
-    content_tag(:div, '', :id => 'user_activity')
   end
   
 end

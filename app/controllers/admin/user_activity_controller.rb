@@ -6,7 +6,7 @@ class Admin::UserActivityController < Admin::BaseController
   end
   
   def show
-    @user_activities = UserActivity.active_for_page(current_user.full_name, params[:url])
+    @user_activities = UserActivity.active_for_page(current_user.full_name, params[:url]).order('name DESC')
     render :layout => false, :object => @user_activities
   rescue ActiveRecord::RecordInvalid
     head :bad_request

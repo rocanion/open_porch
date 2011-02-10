@@ -2,7 +2,7 @@ class UserActivity < ActiveRecord::Base
   
   # == Constants ============================================================
 
-   EXPIRES = 2 # in seconds
+   EXPIRES = 5 # in seconds
   
   # == Relationships ========================================================
   
