@@ -112,6 +112,10 @@ class Area < ActiveRecord::Base
     SEND_MODES.invert[self.send_mode]
   end
   
+  def current_issue
+    self.issues.where(:sent_at => nil).first
+  end
+  
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)

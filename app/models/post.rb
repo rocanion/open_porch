@@ -30,6 +30,8 @@ protected
     if self.area.send_mode?(:immediate)
       self.issue = self.area.issues.create
       self.save
+    elsif self.area.send_mode?(:batched) && self.area.current_issue.blank?
+      self.area.issues.create
     end
   end
 end

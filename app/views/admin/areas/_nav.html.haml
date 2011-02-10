@@ -4,7 +4,8 @@
       = @area.name
       in
       = @area.location
-  %li= active_link_to 'Current issue', [:admin, @area], :active => { :when => /admin\/areas\/\d*\/issues\/\d*\/edit/  }
+  - if @area.current_issue
+    %li= active_link_to 'Current issue', [:edit, :admin, @area, @area.current_issue], :active => { :when => /admin\/areas\/\d*\/issues\/\d*\/edit/  }
   %li= active_link_to 'Issues', [:admin, @area, :issues], :active => { :when => :self_only }
   %li= active_link_to 'Memberships', [:admin, @area, :memberships]
   %li= active_link_to 'Edit borders', [:edit_borders, :admin, @area]
