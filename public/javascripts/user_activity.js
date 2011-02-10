@@ -1,17 +1,14 @@
-var current_path = window.location.pathname;
-
 function get_user_activity(user_name, url, delay) {
   $.ajax({
     type: "GET",
     url: "/admin/user_activity/" + user_name,
     data: { 
-      url : current_path,
+      url : url,
       authenticity_token: $('meta[name=csrf-token]').attr('content')
     },
     success: function(data){
-      $('#user_activity').html(data);
-      
       setTimeout('get_user_activity(\''+ user_name +'\', \''+ url +'\', \''+ delay +'\')', delay);
+      $('#user_activity').html(data);
     }
   });
 }
@@ -22,7 +19,7 @@ function update_user_activity(user_name, url, delay) {
     type: "PUT",
     url: "/admin/user_activity/" + user_name,
     data: ({ 
-      url : current_path,
+      url : url,
       authenticity_token: $('meta[name=csrf-token]').attr('content')
     }),
     success: function(data){
