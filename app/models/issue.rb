@@ -23,7 +23,7 @@ class Issue < ActiveRecord::Base
   scope :sent, where('sent_at IS NOT NULL')
 
   scope :scheduled_before, lambda { |t| 
-    where(['sent_at IS NULL AND scheduled_at <= ?', t])
+    where(['sent_at IS NULL AND scheduled_at <= ?', t.utc])
   }
 
   # == Callbacks ============================================================
@@ -35,12 +35,12 @@ class Issue < ActiveRecord::Base
   
   def send!
     UserMailer.new_issue(self).deliver
-    self.update_attribute(:sent_at, Time.now)
+    self.update_attribute(:sent_at, Time.now.utc)
   end
   
 protected
   def scheduled_time_is_ahead
-    if self.scheduled_at.present? && (self.scheduled_at < Time.now)
+    if self.scheduled_at.present? && (self.scheduled_at < Time.now.utc)
       errors.add(:scheduled_at, "can't be in the past.")
     end
   end
