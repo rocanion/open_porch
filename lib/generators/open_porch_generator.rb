@@ -3,6 +3,9 @@ class OpenPorchGenerator < Rails::Generators::Base
 
   source_root File.expand_path('../../..', __FILE__)
   
+  def generate_application_controller
+    copy_file 'app/controllers/application_controller.rb', 'app/controllers/application_controller.rb'
+  end
   
   def generate_static_files
     directory 'app/views/stylesheets', 'app/views/stylesheets'
