@@ -1,6 +1,6 @@
 .columns  
   = render :partial => 'admin/areas/nav'
-  = show_user_activity_for_url(request.url)
+
   %h2 Issue ##{@issue.number} - #{@issue.sent_at.to_date.to_s(:long)}
   %ul.list
     - @issue.posts.each do |post|
