@@ -6,7 +6,7 @@ class Issue < ActiveRecord::Base
     :presence => true
   
   validates :number,
-    :uniqueness => true
+    :uniqueness => { :scope => :area_id }
   
   validate :scheduled_time_is_ahead
   

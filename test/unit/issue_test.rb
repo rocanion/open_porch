@@ -33,13 +33,47 @@ class IssueTest < ActiveSupport::TestCase
     end
   end
   
-  # def test_send!
-  #   issue = an Issue
-  #   assert_nil issue.sent_at
-  #   assert_emails 1 do
-  #     issue.send!
-  #   end
-  #   assert issue.sent_at.is_a?(Time)
-  # end
+  def test_send!
+    issue = an Issue
+    assert_nil issue.sent_at
+    assert_emails 1 do
+      issue.send!
+    end
+    assert issue.sent_at.is_a?(Time)
+  end
 
+  def test_issue_number
+    # Create one area
+    area = an Area
+    assert_created area
+    # Add an issue
+    issue = area.issues.create_dummy
+    assert_created issue
+    area.reload
+    assert_equal 1, issue.number
+    assert_equal 1, area.issue_number.current
+    # Add another issue
+    issue = area.issues.create_dummy
+    assert_created issue
+    area.reload
+    assert_equal 2, issue.number
+    assert_equal 2, area.issue_number.current
+    
+    # Create another area
+    area = an Area
+    assert_created area
+    # Add an issue
+    issue = area.issues.create_dummy
+    assert_created issue
+    area.reload
+    assert_equal 1, issue.number
+    assert_equal 1, area.issue_number.current
+    # Add another issue
+    issue = area.issues.create_dummy
+    assert_created issue
+    area.reload
+    assert_equal 2, issue.number
+    assert_equal 2, area.issue_number.current
+  end
+  
 end

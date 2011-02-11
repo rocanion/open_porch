@@ -75,6 +75,8 @@ class User < ActiveRecord::Base
     }
   search_methods :email_or_name_search
 
+  scope :admins, where(:role => 'admin')
+  
   # == Callbacks ============================================================
 
   before_validation :assign_role, :on => :create
