@@ -19,6 +19,9 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
   end
   
   def show
+    if @issue.sent_at.blank?
+      redirect_to edit_admin_area_issue_path(@area, @issue)
+    end
   end
   
   def update
