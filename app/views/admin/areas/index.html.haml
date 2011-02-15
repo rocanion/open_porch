@@ -3,7 +3,7 @@
   %table
     %tr
       %th= sort_link @search, :name
-      %th= sort_link @search, :city, 'Location'
+      %th= sort_link @search, :city
       %th.center= sort_link @search, :memberships_count, 'Users'
       %th.center= sort_link @search, :households
       %th.center Send mode
@@ -17,9 +17,9 @@
             %em [draft]
           = link_to area.name, [:edit_borders, :admin, area]
         %td= area.location
-        %td.center= link_to area.memberships_count, [:admin, area, :memberships]
-        %td.center= area.households
+        %td.center= link_to area.memberships_count.to_i, [:admin, area, :memberships]
+        %td.center= area.households.to_i
         %td.center= area.send_mode_name
-        %td.center= link_to area.issues_count, [:admin, area, :issues]
+        %td.center= link_to area.issues_count.to_i, [:admin, area, :issues]
         %td.center= link_to @new_posts[area.id].to_s, [:admin, area]
               

@@ -105,7 +105,7 @@ class Area < ActiveRecord::Base
   end
   
   def location
-    [self.city, self.state].join(', ')
+    [self.city, self.state].compact.join(', ')
   end
   
   def send_mode_name

@@ -7,7 +7,7 @@ class Admin::AreasController < Admin::BaseController
     
   def index
     params[:search] ||= {}
-    params[:search][:meta_sort] ||= 'name'
+    params[:search][:meta_sort] ||= 'city'
     @search = Area.search(params[:search])
     @areas = @search.all
     @new_posts = Area.newposts_count

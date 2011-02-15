@@ -3,21 +3,24 @@
   
   %h2 #{@area.name}: Issues
 
-  %table
-    %tr
-      %th Subject
-      %th Scheduled At
-      %th Sent at
-    - @area.issues.each do |issue|
+  - if @area.issues.empty?
+    %p This area has no issues yet.
+  - else
+    %table
       %tr
-        %td= link_to "Issue ##{issue.number}", edit_admin_area_issue_path(@area, issue)
-        %td
-          - if issue.scheduled_at.present?
-            = issue.scheduled_at.to_s(:long)
-          - else
-            N/A        
-        %td
-          - if issue.sent_at.present?
-            = issue.sent_at.to_s(:long)
-          - else
-            N/A
+        %th Subject
+        %th Scheduled At
+        %th Sent at
+      - @area.issues.each do |issue|
+        %tr
+          %td= link_to "Issue ##{issue.number}", edit_admin_area_issue_path(@area, issue)
+          %td
+            - if issue.scheduled_at.present?
+              = issue.scheduled_at.to_s(:long)
+            - else
+              N/A        
+          %td
+            - if issue.sent_at.present?
+              = issue.sent_at.to_s(:long)
+            - else
+              N/A
