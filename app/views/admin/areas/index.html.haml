@@ -12,10 +12,7 @@
       
     - @areas.each do |area|
       %tr{:class => @new_posts[area.id] && @new_posts[area.id] > 0 ? 'important' : ''}
-        %td
-          - if !area.published?
-            %em [draft]
-          = link_to area.name, [:edit_borders, :admin, area]
+        %td= link_to area.name, [:edit_borders, :admin, area]
         %td= area.location
         %td.center= link_to area.memberships_count.to_i, [:admin, area, :memberships]
         %td.center= area.households.to_i

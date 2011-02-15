@@ -4,8 +4,7 @@ class AreaTest < ActiveSupport::TestCase
 
   def test_create_defaults
     area = Area.create(
-      :name => 'Test Area',
-      :slug => 'test-area'
+      :name => 'Test Area'
     )
     assert_created area
     assert_equal Area::SEND_MODES[:immediate], area.send_mode
@@ -14,21 +13,20 @@ class AreaTest < ActiveSupport::TestCase
   def test_create_requirements
     area = Area.create
     assert_errors_on area, :name
+    Area.create(:name => 'Test NF', :slug => 'test-nf')
+    assert_no_difference 'Area.count' do
+      ['test-nf', 'test nf', 'test#NF'].each do |slug|
+        area = Area.create(:name => 'Test NF 2', :slug => slug)
+        assert_errors_on area, :slug
+      end
+    end
   end
   
   def test_create_dummy
     area = an Area
     assert_created area
   end
-  
-  def test_update_requirements
-    area = an Area
-    assert_created area
-    area.published = true
-    assert !area.valid?
-    assert_errors_on area, :slug
-  end
-  
+
   def test_cascade_deletions
     area = an Area
     assert_created area

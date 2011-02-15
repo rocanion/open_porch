@@ -29,14 +29,12 @@ class Area < ActiveRecord::Base
   validates :name,
     :presence => {:message => 'Please enter the name of this area'}
   validates :slug,
-    :presence => true,
     :uniqueness  => true,
-    :if => :published?
-  
+    :format => { :with => /^[A-Za-z0-9_-]+$/ },
+    :allow_nil => true
   validates :send_mode,
     :presence => true,
-    :inclusion => SEND_MODES.values,
-    :if => :published?
+    :inclusion => SEND_MODES.values
     
   # == Scopes ===============================================================
   
