@@ -15,16 +15,16 @@ Jeweler::Tasks.new do |gem|
   gem.description = ''
   gem.email = "jack@theworkinggroup.ca"
   gem.authors = ['The Working Group Inc']
-  gem.add_dependency('rails', '3.0.3')
-  gem.add_dependency('pg', '0.10.1')
-  gem.add_dependency('haml', '3.0.25')
-  gem.add_dependency('spatial_adapter', '1.2.0')
-  gem.add_dependency('wristband', '1.0.2')
-  gem.add_dependency('formatted_form', '1.0.1')
-  gem.add_dependency('geokit', '1.5.0')
-  gem.add_dependency('active_link_to', '0.0.6')
-  gem.add_dependency('meta_where', '1.0.1')
-  gem.add_dependency('meta_search', '1.0.1')
+  gem.add_dependency('rails', '>= 3.0.4')
+  gem.add_dependency('pg', '>= 0.10.1')
+  gem.add_dependency('haml', '>= 3.0.25')
+  gem.add_dependency('spatial_adapter', '>= 1.2.0')
+  gem.add_dependency('wristband', '>= 1.0.4')
+  gem.add_dependency('formatted_form', '>= 1.0.1')
+  gem.add_dependency('geokit', '>= 1.5.0')
+  gem.add_dependency('active_link_to', '>= 0.0.6')
+  gem.add_dependency('meta_where', '>= 1.0.1')
+  gem.add_dependency('meta_search', '>= 1.0.1')
   gem.add_dependency('will_paginate', "~> 3.0.pre2")
   
 end
