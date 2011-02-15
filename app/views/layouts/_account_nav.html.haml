@@ -7,5 +7,5 @@
     %li{:class => active_class(user_path)}
       = link_to 'Your Profile', user_path
     %li.right= link_to 'logout', logout_path
-    - if current_user.is_admin? || current_user.is_content_manager?
+    - if current_user.is_admin?
       %li.right= link_to  'admin', admin_path

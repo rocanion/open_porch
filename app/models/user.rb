@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   
   # == Constants ============================================================
   
-  ROLES = %w{admin regular_user content_manager}
+  ROLES = %w{admin regular_user}
   
   # == Attributes =====================================================
   

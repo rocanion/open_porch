@@ -7,7 +7,7 @@ class UserAuthorityCheck < AuthorityCheck
   end
   
   def manage_areas?
-    unless (@user.is_admin? || @user.is_content_manager?)
+    unless (@user.is_admin?)
       fail!("You don't have permission do manage users.") 
     end
   end
