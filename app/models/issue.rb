@@ -35,6 +35,11 @@ class Issue < ActiveRecord::Base
   def send!
     UserMailer.new_issue(self).deliver
     self.update_attribute(:sent_at, Time.now.utc)
+    
+    # Create a new issue for the area if there are any new posts left
+    if self.area.posts.in_issue(nil).count > 0
+      self.area.issues.create
+    end
   end
   
 protected

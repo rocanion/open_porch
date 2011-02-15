@@ -1,16 +1,16 @@
 GIT
   remote: git@github.com:twg/formatted_form.git
-  revision: da36db68070d083285b34137ebd1d0183e00edc2
+  revision: 3f49fdb1a750276ce6c95769c32ebda0d7fa663a
   specs:
-    formatted_form (1.0.0)
+    formatted_form (1.0.1)
 
 GIT
   remote: git@github.com:twg/wristband.git
-  revision: 6ed0af9a97d0063e18ce6ac9dc80557ae0da4b51
+  revision: 3b98e609fea4827dc4e7c4611b7d18d11af2cb7a
   specs:
-    wristband (1.0.2)
+    wristband (1.0.3)
       formatted_form (>= 1.0.0)
-      formatted_form (= 1.0.0)
+      formatted_form
       haml (= 3.0.25)
       haml (>= 3.0.25)
       rails (>= 3.0.3)
@@ -49,7 +49,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
-    arel (2.0.7)
+    arel (2.0.8)
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -78,8 +78,7 @@ GEM
       activesupport (~> 3.0.2)
       arel (~> 2.0.2)
     mime-types (1.16)
-    mocha (0.9.11)
-      rake
+    mocha (0.9.12)
     pg (0.10.1)
     polyglot (0.3.1)
     rack (1.2.1)
