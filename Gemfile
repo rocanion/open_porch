@@ -16,7 +16,6 @@ gem 'whenever', '0.6.2', :require => false
 group :test do
   gem "bundler"
   gem "jeweler"
-  gem "rcov"
   gem 'test_dummy'
   gem 'faker'
   gem 'mocha'

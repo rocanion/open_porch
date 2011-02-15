@@ -15,5 +15,13 @@ class UserMailer < ActionMailer::Base
       :to => issue.area.users.collect(&:email)
     )
   end
+
+  def email_verification(user)
+    @user = user
+    mail(
+      :subject => "[OpenPorch] Your account has been created. Please verify your email address",
+      :to => user.email
+    )
+  end
   
 end

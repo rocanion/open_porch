@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
   # == Extensions ===========================================================
 
 
-  wristband :has_authorities => true, :roles => ROLES
+  wristband :roles => ROLES,
+            :has_authorities => true
 
   # == Validations ==========================================================
   
@@ -111,6 +112,14 @@ class User < ActiveRecord::Base
     self.areas.include?(area)
   end
   
+  def set_email_verification_key
+    self.email_verification_key = Wristband::Support.random_salt.gsub(/[^A-Za-z0-9]/,'')
+  end
+  
+  def is_verified?
+    !!self.verified_at?
+  end 
+
 protected
   def assign_role
     self.role = 'regular_user'
@@ -119,5 +128,5 @@ protected
   def password_required?
     self.new_record?
   end
-  
+
 end

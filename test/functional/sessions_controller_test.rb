@@ -4,9 +4,12 @@ class SessionsControllerTest < ActionController::TestCase
   def setup
     @regular_user = a User
     assert_created @regular_user
-
-    @regular_user.update_attribute(:role, 'regular_user')
+    
+    @regular_user.set_email_verification_key
+    @regular_user.role = 'regular_user'
+    @regular_user.save!
     assert !@regular_user.is_admin?
+    assert !@regular_user.is_verified?
 
     area = an Area
     assert_created area
@@ -26,6 +29,9 @@ class SessionsControllerTest < ActionController::TestCase
   end
   
   def test_should_login_with_email_and_redirect
+    @regular_user.update_attribute(:verified_at, Time.now)
+    assert @regular_user.is_verified?
+    
     post :create, :session_user => { :email => @regular_user.email, :password => @regular_user.password }
     assert_equal "Welcome, you are now logged in.", flash[:notice]
     assert_equal session[:user_id], @regular_user.id
@@ -48,6 +54,18 @@ class SessionsControllerTest < ActionController::TestCase
     assert assigns(:session_user).errors[:email].include?("The email address you entered is not valid")
     assert assigns(:session_user).errors[:email].include?("The email address you entered is to short")
     assert assigns(:session_user).errors[:password].include?("The password you entered is too short (minimum is 4 characters)")
+  end
+  
+  def test_login_with_email_not_verified
+    post :create, :session_user => { :email => @regular_user.email, :password => @regular_user.password }
+    assert_equal "Login failed. Did you mistype?", flash[:alert]
+    assert_nil session[:user]
+    assert_response :success
+    assert_template 'new'
+    assert !@controller.logged_in?
+    assert_nil @controller.current_user
+    assert_errors_on assigns(:session_user), :email
+    assert assigns(:session_user).errors[:email].include?("This email address needs to be verified before you can login. <a href='/resend-email-verification/#{@regular_user.email_verification_key}'>Resend verification</a>")
   end
   
   def test_new_redirects_if_logged_in
@@ -79,7 +97,7 @@ class SessionsControllerTest < ActionController::TestCase
     assert_equal @controller.current_user, @regular_user
     
     get :destroy
-    assert_redirected_to login_path
+    assert_redirected_to root_path
     assert_nil cookies[:login_token]
     assert_nil session[:user_id]
     @regular_user.reload
@@ -91,6 +109,9 @@ class SessionsControllerTest < ActionController::TestCase
   # >> Remember me -----------------------------------------------------------
 
   def test_remember_me
+    @regular_user.update_attribute(:verified_at, Time.now)
+    assert @regular_user.is_verified?
+    
     post :create, :session_user => { :email => @regular_user.email, :password => @regular_user.password , :remember_me => '1' }
     assert_equal request.session[:user_id], @regular_user.id
     assert_not_nil assigns(:session_user).user.remember_token

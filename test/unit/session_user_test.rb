@@ -26,6 +26,9 @@ class SessionUserTest < ActiveSupport::TestCase
   
   def test_successful_authentication
     user = a User
+    user.update_attribute(:verified_at, Time.now)
+    assert user.is_verified?
+    
     session_user = SessionUser.create(
       :email => user.email,
       :password => user.password
@@ -46,5 +49,17 @@ class SessionUserTest < ActiveSupport::TestCase
     assert_equal session_user.email, user.email
     assert_equal session_user.password, '-bugus-'
     assert_nil session_user.user
+  end
+  
+  def test_unverified_email
+    user = a User
+    assert !user.is_verified?
+    
+    session_user = SessionUser.create(
+      :email => user.email,
+      :password => user.password
+    )
+    assert_errors_on session_user, :email
+    assert session_user.errors[:email].include?("This email address needs to be verified before you can login. <a href='/resend-email-verification/#{session_user.user.email_verification_key}'>Resend verification</a>")
   end
 end

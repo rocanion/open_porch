@@ -50,7 +50,17 @@ class SessionUser
   end
   
   def save
-    @user = User.authenticate(self.email, self.password) if self.valid?
+    return unless self.valid?
+    if @user = User.authenticate(self.email, self.password) 
+      if @user.is_verified?
+        return @user
+      else
+        @user.email_verification_key ||= @user.set_email_verification_key
+        @user.save!
+        self.errors.add(:email, "This email address needs to be verified before you can login. <a href='/resend-email-verification/#{@user.email_verification_key}'>Resend verification</a>".html_safe)
+        return false
+      end
+    end
   end
   
   def to_key
