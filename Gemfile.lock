@@ -135,4 +135,4 @@ DEPENDENCIES
   test_dummy
   whenever (= 0.6.2)
   will_paginate (~> 3.0.pre2)
-  wristband!
+  wristband (= 1.0.4)!
