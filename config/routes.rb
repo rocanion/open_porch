@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   resources :registrations
   resource  :user
+  get '/verify-email/:email_verification_key' => 'users#verify_email', :as => :verify_email
+  get '/resend-email-verification/:email_verification_key' => 'users#resend_email_verification', :as => :resend_email_verification
+  
   
   resources :areas, :only => :show do
     resources :posts, :only => [:new, :create]

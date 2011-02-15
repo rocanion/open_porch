@@ -11,16 +11,18 @@ class PasswordsControllerTest < ActionController::TestCase
     user = a User
     assert_created user
     assert_difference 'ActionMailer::Base.deliveries.size', 1 do
-      post :create, :email => user.email
-      assert_equal 'Email to reset password successfully sent.', flash[:notice]
-      assert_redirected_to login_path
-      user.reload
-      assert_not_nil user.perishable_token
+      assert_emails 1 do
+        post :create, :email => user.email
+        assert_equal 'Email to reset password successfully sent.', flash[:notice]
+        assert_redirected_to login_path
+        user.reload
+        assert_not_nil user.perishable_token
+      end
     end
     response = ActionMailer::Base.deliveries.last
     assert_equal 2, response.parts.length
     response.parts.each do |part|
-      assert_match /#{user.perishable_token}/, part.body.to_s
+      assert_match user.perishable_token, part.body.to_s
     end
     assert_equal user.email, response.to[0]
   end
