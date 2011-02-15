@@ -1,11 +1,10 @@
-require File.expand_path('db/migrate/20110204173301_add_published_to_areas.rb', Rails.root)
-
 class RemovePublishedFromAreas < ActiveRecord::Migration
   def self.up
-    AddPublishedToAreas.down
+    remove_column :areas, :published
   end
 
   def self.down
-    AddPublishedToAreas.up
+    add_column :areas, :published, :boolean, :default => false, :null => false
+    add_index :areas, :published
   end
 end
