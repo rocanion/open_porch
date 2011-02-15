@@ -1,10 +1,4 @@
 GIT
-  remote: git@github.com:twg/formatted_form.git
-  revision: 3f49fdb1a750276ce6c95769c32ebda0d7fa663a
-  specs:
-    formatted_form (1.0.1)
-
-GIT
   remote: git@github.com:twg/wristband.git
   revision: 2b549323cc4e9f946c9f33b7b847faa6f5911b37
   specs:
@@ -55,6 +49,7 @@ GEM
       abstract (>= 1.0.0)
     faker (0.9.5)
       i18n (~> 0.4)
+    formatted_form (1.0.1)
     geokit (1.5.0)
     git (1.2.5)
     haml (3.0.25)
@@ -121,7 +116,7 @@ DEPENDENCIES
   active_link_to (= 0.0.6)
   bundler
   faker
-  formatted_form!
+  formatted_form (>= 1.0.1)
   geokit (= 1.5.0)
   haml (= 3.0.25)
   jeweler
@@ -135,4 +130,4 @@ DEPENDENCIES
   test_dummy
   whenever (= 0.6.2)
   will_paginate (~> 3.0.pre2)
-  wristband (= 1.0.4)!
+  wristband (>= 1.0.4)!
