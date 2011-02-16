@@ -34,8 +34,10 @@ class AreaTest < ActiveSupport::TestCase
     assert_created membership
     post = area.posts.create_dummy  
     assert_created post
+    activity = area.activities.create_dummy
+    assert_created activity
     area.reload
-    assert_difference ['Area.count', 'Membership.count', 'Post.count', 'Issue.count'], -1 do
+    assert_difference ['Area.count', 'Membership.count', 'Post.count', 'Issue.count', 'AreaActivity.count'], -1 do
       area.destroy
     end
   end
@@ -47,4 +49,16 @@ class AreaTest < ActiveSupport::TestCase
     assert_equal :batched, area.send_mode_name
   end
   
+  def test_record_activity_for
+    area = an Area
+    assert_equal 0, area.activities.count
+    assert_difference 'AreaActivity.count', 1 do
+      activity = area.record_activity_for!(:quitters)
+      assert_equal 1, activity.quitters_count
+    end
+    assert_no_difference 'AreaActivity.count' do
+      activity = area.record_activity_for!(:quitters)
+      assert_equal 2, activity.quitters_count
+    end
+  end
 end

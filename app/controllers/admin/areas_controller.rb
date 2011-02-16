@@ -9,7 +9,7 @@ class Admin::AreasController < Admin::BaseController
     params[:search] ||= {}
     params[:search][:meta_sort] ||= 'city'
     @search = Area.search(params[:search])
-    @areas = @search.all
+    @areas = @search.paginate(:page => params[:page])
     @new_posts = Area.newposts_count
   end
   

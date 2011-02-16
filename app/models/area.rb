@@ -23,6 +23,9 @@ class Area < ActiveRecord::Base
     :dependent => :destroy
   has_many :issues,
     :dependent => :destroy
+  has_many :activities,
+    :dependent => :destroy,
+    :class_name => 'AreaActivity'
   
   # == Validations ==========================================================
   
@@ -112,6 +115,12 @@ class Area < ActiveRecord::Base
   
   def current_issue
     self.issues.where(:sent_at => nil).first
+  end
+  
+  def record_activity_for!(field)
+    activity = self.activities.find_or_create_by_day(Time.now.utc.to_date)
+    activity.increment!([field, 'count'].join('_'))
+    activity.reload
   end
   
 protected
