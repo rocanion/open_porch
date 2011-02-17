@@ -10,5 +10,5 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :area, 
     :counter_cache => true
-  
+
 end

@@ -3,7 +3,7 @@
   %head
     %meta{"http-equiv" => "Content-Type", "content" => "text/html;charset=utf-8"}/
     = render(:partial => 'layouts/head')
-    = javascript_include_tag 'jquery-ui.min'
+    = javascript_include_tag 'jquery-ui.min', 'highcharts', 'highcharts_init'
     
   %body
     .wrapper{:class => "#{params[:controller]}_#{params[:action]}".idify}
