@@ -89,7 +89,7 @@ class User < ActiveRecord::Base
   end
   
   def self.roles_for_select
-    ROLES.collect{|r| [r.titleize, r]}
+    ROLES.collect{|r| [r.humanize, r]}
   end
 
   # == Instance Methods =====================================================

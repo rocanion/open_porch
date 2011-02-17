@@ -51,18 +51,41 @@ class Admin::UsersControllerTest < ActionController::TestCase
   
   def test_update_from_users
     user = a User
-    put :update, :id => user, :user => { :email => 'user@domain.com' }, :area_id => nil
+    assert_not_equal 'user@domain.com', user.email
+    assert_not_equal 'Test', user.first_name
+    assert_not_equal 'Name', user.last_name
+    assert_not_equal 'Test Address', user.address
+    assert_not_equal 'Test City', user.city
+    assert_not_equal 'Test State', user.state
+    put :update, :id => user, :user => user_params, :area_id => nil
     user.reload
+    assert_equal flash[:notice], 'User has been successfully updated.'
     assert_equal 'user@domain.com', user.email
+    assert_equal 'Test', user.first_name
+    assert_equal 'Name', user.last_name
+    assert_equal 'Test Address', user.address
+    assert_equal 'Test City', user.city
+    assert_equal 'Test State', user.state
     assert_redirected_to admin_users_path
   end
   
   def test_update_from_areas
     area = an Area
     user = a User
-    put :update, :id => user, :user => { :email => 'user@domain.com' }, :area_id => area
-    user.reload
-    assert_equal 'user@domain.com', user.email
+    assert_not_equal 'user@domain.com', user.email
+    assert_not_equal 'Test', user.first_name
+    assert_not_equal 'Name', user.last_name
+    assert_not_equal 'Test Address', user.address
+    assert_not_equal 'Test City', user.city
+    assert_not_equal 'Test State', user.state
+    put :update, :id => user, :user => user_params, :area_id => area
+    assert_equal flash[:notice], 'User has been successfully updated.'
+    assert_equal 'user@domain.com', assigns(:user).email
+    assert_equal 'Test', assigns(:user).first_name
+    assert_equal 'Name', assigns(:user).last_name
+    assert_equal 'Test Address', assigns(:user).address
+    assert_equal 'Test City', assigns(:user).city
+    assert_equal 'Test State', assigns(:user).state
     assert_redirected_to admin_area_memberships_path(area)
   end
   
@@ -71,7 +94,10 @@ class Admin::UsersControllerTest < ActionController::TestCase
     put :update, :id => user, :user => { :email => '' }
     assert_response :success
     assert_template :edit
-    assert_not_nil user.email
+    assert_not_nil assigns(:user).email
+    assert assigns(:user).errors[:email].include?("Please enter your email address")
+    assert assigns(:user).errors[:email].include?("The email address you entered is to short")
+    assert assigns(:user).errors[:email].include?("The email address you entered is not valid")
   end
   
   def test_destroy
@@ -81,5 +107,16 @@ class Admin::UsersControllerTest < ActionController::TestCase
     end
     assert_redirected_to admin_users_path
   end
-
+  
+protected
+  def user_params(options = {})
+    {
+      :email => 'user@domain.com', 
+      :first_name => 'Test', 
+      :last_name => 'Name', 
+      :address => 'Test Address',
+      :city => 'Test City',
+      :state => 'Test State'
+    }.merge(options)
+  end
 end
