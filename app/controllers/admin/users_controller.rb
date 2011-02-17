@@ -4,6 +4,8 @@ class Admin::UsersController < Admin::BaseController
     :except => [:index]
   
   def index
+    params[:search] ||= {}
+    params[:search][:meta_sort] ||= 'created_at.desc'
     @search = User.search(params[:search])
     @users = @search.paginate(:page => params[:page])
   end

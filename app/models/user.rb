@@ -87,6 +87,10 @@ class User < ActiveRecord::Base
   def self.per_page
     100
   end
+  
+  def self.roles_for_select
+    ROLES.collect{|r| [r.titleize, r]}
+  end
 
   # == Instance Methods =====================================================
   

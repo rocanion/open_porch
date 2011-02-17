@@ -1,17 +1,19 @@
 .columns
   %h2 Users
     
-  = will_paginate @accounts
+  = will_paginate @users
   = form_for @search, :url => [:admin, :users], :html => {:method => :get} do |f|
-    = f.label :email_or_name_search, 'Find by name or email'
+    = f.label :email_or_name_search, 'Search'
     = f.text_field :email_or_name_search, :style => 'width: 150px'
+    = f.select :role_equals, User.roles_for_select, :include_blank => 'All Roles'
     = f.submit 'Find'
 
   %table
     %tr
       %th Name
       %th Email
-      %th Role
+      %th= sort_link @search, :role
+      %th= sort_link @search, :created_at
       %th
       
     - @users.each do |user|
@@ -19,7 +21,8 @@
         %td= link_to user.full_name, [:edit, :admin, user]
         %td= user.email
         %td= user.role.humanize
+        %td= user.created_at
         %td
           = link_to 'delete', admin_user_path(user), :method => :delete, :confirm => 'Are you sure you want to delete this user?'
           
-  = will_paginate @accounts
+  = will_paginate @users
