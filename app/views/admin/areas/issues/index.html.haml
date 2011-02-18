@@ -2,16 +2,16 @@
   = render :partial => 'admin/areas/nav'
   
   %h2 #{@area.name}: Issues
-
-  - if @area.issues.empty?
+  = will_paginate @issues
+  - if @issues.empty?
     %p This area has no issues yet.
   - else
     %table
       %tr
-        %th Subject
+        %th= sort_link @search, :number
         %th Scheduled At
         %th Sent at
-      - @area.issues.each do |issue|
+      - @issues.each do |issue|
         %tr
           %td= link_to "Issue ##{issue.number}", edit_admin_area_issue_path(@area, issue)
           %td
@@ -24,3 +24,4 @@
               = issue.sent_at.to_s(:long)
             - else
               N/A
+  = will_paginate @issues
