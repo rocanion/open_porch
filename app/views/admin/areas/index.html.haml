@@ -4,35 +4,38 @@
 
     $(document).ready(function() {
       draw_chart({
-        months : #{['mon', 'tue', 'wed', 'thu'].to_json}, 
+        days : #{@activities.collect{|d| d.day.strftime('%d<br/>%m')}.to_json}, 
         series : [
           {
             name: 'New Users',
-            data : #{[8,6,4,2].to_json}
+            data : #{@activities.collect{|a| a.sum_new_users_count.to_i}.to_json}
           }, 
           {
             name: 'Quitters',
-            data : #{[4,3,2,1].to_json}
+            data : #{@activities.collect{|a| a.sum_quitters_count.to_i}.to_json}
           },
           {
             name: 'New Posts',
-            data : #{[1,2,3,4].to_json}
+            data : #{@activities.collect{|a| a.sum_new_posts_count.to_i}.to_json}
           },
           {
             name: 'Issues Published',
-            data : #{[2,4,6,8].to_json}
+            data : #{@activities.collect{|a| a.sum_issues_published_count.to_i}.to_json}
           }
         ]
       });
     })   
-  #chart-container{:style=>"width: 100%; height: 400px"}
   
   = will_paginate @areas
   
   = form_for @search, :url => [:admin, :areas], :html => {:method => :get} do |f|
-    = f.label :name_or_city_or_state_contains, 'Find by name'
-    = f.text_field :name_or_city_or_state_contains, :style => 'width: 150px'
+    = f.label :full_name_search, 'Find by name'
+    = f.text_field :full_name_search, :style => 'width: 150px'
+    = text_field_tag :activity_start_date,  params[:activity_start_date], :style => 'width: 150px', :type => :date
+    = text_field_tag :activity_end_date,    params[:activity_end_date], :style => 'width: 150px', :type => :date
     = f.submit 'Find'
+  
+  #chart-container{:style=>"width: 100%; height: 400px"}
   
   %table
     %tr

@@ -46,6 +46,15 @@ class Area < ActiveRecord::Base
     order("ST_Distance(border, ST_GeomFromEWKT('SRID=4326;POINT(#{point.text_representation})'))")
   }
   
+  # Search Scope
+  scope :full_name_search,
+    lambda {|str|
+      like_str = "%#{str}%"
+      id = str
+      where("((name || ', ' || city || ', ' || state) ILIKE ?)", like_str)
+    }
+  search_methods :full_name_search
+  
   # == Callbacks ============================================================
   
   after_create :initialize_issue_numbers
@@ -118,9 +127,14 @@ class Area < ActiveRecord::Base
   end
   
   def record_activity_for!(field)
-    activity = self.activities.find_or_create_by_day(Time.now.utc.to_date)
-    activity.increment!([field, 'count'].join('_'))
-    activity.reload
+    field = field.to_s
+    if AreaActivity::TRACKABLE.include?(field)
+      activity = self.activities.find_or_create_by_day(Time.now.utc.to_date)
+      activity.increment!([field, 'count'].join('_'), 1)
+      activity.reload
+    else
+      raise "Cannot find field in the list of trackable fields. Currently tracking: #{AreaActivity::TRACKABLE.join(', ')}"
+    end
   end
   
 protected

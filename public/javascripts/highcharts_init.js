@@ -9,10 +9,11 @@ function draw_chart(options) {
      },
      title: null,
      xAxis: {
-        categories: options.months
+        categories: options.days
      },
      yAxis: {
-        title: { text: 'Count' }
+        title: { text: 'Count' },
+        min: 0
      },
      tooltip: {
         formatter: function() {

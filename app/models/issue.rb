@@ -40,6 +40,8 @@ class Issue < ActiveRecord::Base
     if self.area.posts.in_issue(nil).count > 0
       self.area.issues.create
     end
+    
+    self.area.record_activity_for!(:issues_published)
   end
   
 protected

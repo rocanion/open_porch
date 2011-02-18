@@ -14,7 +14,7 @@ class MembershipTest < ActiveSupport::TestCase
   
   def test_create_dummy
     membership = Membership.create_dummy
-    assert_created membership
+    assert_created membership      
   end
   
 end

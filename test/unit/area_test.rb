@@ -34,8 +34,8 @@ class AreaTest < ActiveSupport::TestCase
     assert_created membership
     post = area.posts.create_dummy  
     assert_created post
-    activity = area.activities.create_dummy
-    assert_created activity
+    # Note: Creating a membership and post will also create an AreaActivity,
+    # so no need to create that separately.
     area.reload
     assert_difference ['Area.count', 'Membership.count', 'Post.count', 'Issue.count', 'AreaActivity.count'], -1 do
       area.destroy

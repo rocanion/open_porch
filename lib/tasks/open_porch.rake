@@ -7,4 +7,8 @@ namespace :open_porch do
     end
   end
   
+  desc "Load Activites"
+  task :load_activities => :environment do
+  end
+  
 end
