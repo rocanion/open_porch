@@ -1,6 +1,12 @@
-class PostsController < ApplicationController
-  before_filter :load_area
-  before_filter :build_post
+class Area::PostsController < Area::BaseController
+  before_filter :build_post,
+    :only => [:new, :create]
+  
+  def index
+    params[:search] ||= {}
+    @search = @area.posts.order('created_at DESC').joins(:issue).where('sent_at IS NOT NULL').search(params[:search])
+    @posts = @search.paginate(:page => params[:page])
+  end
   
   def new
   end
@@ -13,12 +19,6 @@ class PostsController < ApplicationController
   end
 
 protected
-
-  def load_area
-    @area = current_user.areas.find(params[:area_id])
-  rescue ActiveRecord::RecordNotFound
-    render :text => 'Area not found', :status => 404
-  end
   
   def build_post
     @post = @area.posts.new(params[:post])

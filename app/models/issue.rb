@@ -25,6 +25,10 @@ class Issue < ActiveRecord::Base
   scope :scheduled_before, lambda { |t| 
     where(['sent_at IS NULL AND scheduled_at <= ?', t.utc])
   }
+  
+  scope :in_month, lambda { |m|
+    where(["to_char(sent_at, 'YYYY-MM') = ?", m])
+  }
 
   # == Callbacks ============================================================
   
@@ -42,6 +46,10 @@ class Issue < ActiveRecord::Base
     end
     
     self.area.record_activity_for!(:issues_published)
+  end
+  
+  def to_params
+    self.number
   end
   
 protected

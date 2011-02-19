@@ -6,9 +6,5 @@ namespace :open_porch do
       issue.send!
     end
   end
-  
-  desc "Load Activites"
-  task :load_activities => :environment do
-  end
-  
+    
 end

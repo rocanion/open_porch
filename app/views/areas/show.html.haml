@@ -8,21 +8,7 @@
       %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
       %h3 Approx. households within boundary: <strong>#{@area.households}</strong>
     
-    - if logged_in?
-      - if @issue.present?
-        %h2 Issue #{@issue.number} - #{@issue.sent_at.to_date.to_s(:long)}
-        %ul.list
-          - @issue.posts.each do |post|
-            %li
-              %h4= post.title
-              %p.meta
-                By <strong>#{post.user.full_name}</strong>, #{post.user.address}
-                %br/
-                #{post.created_at.to_s(:long)}
-              = simple_format post.content
-      - else
-        %p No issues found
-    - else
+    - unless logged_in?
       %h3 
         Only registered members can read and participate in
         %br/
@@ -35,13 +21,16 @@
         = f.submit 'Log In'
 
   - if @area.border.present?
-    .right_column
+    .right_column      
+      = render :partial => 'area/posts/posts_search_form'
+      
       = content_for :head do
         = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
         = javascript_include_tag 'google_maps'
-
 
       = content_for :doc_ready do
         initialize_gmap(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y}, {}, #{@area.bounds.to_json});
         add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
       #map_canvas{:style => 'width:280px; height:400px'}
+      
+      
