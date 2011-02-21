@@ -10,10 +10,10 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
   s.date = %q{2011-02-21}
-  s.default_executable = %q{open_porch_import}
+  s.default_executable = %q{open_porch_engine}
   s.description = %q{}
   s.email = %q{jack@theworkinggroup.ca}
-  s.executables = ["open_porch_import"]
+  s.executables = ["open_porch_engine"]
   s.extra_rdoc_files = [
     "README.md"
   ]
@@ -116,6 +116,7 @@ Gem::Specification.new do |s|
     "app/views/users/edit.html.haml",
     "app/views/users/new.html.haml",
     "app/views/users/show.html.haml",
+    "bin/open_porch_engine",
     "config.ru",
     "config/application.rb",
     "config/boot.rb",
