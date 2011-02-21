@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PostsControllerTest < ActionController::TestCase
+class Area::PostsControllerTest < ActionController::TestCase
   
   def setup
     login_as(:regular_user)

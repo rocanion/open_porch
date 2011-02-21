@@ -2,7 +2,11 @@
   %ul.tabs
     %li{:class => active_class(area_path(current_user.areas.first), :when => :self_only ) }
       = link_to 'Your Neighborhood Forum', area_path(current_user.areas.first)
-    %li{:class => active_class(area_posts_path(current_user.areas.first),  :when => :self ) }
+    %li{:class => active_class(area_current_issue_path(current_user.areas.first), :when => :self_only ) }
+      = link_to 'Current Issue', area_current_issue_path(current_user.areas.first)
+    %li{:class => active_class(area_issues_path(current_user.areas.first), :when => :self ) }
+      = link_to 'Archive', area_issues_path(current_user.areas.first)
+    %li{:class => active_class(new_area_post_path(current_user.areas.first),  :when => :self_only ) }
       = link_to 'Post a Message', new_area_post_path(current_user.areas.first)
     %li{:class => active_class(user_path)}
       = link_to 'Your Profile', user_path

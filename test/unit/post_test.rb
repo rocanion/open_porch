@@ -20,7 +20,7 @@ class PostTest < ActiveSupport::TestCase
   end
   
   def test_create_dummy
-    area = Area.create_dummy(:send_mode => :batched)
+    area = Area.create_dummy(:send_mode => 'batched')
     assert_created area
     assert area.issues.empty?
 
@@ -38,5 +38,5 @@ class PostTest < ActiveSupport::TestCase
       end
     end
   end
-  
+
 end

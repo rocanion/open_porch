@@ -2,11 +2,6 @@ require 'test_helper'
 
 class MembershipTest < ActiveSupport::TestCase
   
-  def test_create_defaults
-    membership = Membership.create_dummy
-    assert_created membership
-  end
-  
   def test_validations
     # Uniqueness
     membership = Membership.create_dummy
@@ -18,8 +13,8 @@ class MembershipTest < ActiveSupport::TestCase
   end
   
   def test_create_dummy
-    membership = a Membership
-    assert_created membership
+    membership = Membership.create_dummy
+    assert_created membership      
   end
   
 end

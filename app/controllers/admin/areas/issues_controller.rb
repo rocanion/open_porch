@@ -5,7 +5,7 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
     :except => [:index, :new, :show]
   
   def index
-    @issues = @area.issues.order("number DESC")
+    @issues = @area.issues.order("number DESC").paginate(:page => params[:page])
   end
   
   def new

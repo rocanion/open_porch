@@ -6,5 +6,5 @@ namespace :open_porch do
       issue.send!
     end
   end
-  
+    
 end

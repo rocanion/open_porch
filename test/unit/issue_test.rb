@@ -148,5 +148,5 @@ class IssueTest < ActiveSupport::TestCase
     assert_equal 2, issue.number
     assert_equal 2, area.issue_number.current
   end
-  
+
 end

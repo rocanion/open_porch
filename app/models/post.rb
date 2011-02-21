@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
   
   # == Callbacks ============================================================
 
-  after_create :create_issue
+  after_create :create_issue, :record_activity_for_new_post
 
   # == Scope ================================================================
   
@@ -36,5 +36,9 @@ protected
     elsif self.area.send_mode?(:batched) && self.area.current_issue.blank?
       self.area.issues.create
     end
+  end
+  
+  def record_activity_for_new_post
+    self.area.record_activity_for!(:new_posts)
   end
 end
