@@ -26,7 +26,7 @@ class Area < ActiveRecord::Base
     :presence => {:message => 'Please enter the name of this area'}
   validates :slug,
     :uniqueness  => true,
-    :format => { :with => /^[A-Za-z0-9_-]+$/ },
+    :format => { :with => /^[\w.-]+$/ },
     :allow_nil => true
   validates :send_mode,
     :presence => true,
