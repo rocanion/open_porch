@@ -5,8 +5,7 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
     :except => [:index, :new, :show]
   
   def index
-    @issues = @area.issues
-    
+    @issues = @area.issues.order("number DESC")
   end
   
   def new

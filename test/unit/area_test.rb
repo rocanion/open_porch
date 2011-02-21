@@ -8,7 +8,7 @@ class AreaTest < ActiveSupport::TestCase
       :slug => 'test-area'
     )
     assert_created area
-    assert_equal Area::SEND_MODES[:immediate], area.send_mode
+    assert_equal 'immediate', area.send_mode
   end
   
   def test_create_requirements
@@ -40,13 +40,6 @@ class AreaTest < ActiveSupport::TestCase
     assert_difference ['Area.count', 'Membership.count', 'Post.count', 'Issue.count'], -1 do
       area.destroy
     end
-  end
-  
-  def test_send_mode_name
-    area = an Area
-    assert_equal :immediate, area.send_mode_name
-    area.send_mode = Area::SEND_MODES[:batched]
-    assert_equal :batched, area.send_mode_name
   end
   
 end

@@ -1,15 +1,8 @@
 class Area < ActiveRecord::Base
   
-  # == Attributes ===========================================================
-  
   # == Constants ============================================================
   
-  SEND_MODES = {
-    :immediate  => 0,
-    :batched    => 1
-  }.freeze
-  
-  # == Extensions ===========================================================
+  SEND_MODES = %w{immediate batched}
   
   # == Relationships ========================================================
   
@@ -35,7 +28,7 @@ class Area < ActiveRecord::Base
   
   validates :send_mode,
     :presence => true,
-    :inclusion => SEND_MODES.values,
+    :inclusion => SEND_MODES,
     :if => :published?
     
   # == Scopes ===============================================================
@@ -47,6 +40,7 @@ class Area < ActiveRecord::Base
   
   # == Callbacks ============================================================
   
+  before_validation :set_send_mode, :on => :create
   after_create :initialize_issue_numbers
   
   # == Class Methods ========================================================
@@ -100,24 +94,25 @@ class Area < ActiveRecord::Base
     @border_coordinates ||= border.rings.first.points.collect{|point| "new google.maps.LatLng(#{point.x}, #{point.y})"}.join(',')
   end
   
-  def send_mode?(mode)
-    self.send_mode.to_i == SEND_MODES[mode]
-  end
-  
   def location
     [self.city, self.state].compact.join(', ')
-  end
-  
-  def send_mode_name
-    SEND_MODES.invert[self.send_mode]
   end
   
   def current_issue
     self.issues.where(:sent_at => nil).first
   end
   
+  def send_mode?(mode)
+    self.send_mode == mode.to_s
+  end
+  
+  
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)
+  end
+  
+  def set_send_mode
+    self.send_mode ||= 'immediate'
   end
 end

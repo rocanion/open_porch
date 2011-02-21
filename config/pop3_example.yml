@@ -1,0 +1,7 @@
+# Configure the mail server used to collect emails using POP3
+development:
+  host: pop.example.com
+  port: 995
+  username: 
+  password: 
+  enable_ssl: true

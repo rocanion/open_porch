@@ -3,7 +3,7 @@
   
   %h2 #{@area.name}: Issues
 
-  - if @area.issues.empty?
+  - if @issues.empty?
     %p This area has no issues yet.
   - else
     %table
@@ -11,7 +11,7 @@
         %th Subject
         %th Scheduled At
         %th Sent at
-      - @area.issues.each do |issue|
+      - @issues.each do |issue|
         %tr
           %td= link_to "Issue ##{issue.number}", edit_admin_area_issue_path(@area, issue)
           %td

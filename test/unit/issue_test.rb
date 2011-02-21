@@ -51,7 +51,7 @@ class IssueTest < ActiveSupport::TestCase
   
   def test_send_in_batched_mode!
     # Create an area
-    area = Area.create_dummy(:send_mode => Area::SEND_MODES[:batched])
+    area = Area.create_dummy(:send_mode => 'batched')
     assert_created area
     assert area.send_mode?(:batched)
     

@@ -1,0 +1,8 @@
+development:
+  address: smtp.somewhere.com
+  port: 25
+  domain: open_porch.local
+  user_name: 
+  password: 
+  authentication: plain
+  enable_starttls_auto: true

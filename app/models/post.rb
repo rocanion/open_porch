@@ -10,6 +10,7 @@ class Post < ActiveRecord::Base
   belongs_to :area
   belongs_to :user
   belongs_to :issue
+  belongs_to :email_message
   
   # == Callbacks ============================================================
 
@@ -30,6 +31,7 @@ protected
     if self.area.send_mode?(:immediate)
       self.issue = self.area.issues.create!
       self.save
+      self.issue.reload
       self.issue.send! 
     elsif self.area.send_mode?(:batched) && self.area.current_issue.blank?
       self.area.issues.create

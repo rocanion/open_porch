@@ -21,6 +21,11 @@ group :test do
   gem 'mocha'
 end
 
+group :pop3 do
+  gem 'activerecord', :require => 'active_record'
+  gem 'actionmailer', :require => 'action_mailer'
+  gem 'mail'
+end
 
 
 # Initial postgress configuration: 

@@ -423,36 +423,6 @@
       set_polygon_changed_status(polygon, true)
       delete_vertices();
       prepare_for_edit(polygon)
-
-
-      
-      // // Collect the distances between the new point and every polygon vertex
-      // var distances = new Array();
-      // polygon.getPath().forEach(function(poly_latLng, index){
-      //   distances.push({
-      //     index: index, 
-      //     distance: google.maps.geometry.spherical.computeDistanceBetween(latLng, poly_latLng)
-      //   });
-      // });
-      // 
-      // // Sort the distances
-      // distances.sort(function(a,b){
-      //   return a.distance - b.distance;
-      // });
-      // 
-      // var coordinates = new Array();
-      // var added_new_coordinate = false;
-      // polygon.getPath().forEach(function(poly_latLng, index){
-      //   coordinates.push(poly_latLng);
-      //   if(!added_new_coordinate && (index == distances[0].index || index == distances[1].index)) {
-      //     coordinates.push(latLng);
-      //     added_new_coordinate = true;
-      //   }
-      // });
-      // polygon.setPath(coordinates);
-      // set_polygon_changed_status(polygon, true)
-      // delete_vertices();
-      // prepare_for_edit(polygon)
     }
     
     // -------------------------

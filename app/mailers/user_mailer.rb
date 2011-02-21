@@ -1,18 +1,20 @@
 class UserMailer < ActionMailer::Base
   default :from => "from@example.com"
   
-  default_url_options[:host] = 'open-porch.local'
-
+  if defined?(ActionController::Base)
+    default_url_options[:host] = 'open-porch.local'
+  end
+  
   def password_reset(user)
     @user = user
-    mail(:to => user.email, :subject => "You have requested a new password")
+    mail(:to => user.email, :subject => "[OpenPorch] You have requested a new password")
   end
 
-  def new_issue(issue)
+  def new_issue(issue, emails = nil)
     @issue = issue
     mail(
       :subject => "[OpenPorch] #{issue.number}-#{issue.area.name}",
-      :to => issue.area.users.collect(&:email)
+      :to => emails
     )
   end
 
