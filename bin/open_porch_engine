@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require "rubygems"
 require 'bundler'
+require 'open_porch'
 require 'net/pop'
 require 'yaml'
 require 'logger'
