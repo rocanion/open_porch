@@ -6,13 +6,13 @@ class EmailMessage < ActiveRecord::Base
 
   # == Class Methods ========================================================
 
-  def self.create_from_pop3(pop3_config)
+  def self.create_from_pop3
     last_message_number = EmailMessage.maximum(:number).to_i
     msg_count = 0
 
-    puts "Connecting to #{pop3_config['host']} ..."
-    Net::POP.enable_ssl(OpenSSL::SSL::VERIFY_NONE) if pop3_config['enable_ssl']
-    Net::POP3.start(pop3_config['host'], pop3_config['port'], pop3_config['username'], pop3_config['password']) do |pop|
+    puts "Connecting to #{OPEN_PORCH_POP3['host']} ..."
+    Net::POP.enable_ssl(OpenSSL::SSL::VERIFY_NONE) if OPEN_PORCH_POP3['enable_ssl']
+    Net::POP3.start(OPEN_PORCH_POP3['host'], OPEN_PORCH_POP3['port'], OPEN_PORCH_POP3['username'], OPEN_PORCH_POP3['password']) do |pop|
       puts "Found #{pop.n_mails} messages on the server"
       puts "Last saved message: #{last_message_number}"
       unless pop.mails.empty?
@@ -44,7 +44,7 @@ class EmailMessage < ActiveRecord::Base
     end
     puts "Done!"
   rescue SocketError => e
-    puts "ERROR: Could not connect to #{pop3_config['host']} - #{e.message}"
+    puts "ERROR: Could not connect to #{OPEN_PORCH_POP3['host']} - #{e.message}"
   end
   
   # == Instance Methods ========================================================

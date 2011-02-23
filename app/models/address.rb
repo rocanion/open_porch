@@ -1,7 +1,7 @@
 class Address
   include ActiveModel::Validations
   include GeoKit::Geocoders
-
+  
   # == Constants ============================================================
   
   # == Attributes =====================================================

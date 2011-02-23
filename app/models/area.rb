@@ -46,7 +46,10 @@ class Area < ActiveRecord::Base
       id = str
       where("((name || ', ' || city || ', ' || state) ILIKE ?)", like_str)
     }
-  search_methods :full_name_search
+
+  if defined?(MetaSearch)
+    search_methods :full_name_search
+  end
   
   # == Callbacks ============================================================
   
@@ -125,6 +128,10 @@ class Area < ActiveRecord::Base
     else
       raise "Cannot find field in the list of trackable fields. Currently tracking: #{AreaActivity::TRACKABLE.join(', ')}"
     end
+  end
+  
+  def self.for_select
+    Area.order('state, city, name').collect{|a| [[a.name, a.city, a.state].join(', '), a.id]}
   end
   
 protected

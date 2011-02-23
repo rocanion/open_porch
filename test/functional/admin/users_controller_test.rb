@@ -42,6 +42,28 @@ class Admin::UsersControllerTest < ActionController::TestCase
     assert assigns(:users)
   end
   
+  def test_get_new
+    get :new
+    assert_response :success
+    assert_template :new
+  end
+  
+  def test_create
+    assert_difference 'User.count', 1 do
+      post :create, :user => user_params(:password => 'testtest', :password_confirmation => 'testtest')
+    end
+    assert_equal 'User was successfully created.', flash[:notice]
+    assert_redirected_to admin_users_path
+  end
+  
+  def test_creation_fail
+    assert_no_difference 'User.count' do
+      post :create, :user => user_params(:first_name => '')
+    end
+    assert_response :success
+    assert_template :new
+  end
+  
   def test_get_edit
     user = a User
     get :edit, :id => user
