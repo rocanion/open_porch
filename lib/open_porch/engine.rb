@@ -6,5 +6,10 @@ require "meta_search"
 require "rails"
 
 module OpenPorch
-  class Engine < Rails::Engine; end
+  class Engine < Rails::Engine
+    initializer 'open_porch_helper' do |app|
+      require File.expand_path("../../app/helpers/open_porch_helper.rb", File.dirname(__FILE__))
+      ActionView::Base.send(:include, OpenPorchHelper)
+    end
+  end
 end

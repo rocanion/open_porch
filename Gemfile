@@ -22,13 +22,6 @@ group :test do
   gem 'mocha'
 end
 
-group :pop3 do
-  gem 'activerecord', :require => 'active_record'
-  gem 'actionmailer', :require => 'action_mailer'
-  gem 'mail'
-  gem 'postageapp'
-end
-
 
 # Initial postgress configuration: 
 # http://www.glom.org/wiki/index.php?title=Initial_Postgres_Configuration

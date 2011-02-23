@@ -2,7 +2,7 @@ open_porch_file = defined?(OPEN_PORCH_CONFIG_FILE) ? OPEN_PORCH_CONFIG_FILE : Fi
 
 
 if File.exists?(open_porch_file)
-  open_porch_config = YAML::load(open_porch_file)
+  open_porch_config = YAML::load(File.open(open_porch_file))
   env = defined?(Rails) ? Rails.env : RAILS_ENV
 
   if open_porch_config['openx_zones'] && open_porch_config['openx_zones'][env]
