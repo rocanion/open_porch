@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_filter :login_required, :only => [:new, :create, :verify_email, :resend_email_verification]
   before_filter :redirect_if_logged_in, :only => [ :new, :create, :verify_email, :resend_email_verification ]
   before_filter :build_user, :only => [:new, :create]
-  before_filter :load_user, :only => [:edit, :update]
+  before_filter :load_user, :only => [:edit, :update, :destroy]
   
   def new
     # ...
@@ -51,6 +51,13 @@ class UsersController < ApplicationController
       end
     end
     redirect_to login_path
+  end
+  
+  def destroy
+    logout
+    @user.destroy
+    flash[:alert] = "Your account has been deleted."
+    redirect_to root_path
   end
   
 protected

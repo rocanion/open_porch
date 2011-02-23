@@ -14,7 +14,7 @@
             - issue.posts.each do |post|
               .post
                 %h4= post.title
-                %p.meta By #{mail_to(post.user.email, post.user.full_name)}, #{post.user.address}
+                %p.meta By #{mail_to(post.user_email, post.user_full_name)}, #{post.user_address}
             
   .right_column  
     .pagination

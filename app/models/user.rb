@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   has_many :areas,
     :through => :memberships
   has_many :posts,
-    :dependent => :destroy
+    :dependent => :nullify
   
   accepts_nested_attributes_for :memberships, :allow_destroy => true
   
