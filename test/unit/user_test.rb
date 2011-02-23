@@ -41,10 +41,13 @@ class UserTest < ActiveSupport::TestCase
     user = a User
     assert_created user
     membership = user.memberships.create_dummy
-    membership = user.posts.create_dummy
     assert_created membership
-    assert_difference ['User.count', 'Membership.count', 'Post.count'], -1 do
-      user.destroy
+    post = user.posts.create_dummy
+    assert_created post
+    assert_difference ['User.count', 'Membership.count'], -1 do
+      assert_no_difference 'Post.count' do
+        user.destroy
+      end
     end
   end
   

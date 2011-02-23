@@ -132,4 +132,13 @@ class UsersControllerTest < ActionController::TestCase
       assert_equal assigns(:user).email, response.to[0]
     end
   end
+  
+  def test_destroy
+    login_as(:regular_user)
+    assert_difference 'User.count', -1 do
+      delete :destroy
+    end
+    assert_equal "Your account has been deleted.", flash[:alert]
+    assert_redirected_to root_path
+  end
 end
