@@ -1,9 +1,10 @@
-open_porch_file = File.expand_path('../open_porch.yml', File.dirname(__FILE__))
+open_porch_file = defined?(OPEN_PORCH_CONFIG_FILE) ? OPEN_PORCH_CONFIG_FILE : File.expand_path('../open_porch.yml', File.dirname(__FILE__))
+
 
 if File.exists?(open_porch_file)
-  open_porch_config = YAML::load(File.open(open_porch_file))
+  open_porch_config = YAML::load(open_porch_file)
   env = defined?(Rails) ? Rails.env : RAILS_ENV
-  
+
   if open_porch_config['openx_zones'] && open_porch_config['openx_zones'][env]
     OPEN_PORCH_ZONES = open_porch_config['openx_zones'][env]
   end
@@ -19,5 +20,6 @@ if File.exists?(open_porch_file)
       end
     end
   end
-  
+else
+  puts "open_porch.yml not found. Looking at: #{open_porch_file}"
 end

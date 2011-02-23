@@ -1,20 +1,63 @@
 #!/usr/bin/env ruby
 require "rubygems"
-require 'bundler'
+
+# Look for a Gemfile to load
+path = File.expand_path('.')
+while (File.exists?(path) and (path != '/'))
+  gemfile = "#{path}/Gemfile"
+  if (File.exists?(gemfile))
+    ENV['BUNDLE_GEMFILE'] = gemfile
+    require "bundler/setup"
+    break
+  else
+    path = File.expand_path("..", path)
+  end
+end
+
+
+require 'active_record'
+require 'action_mailer'
+require 'mail'
+require 'postageapp'
+require 'postageapp/mailer'
 require 'net/pop'
 require 'yaml'
 require 'logger'
 require 'iconv'
 
-Bundler.setup
-Bundler.require(:pop3)
-
-require 'postageapp/mailer'
-
 # ======= Initialize =============================================================
 
+# Set default environment
+RAILS_ENV = (ENV['RAILS_ENV'] || 'development').dup unless defined?(RAILS_ENV)
+puts "Running in #{RAILS_ENV}"
+
+
+# Establish a database connection 
+db_config = nil
+path = File.expand_path('.')
+while (File.exists?(path) and (path != '/') and !db_config)
+  if (File.exists?("#{path}/config/database.yml"))
+    File.open("#{path}/config/database.yml") do |f|
+      db_config = YAML.load(f)[RAILS_ENV]
+      ActiveRecord::Base.establish_connection(db_config)
+    end
+  else
+    path = "../#{path}"
+  end
+end
+
+unless (db_config)
+  puts "Could not find database.yml"
+  exit(-1)
+end
+
+ROOT_PATH = path
+OPEN_PORCH_CONFIG_FILE = "#{ROOT_PATH}/config/open_porch.yml"
+
+# ==== Request lock =====================================================
+
 # Request a lock on a file to make sure only one instance of this scrip is running
-LOCK_FILE = File.expand_path('../tmp/pids/open_porch.lock', File.dirname(__FILE__))
+LOCK_FILE = File.expand_path("#{ROOT_PATH}/tmp/pids/open_porch.lock", File.dirname(__FILE__))
 fh = File.open(LOCK_FILE, File::RDWR|File::CREAT)
 unless fh.flock(File::LOCK_EX|File::LOCK_NB)
   puts 'Already running. Bye!'
@@ -23,37 +66,49 @@ unless fh.flock(File::LOCK_EX|File::LOCK_NB)
 end
 
 
-# Set default environment
-RAILS_ENV = (ENV['RAILS_ENV'] || 'development').dup unless defined?(RAILS_ENV)
+# ==== Load required files =====================================================
 
+requirements = {}
 
-# Establish a database connection
-db_file = File.expand_path('../config/database.yml', File.dirname(__FILE__))
-db_config = YAML::load(File.open(db_file))[RAILS_ENV]
-ActiveRecord::Base.establish_connection(db_config)
+base_path = File.expand_path('..', File.dirname(__FILE__))
 
+# initializers
+requirements['/config/initializers/open_porch.rb'] = base_path
+requirements['/config/initializers/email_regex.rb'] = base_path
 
-# Load OpePorch configuration
-require File.expand_path("../config/initializers/open_porch.rb", File.dirname(__FILE__))
+# models
+Dir.glob("#{base_path}/app/models/*.rb").each do |file|
+  next if %w{address.rb user_authority_check.rb}.include?(File.basename(file))
+  requirements["/app/models/#{File.basename(file)}"] = base_path
+end
+
+# mailer
+requirements['/app/mailers/user_mailer.rb'] = base_path
+
+# Check if any required files are being overriten on the main app
+if ROOT_PATH != base_path
+  puts "overriding ..." 
+  requirements.each do |file, path|
+    if File.exists?(ROOT_PATH + file)
+      requirements[file] = ROOT_PATH
+    end
+  end
+end
+
+requirements.each do |file, path|
+  require path + file
+end
+
 
 
 # Setup logging
-log_file = File.expand_path("../log/pop3_#{RAILS_ENV}.log", File.dirname(__FILE__))
+log_file = File.expand_path("#{ROOT_PATH}/log/pop3_#{RAILS_ENV}.log", File.dirname(__FILE__))
 ActiveRecord::Base.logger = Logger.new(log_file)
 
 
 
-# Load models
-require File.expand_path("../config/initializers/email_regex.rb", File.dirname(__FILE__))
-Dir.glob(File.expand_path("../app/models/*.rb", File.dirname(__FILE__))).each do |file|
-  next if %w{address.rb user_authority_check.rb}.include?(File.basename(file))
-  require file
-end
-
-
-# Load user mailer
+# Setup mailer views
 ActionMailer::Base.view_paths = File.expand_path("../app/views", File.dirname(__FILE__))
-require File.expand_path("../app/mailers/user_mailer.rb", File.dirname(__FILE__))
 
 
 # ======= Main =============================================================

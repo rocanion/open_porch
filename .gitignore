@@ -13,3 +13,5 @@ public/stylesheets/*
 coverage/*
 .rvmrc
 rcov/*
+bin/*.lock
+pkg/*
