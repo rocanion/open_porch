@@ -1,6 +1,6 @@
 .columns
   %h2 Users
-    
+  = link_to 'Add new user', new_admin_user_path
   = will_paginate @users
   = form_for @search, :url => [:admin, :users], :html => {:method => :get} do |f|
     = f.label :email_or_name_or_address_search, 'Search'

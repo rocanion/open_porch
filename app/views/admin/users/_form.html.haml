@@ -13,4 +13,9 @@
 = f.password_field :password_confirmation
 = f.select :role, User.roles_for_select
 %br
+%h3 Membership
+= f.fields_for :memberships do |membership_form|
+  = membership_form.select :area_id, Area.for_select
+%br
+
 = f.submit 'Save', :cancel_url => link_to('cancel', @return_url)

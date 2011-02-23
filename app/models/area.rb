@@ -127,6 +127,10 @@ class Area < ActiveRecord::Base
     end
   end
   
+  def self.for_select
+    Area.order('state, city, name').collect{|a| [[a.name, a.city, a.state].join(', '), a.id]}
+  end
+  
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)
