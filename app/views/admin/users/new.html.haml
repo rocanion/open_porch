@@ -1,5 +1,5 @@
 .columns
   %h1 New User
   = formatted_form_for @user, :url => admin_users_path do |f|
-    = render :partial => 'form', :locals => {:f => f}
+    = render :partial => 'admin/users/form', :locals => {:f => f}
 
