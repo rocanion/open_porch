@@ -3,7 +3,7 @@ $(document).ready(function() {
   area_id = current_path.split('/')[3];
   issue_id = current_path.split('/')[5];
   issue_path = current_path.replace('edit', '');
-
+  
   $('input[name=select_all]').change(function(){
     $(this).parents('.posts').find('input[name=posts[]]').attr('checked', $(this).is(':checked'));
   })
@@ -19,6 +19,10 @@ $(document).ready(function() {
       $(this).siblings('.posts').find('input[name=posts[]]').serialize()
     )
   })
+  
+  $('.ajax-button').live("ajax:beforeSend", function(){
+    $(this).replaceWith($('<div class="ajax-loader" id="'+this.id+'">'));
+  })
 
   $('div.sortable').sortable({
     items: 'div.post',
@@ -31,6 +35,7 @@ $(document).ready(function() {
       )
     }
   })
+  
 })
 
 function move_posts_to(posts, dest_div) {

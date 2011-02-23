@@ -1,0 +1,1 @@
+= link_to '', toggle_reviewed_by_admin_area_post_path(@area, @post), :id => dom_id(@post, :status), :remote => true, :method => :post, :class => (@post.reviewed? ? 'reviewed ajax-button' : 'unreviewed ajax-button')

@@ -2,11 +2,11 @@
   = javascript_include_tag 'user_activity'
   = javascript_include_tag 'issue_edit'
   
-= update_user_activity_for_url(request.url)
+/ = update_user_activity_for_url(request.url)
   
 .columns.half  
   = render :partial => 'admin/areas/nav'
-  = show_user_activity_for_url(request.url)
+  / = show_user_activity_for_url(request.url)
   %h2 Editing Issue ##{@issue.number}
   .left_column
     .posts#new_posts

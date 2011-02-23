@@ -3,4 +3,4 @@
   = f.text_area :content
   = f.submit 'Save'
   or
-  = link_to('cancel', admin_area_post_path(@area, @post), :remote => true)
+  = link_to('cancel', admin_area_post_path(@area, @post), :remote => true, :class => 'ajax-button')

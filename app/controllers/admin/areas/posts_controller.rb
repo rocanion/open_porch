@@ -7,7 +7,6 @@ class Admin::Areas::PostsController < Admin::Areas::BaseController
   end
   
   def update
-    @post.reviewed_by = current_user.full_name
     @post.update_attributes(params[:post])
   end
   
@@ -21,6 +20,15 @@ class Admin::Areas::PostsController < Admin::Areas::BaseController
       end
     end
     render :nothing => true
+  end
+  
+  def toggle_reviewed_by
+    if !@post.reviewed_by
+      @post.update_attribute(:reviewed_by, current_user.full_name)
+    else
+      @post.update_attribute(:reviewed_by, nil)
+    end
+    render :layout => false
   end
 
 protected

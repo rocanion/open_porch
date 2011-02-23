@@ -25,6 +25,9 @@ Rails.application.routes.draw do
         end
       end
       resources :posts, :controller => 'areas/posts' do
+        member do
+          post :toggle_reviewed_by
+        end
         collection do
           put :order, :as => :order
         end

@@ -122,9 +122,25 @@
       input[type=text], textarea
         width: 350px
         margin-bottom: 10px
+      .edit_post
+        .ajax-loader
+          display: inline-block
+          width: 14px
+          height: 14px
     .status
       float: left
       width: 40px
+      a
+        width: 20px
+        height: 20px
+        display: block
+        background-repeat: no-repeat
+        background-position: center
+      a.reviewed
+        background-image: url('/images/icons/post_reviewed.png')
+      a.unreviewed
+        background-image: url('/images/icons/post_new.png')
+        
   .header
     overflow: hidden
     border-bottom: 1px solid #a6a8ab
