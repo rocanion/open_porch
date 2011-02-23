@@ -1,12 +1,36 @@
-<h2>Issue <%= @issue.number %> - <%= @issue.area.name %></h2>
+<% if defined?(OPEN_PORCH_POP3)%>
+  <p>To POST your message, email to <%=mail_to("#{@issue.area.slug}@#{OPEN_PORCH_POP3['host']}") %></p>
+<% end %>
+
+
+<h2><%= "#{@issue.area.name} NEIGHBORHOOD FORUM NO.#{@issue.number}".upcase %></h2>
+
+
+
 
 <% @issue.posts.order('position').each do |post| %>
+  <h3><%=post.title %></h3>
+  <p class="author"> 
+    By 
+    <strong><%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %></strong>
+  </p>
+  
+<% end %>
+
+
+<% @issue.posts.order('position').each do |post| %>
+  <br/>
+  <hr/>
+  <br/>
   <h3><%= post.title %></h3>
   <p class="author"> 
     By 
-    <strong><%= post.user.full_name%>,  <%=post.user.address %></strong>
+    <strong><%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>, <%= mail_to(post.user_email) %></strong>
     <br/>
-    <%= post.created_at.to_s(:long) %>
+    <%= post.created_at.strftime("%a, %e %B, %Y") %>
+    <% if defined?(OPEN_PORCH_POP3)%>
+      <br/>Post your note to neighbors: <%=mail_to("#{@issue.area.slug}@#{OPEN_PORCH_POP3['host']}") %>
+    <% end %>
   </p>
   <%= simple_format(auto_link(post.content)) %>
 <% end %>
