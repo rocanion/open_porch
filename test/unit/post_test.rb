@@ -16,11 +16,13 @@ class PostTest < ActiveSupport::TestCase
   
   def test_create_requirements
     post = Post.create
-    assert_errors_on post, :title, :content, :user_id, :area_id
+    assert_errors_on post, :title, :content, :user_id, :area_id, :user_first_name,
+                           :user_last_name, :user_email, :user_address, :user_city,
+                           :user_state
   end
   
   def test_create_dummy
-    area = Area.create_dummy(:send_mode => :batched)
+    area = Area.create_dummy(:send_mode => 'batched')
     assert_created area
     assert area.issues.empty?
 
@@ -38,5 +40,5 @@ class PostTest < ActiveSupport::TestCase
       end
     end
   end
-  
+
 end

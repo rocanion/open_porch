@@ -1,0 +1,28 @@
+= render :partial => 'layouts/account_nav'
+.columns  
+  %h2 Search archives
+
+  = will_paginate @posts
+    
+  .left_column
+    
+    - if @posts.size > 0
+      %ul.list
+        - @posts.each do |post|
+          %li
+            %h4= link_to post.title, [@area, post.issue]
+            %p.meta
+              By <strong>#{post.user_full_name}</strong>, #{post.user_address}
+              %br/
+              #{post.created_at.to_s(:long)}
+            = simple_format post.content
+    
+    - else
+      %p No posts found
+
+  .right_column
+    = render :partial => 'posts_search_form', :locals => {:advanced => true}
+  
+  = will_paginate @posts
+  
+  

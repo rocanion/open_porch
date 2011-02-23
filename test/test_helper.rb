@@ -71,5 +71,22 @@ class ActiveSupport::TestCase
     
     user
   end
+  
+  def assert_exception_raised(exception_class = nil, error_message = nil, &block)
+    exception_raised = nil
+    yield
+  rescue => exception_raised
+  ensure
+    if exception_raised
+      if exception_class
+        assert_equal exception_class, exception_raised.class, exception_raised.to_s
+      else
+        assert true
+      end
+      assert_equal error_message, exception_raised.to_s if error_message
+    else
+      flunk 'Exception was not raised'
+    end
+  end
 
 end

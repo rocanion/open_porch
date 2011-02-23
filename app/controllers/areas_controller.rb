@@ -1,11 +1,11 @@
-class AreasController < ApplicationController
+class AreasController < Area::BaseController
   skip_before_filter :login_required,
     :only => :show
   before_filter :load_area,
     :only => :show
+  before_filter :initialize_search
 
   def show
-    @issue = @area.issues.sent.last
   end
 
 protected

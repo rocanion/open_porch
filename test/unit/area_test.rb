@@ -7,7 +7,7 @@ class AreaTest < ActiveSupport::TestCase
       :name => 'Test Area'
     )
     assert_created area
-    assert_equal Area::SEND_MODES[:immediate], area.send_mode
+    assert_equal 'immediate', area.send_mode
   end
   
   def test_create_requirements
@@ -34,19 +34,12 @@ class AreaTest < ActiveSupport::TestCase
     assert_created membership
     post = area.posts.create_dummy  
     assert_created post
-    activity = area.activities.create_dummy
-    assert_created activity
+    # Note: Creating a membership and post will also create an AreaActivity,
+    # so no need to create that separately.
     area.reload
     assert_difference ['Area.count', 'Membership.count', 'Post.count', 'Issue.count', 'AreaActivity.count'], -1 do
       area.destroy
     end
-  end
-  
-  def test_send_mode_name
-    area = an Area
-    assert_equal :immediate, area.send_mode_name
-    area.send_mode = Area::SEND_MODES[:batched]
-    assert_equal :batched, area.send_mode_name
   end
   
   def test_record_activity_for

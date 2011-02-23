@@ -11,6 +11,13 @@ class Admin::AreasController < Admin::BaseController
     @search = Area.search(params[:search])
     @areas = @search.paginate(:page => params[:page])
     @new_posts = Area.newposts_count
+    
+    start_date =  Time.parse(params[:activity_start_date]).to_date    rescue 30.days.ago.to_date
+    end_date =    Time.parse(params[:activity_end_date]).to_date      rescue Date.today
+    
+    @activities = AreaActivity.grouped_by_day
+                    .search(:day_between => [start_date, end_date])
+                    .where(:area_id => @search.all.collect(&:id))
   end
   
   def new

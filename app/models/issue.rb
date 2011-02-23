@@ -25,6 +25,10 @@ class Issue < ActiveRecord::Base
   scope :scheduled_before, lambda { |t| 
     where(['sent_at IS NULL AND scheduled_at <= ?', t.utc])
   }
+  
+  scope :in_month, lambda { |m|
+    where(["to_char(sent_at, 'YYYY-MM') = ?", m])
+  }
 
   # == Callbacks ============================================================
   
@@ -33,13 +37,30 @@ class Issue < ActiveRecord::Base
   # == Instance Methods =====================================================
   
   def send!
-    UserMailer.new_issue(self).deliver
+    # Send in one batch if PostageApp is defined
+    if defined?(PostageApp.configure)
+      # UserMailer.new_issue(self, self.area.users.collect(&:email)).deliver
+
+    # Send emails one at a time (wont work for many users)
+    # You will want to change this if not using PostageApp
+    else
+      # self.area.users.collect(&:email).each do |email|
+        UserMailer.new_issue(self, 'jack@twg.ca').deliver
+      # end
+    end
+    
     self.update_attribute(:sent_at, Time.now.utc)
     
     # Create a new issue for the area if there are any new posts left
     if self.area.posts.in_issue(nil).count > 0
       self.area.issues.create
     end
+    
+    self.area.record_activity_for!(:issues_published)
+  end
+  
+  def to_params
+    self.number
   end
   
 protected
@@ -50,6 +71,6 @@ protected
   end
   
   def set_issue_number
-    self.number = self.area.issue_number.next
+    self.number ||= self.area.issue_number.next
   end
 end

@@ -112,13 +112,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionmailer
   active_link_to (= 0.0.6)
+  activerecord
   bundler
   faker
   formatted_form (>= 1.0.1)
   geokit (= 1.5.0)
   haml (= 3.0.25)
   jeweler
+  mail
   meta_search (= 1.0.1)
   meta_where (= 1.0.1)
   mocha

@@ -1,0 +1,10 @@
+- advanced ||= false
+
+%h3 Search the archive
+
+= formatted_form_for @search, :url => [@area, :posts], :html => {:method => :get} do |f|
+  = f.text_field :title_or_content_contains
+  - if advanced
+    = f.text_field :created_at_greater_than_or_equal_to, :label => 'After', :type => :date
+    = f.text_field :created_at_less_than_or_equal_to, :label => 'Before', :type => :date
+  = f.submit :search

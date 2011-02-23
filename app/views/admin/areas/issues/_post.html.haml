@@ -4,10 +4,7 @@
     %h6= link_to post.title, ''
     .meta
       Posted by
-      - if post.user.present?
-        = mail_to(post.user.email, post.user.full_name)
-      - else
-        (user removed)
+      = mail_to(post.user_email, post.user_full_name)
       = time_ago_in_words(post.created_at)
       ago.
     .text{:style => 'display: none'}

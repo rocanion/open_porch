@@ -15,7 +15,7 @@ class Admin::Areas::IssuesControllerTest < ActionController::TestCase
   
   def test_get_new
     area = an Area
-    area.update_attribute(:send_mode, Area::SEND_MODES[:batched])
+    area.update_attribute(:send_mode, :batched)
     assert_difference 'Issue.count', 1 do
       get :new, :area_id => area.id
     end

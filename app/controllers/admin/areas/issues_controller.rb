@@ -5,8 +5,7 @@ class Admin::Areas::IssuesController < Admin::Areas::BaseController
     :except => [:index, :new, :show]
   
   def index
-    @search = @area.issues.search(params[:search])
-    @issues = @search.paginate(:page => params[:page])
+    @issues = @area.issues.order("number DESC").paginate(:page => params[:page])
   end
   
   def new

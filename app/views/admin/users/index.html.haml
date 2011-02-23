@@ -3,14 +3,14 @@
     
   = will_paginate @users
   = form_for @search, :url => [:admin, :users], :html => {:method => :get} do |f|
-    = f.label :email_or_name_search, 'Search'
-    = f.text_field :email_or_name_search, :style => 'width: 150px'
+    = f.label :email_or_name_or_address_search, 'Search'
+    = f.text_field :email_or_name_or_address_search, :style => 'width: 150px'
     = f.select :role_equals, User.roles_for_select, :include_blank => 'All Roles'
     = f.submit 'Find'
 
   %table
     %tr
-      %th Name
+      %th= sort_link @search, :last_name_and_first_name, 'Name'
       %th Email
       %th= sort_link @search, :role
       %th= sort_link @search, :created_at

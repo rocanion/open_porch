@@ -1,15 +1,8 @@
 class Area < ActiveRecord::Base
   
-  # == Attributes ===========================================================
-  
   # == Constants ============================================================
   
-  SEND_MODES = {
-    :immediate  => 0,
-    :batched    => 1
-  }.freeze
-  
-  # == Extensions ===========================================================
+  SEND_MODES = %w{immediate batched}
   
   # == Relationships ========================================================
   
@@ -33,11 +26,11 @@ class Area < ActiveRecord::Base
     :presence => {:message => 'Please enter the name of this area'}
   validates :slug,
     :uniqueness  => true,
-    :format => { :with => /^[A-Za-z0-9_-]+$/ },
+    :format => { :with => /^[\w.-]+$/ },
     :allow_nil => true
   validates :send_mode,
     :presence => true,
-    :inclusion => SEND_MODES.values
+    :inclusion => SEND_MODES
     
   # == Scopes ===============================================================
   
@@ -46,8 +39,18 @@ class Area < ActiveRecord::Base
     order("ST_Distance(border, ST_GeomFromEWKT('SRID=4326;POINT(#{point.text_representation})'))")
   }
   
+  # Search Scope
+  scope :full_name_search,
+    lambda {|str|
+      like_str = "%#{str}%"
+      id = str
+      where("((name || ', ' || city || ', ' || state) ILIKE ?)", like_str)
+    }
+  search_methods :full_name_search
+  
   # == Callbacks ============================================================
   
+  before_validation :set_send_mode, :on => :create
   after_create :initialize_issue_numbers
   
   # == Class Methods ========================================================
@@ -101,30 +104,35 @@ class Area < ActiveRecord::Base
     @border_coordinates ||= border.rings.first.points.collect{|point| "new google.maps.LatLng(#{point.x}, #{point.y})"}.join(',')
   end
   
-  def send_mode?(mode)
-    self.send_mode.to_i == SEND_MODES[mode]
-  end
-  
   def location
     [self.city, self.state].compact.join(', ')
-  end
-  
-  def send_mode_name
-    SEND_MODES.invert[self.send_mode]
   end
   
   def current_issue
     self.issues.where(:sent_at => nil).first
   end
   
+  def send_mode?(mode)
+    self.send_mode == mode.to_s
+  end
+  
   def record_activity_for!(field)
-    activity = self.activities.find_or_create_by_day(Time.now.utc.to_date)
-    activity.increment!([field, 'count'].join('_'))
-    activity.reload
+    field = field.to_s
+    if AreaActivity::TRACKABLE.include?(field)
+      activity = self.activities.find_or_create_by_day(Time.now.utc.to_date)
+      activity.increment!([field, 'count'].join('_'), 1)
+      activity.reload
+    else
+      raise "Cannot find field in the list of trackable fields. Currently tracking: #{AreaActivity::TRACKABLE.join(', ')}"
+    end
   end
   
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)
+  end
+  
+  def set_send_mode
+    self.send_mode ||= 'immediate'
   end
 end

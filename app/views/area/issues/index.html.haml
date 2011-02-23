@@ -1,0 +1,27 @@
+= render :partial => 'layouts/account_nav'
+
+.columns
+  %h2 #{@area.name} Forum Archive
+  
+  .left_column
+    - if @issues.blank?
+      No issues for this month.
+    - else
+      %ul.list
+        - @issues.each do |issue|
+          %li
+            %h3=link_to "No. #{issue.number} &ndash; #{issue.sent_at.to_date.to_s(:long)}".html_safe, area_issue_path(@area, issue)
+            - issue.posts.each do |post|
+              .post
+                %h4= post.title
+                %p.meta By #{mail_to(post.user_email, post.user_full_name)}, #{post.user_address}
+            
+  .right_column  
+    .pagination
+      - prev_month = @current_month.prev_month
+      = link_to "&laquo; #{prev_month.strftime('%b %Y')}".html_safe, archive_area_issues_path(@area, prev_month.year, prev_month.month)
+      %span= @current_month.strftime('%b %Y')
+      - unless @current_month == Date.today.beginning_of_month
+        - next_month = @current_month.next_month
+        = link_to "#{next_month.strftime('%b %Y')} &raquo;".html_safe, archive_area_issues_path(@area, next_month.year, next_month.month)
+    = render :partial => 'area/posts/posts_search_form', :locals => {:advanced => true}
