@@ -53,9 +53,9 @@ class UsersControllerTest < ActionController::TestCase
       end
     end
     response = ActionMailer::Base.deliveries.last
-    assert_equal 2, response.parts.length
-    response.parts.each do |part|
-      assert_match assigns(:user).email_verification_key, part.body.to_s
+    assert_equal 2, response.arguments['content'].length
+    response.arguments['content'].each do |content_type, body|
+      assert_match assigns(:user).email_verification_key, body
     end
     assert_equal assigns(:user).email, response.to[0]
     
@@ -125,9 +125,9 @@ class UsersControllerTest < ActionController::TestCase
       get :resend_email_verification, :email_verification_key => user.email_verification_key
       assert_redirected_to login_path
       response = ActionMailer::Base.deliveries.last
-      assert_equal 2, response.parts.length
-      response.parts.each do |part|
-        assert_match assigns(:user).email_verification_key, part.body.to_s
+      assert_equal 2, response.arguments['content'].length
+      response.arguments['content'].each do |content_type, body|
+        assert_match assigns(:user).email_verification_key, body
       end
       assert_equal assigns(:user).email, response.to[0]
     end

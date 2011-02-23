@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
-  s.date = %q{2011-02-21}
+  s.date = %q{2011-02-23}
   s.default_executable = %q{open_porch_engine}
   s.description = %q{}
   s.email = %q{jack@theworkinggroup.ca}
@@ -104,14 +104,12 @@ Gem::Specification.new do |s|
     "app/views/stylesheets/reset.sass",
     "app/views/stylesheets/structure.sass",
     "app/views/stylesheets/typography.sass",
-    "app/views/user_mailer/email_verification.html.haml",
-    "app/views/user_mailer/email_verification.text.haml",
+    "app/views/user_mailer/email_verification.html.erb",
+    "app/views/user_mailer/email_verification.text.erb",
     "app/views/user_mailer/new_issue.html.erb",
-    "app/views/user_mailer/new_issue.html.haml",
     "app/views/user_mailer/new_issue.text.erb",
-    "app/views/user_mailer/new_issue.text.haml",
-    "app/views/user_mailer/password_reset.html.haml",
-    "app/views/user_mailer/password_reset.text.haml",
+    "app/views/user_mailer/password_reset.html.erb",
+    "app/views/user_mailer/password_reset.text.erb",
     "app/views/users/_form.html.haml",
     "app/views/users/edit.html.haml",
     "app/views/users/new.html.haml",
@@ -132,14 +130,14 @@ Gem::Specification.new do |s|
     "config/initializers/inflections.rb",
     "config/initializers/meta_search.rb",
     "config/initializers/mime_types.rb",
+    "config/initializers/open_porch.rb",
     "config/initializers/sass.rb",
     "config/initializers/secret_token.rb",
     "config/initializers/session_store.rb",
-    "config/initializers/setup_mail.rb",
     "config/initializers/states_provinces.rb",
     "config/initializers/will_paginate.rb",
     "config/locales/en.yml",
-    "config/pop3_example.yml",
+    "config/open_porch_example.yml",
     "config/routes.rb",
     "config/schedule.rb",
     "db/migrate/01_create_areas.rb",
@@ -166,6 +164,7 @@ Gem::Specification.new do |s|
     "lib/open_porch/engine.rb",
     "lib/tasks/.gitkeep",
     "lib/tasks/open_porch.rake",
+    "lib/tasks/postageapp_tasks.rake",
     "open_porch.gemspec",
     "public/404.html",
     "public/422.html",
@@ -284,6 +283,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<meta_search>, ["= 1.0.1"])
       s.add_runtime_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
       s.add_runtime_dependency(%q<whenever>, ["= 0.6.2"])
+      s.add_runtime_dependency(%q<postageapp>, [">= 0"])
     else
       s.add_dependency(%q<rails>, ["= 3.0.4"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
@@ -297,6 +297,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<meta_search>, ["= 1.0.1"])
       s.add_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
       s.add_dependency(%q<whenever>, ["= 0.6.2"])
+      s.add_dependency(%q<postageapp>, [">= 0"])
     end
   else
     s.add_dependency(%q<rails>, ["= 3.0.4"])
@@ -311,6 +312,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<meta_search>, ["= 1.0.1"])
     s.add_dependency(%q<will_paginate>, ["~> 3.0.pre2"])
     s.add_dependency(%q<whenever>, ["= 0.6.2"])
+    s.add_dependency(%q<postageapp>, [">= 0"])
   end
 end
 

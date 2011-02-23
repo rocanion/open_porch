@@ -20,9 +20,9 @@ class PasswordsControllerTest < ActionController::TestCase
       end
     end
     response = ActionMailer::Base.deliveries.last
-    assert_equal 2, response.parts.length
-    response.parts.each do |part|
-      assert_match user.perishable_token, part.body.to_s
+    assert_equal 2, response.arguments['content'].length
+    response.arguments['content'].each do |content_type, body|
+      assert_match user.perishable_token, body
     end
     assert_equal user.email, response.to[0]
   end
