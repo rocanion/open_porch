@@ -69,18 +69,19 @@ class User < ActiveRecord::Base
   # == Scopes ===============================================================
 
   # Search Scope
-  scope :email_or_name_search,
+  scope :email_or_name_or_address_search,
     lambda {|str|
       like_str = "%#{str}%"
-      where("email ILIKE ? OR ((first_name || ' ' || last_name) ILIKE ?)", like_str, like_str)
+      where("email ILIKE ? OR ((first_name || ' ' || last_name) ILIKE ?) OR ((address || ', ' || city || ', ' || state) ILIKE ?)", 
+            like_str, like_str, like_str)
     }
   
   if defined?(MetaSearch)
-    search_methods :email_or_name_search 
+    search_methods :email_or_name_or_address_search 
   end
   
   scope :admins, where(:role => 'admin')
-  
+    
   # == Callbacks ============================================================
 
   before_validation :assign_role, :on => :create
