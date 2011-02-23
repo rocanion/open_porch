@@ -2,8 +2,7 @@
 .DS_Store
 .bundle
 config/database.yml
-config/pop3.yml
-config/email.yml
+config/open_porch.yml
 db/schema.rb
 db/dumps/*
 log/*.log

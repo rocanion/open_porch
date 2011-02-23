@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require "rubygems"
 require 'bundler'
-require 'open_porch'
 require 'net/pop'
 require 'yaml'
 require 'logger'
@@ -9,6 +8,8 @@ require 'iconv'
 
 Bundler.setup
 Bundler.require(:pop3)
+
+require 'postageapp/mailer'
 
 # ======= Initialize =============================================================
 
@@ -32,38 +33,40 @@ db_config = YAML::load(File.open(db_file))[RAILS_ENV]
 ActiveRecord::Base.establish_connection(db_config)
 
 
+# Load OpePorch configuration
+require File.expand_path("../config/initializers/open_porch.rb", File.dirname(__FILE__))
+
+
 # Setup logging
 log_file = File.expand_path("../log/pop3_#{RAILS_ENV}.log", File.dirname(__FILE__))
 ActiveRecord::Base.logger = Logger.new(log_file)
 
 
+
 # Load models
 require File.expand_path("../config/initializers/email_regex.rb", File.dirname(__FILE__))
-%w{email_message area post issue issue_number user membership}.each do |model|
-  require File.expand_path("../app/models/#{model}.rb", File.dirname(__FILE__))
+Dir.glob(File.expand_path("../app/models/*.rb", File.dirname(__FILE__))).each do |file|
+  next if %w{address.rb user_authority_check.rb}.include?(File.basename(file))
+  require file
 end
 
-# Load ActionMailer configuration
-require File.expand_path("../config/initializers/setup_mail.rb", File.dirname(__FILE__))
 
 # Load user mailer
 ActionMailer::Base.view_paths = File.expand_path("../app/views", File.dirname(__FILE__))
 require File.expand_path("../app/mailers/user_mailer.rb", File.dirname(__FILE__))
 
-# Load the pop3 server configuration
-pop3_file = File.expand_path('../config/pop3.yml', File.dirname(__FILE__))
-pop3_config = YAML::load(File.open(pop3_file))[RAILS_ENV]
-
 
 # ======= Main =============================================================
 
 # Send all scheduled issues
-Issue.scheduled_before(Time.now).each do |issue|
+unsent_issues = Issue.scheduled_before(Time.now).all
+puts "Found #{unsent_issues.length} unsent issues."
+unsent_issues.each do |issue|
   issue.send!
 end
 
-# Parse all new messages from POP3 serevr
-EmailMessage.create_from_pop3(pop3_config)
+# Parse all new messages from POP3 server
+EmailMessage.create_from_pop3
 
 
 # ======= Cleanup =============================================================

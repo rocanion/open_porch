@@ -1,0 +1,22 @@
+# Configure the mail server used to collect emails using POP3
+pop3:
+  development:
+    host: pop.example.com
+    port: 995
+    username: 
+    password: 
+    enable_ssl: true
+
+# OpenX zones
+openx_zones:
+  development:
+    current_issue: ZONE_ID
+    newsletter: ZONE_ID
+    
+# PostageApp configuration
+postageapp:
+  development:
+    api_key: YOUR_API_KEY
+    # other options here
+    
+    

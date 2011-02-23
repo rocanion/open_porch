@@ -46,7 +46,10 @@ class Area < ActiveRecord::Base
       id = str
       where("((name || ', ' || city || ', ' || state) ILIKE ?)", like_str)
     }
-  search_methods :full_name_search
+
+  if defined?(MetaSearch)
+    search_methods :full_name_search
+  end
   
   # == Callbacks ============================================================
   

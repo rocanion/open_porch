@@ -12,6 +12,7 @@ gem "meta_where", '1.0.1'
 gem "meta_search", '1.0.1'
 gem "will_paginate", "~> 3.0.pre2"
 gem 'whenever', '0.6.2', :require => false
+gem 'postageapp'
 
 group :test do
   gem "bundler"
@@ -25,6 +26,7 @@ group :pop3 do
   gem 'activerecord', :require => 'active_record'
   gem 'actionmailer', :require => 'action_mailer'
   gem 'mail'
+  gem 'postageapp'
 end
 
 

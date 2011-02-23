@@ -37,17 +37,7 @@ class Issue < ActiveRecord::Base
   # == Instance Methods =====================================================
   
   def send!
-    # Send in one batch if PostageApp is defined
-    if defined?(PostageApp.configure)
-      # UserMailer.new_issue(self, self.area.users.collect(&:email)).deliver
-
-    # Send emails one at a time (wont work for many users)
-    # You will want to change this if not using PostageApp
-    else
-      # self.area.users.collect(&:email).each do |email|
-        UserMailer.new_issue(self, 'jack@twg.ca').deliver
-      # end
-    end
+    UserMailer.new_issue(self).deliver
     
     self.update_attribute(:sent_at, Time.now.utc)
     
