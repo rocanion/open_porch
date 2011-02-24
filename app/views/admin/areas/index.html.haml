@@ -7,6 +7,7 @@
         = text_field_tag :activity_start_date,  params[:activity_start_date], :type => :date
         = text_field_tag :activity_end_date,    params[:activity_end_date], :type => :date
       = f.submit 'Find'
+    %h5= link_to 'Add new area', edit_borders_admin_area_path('new')
 
   :javascript
     $(document).ready(function() {

@@ -26,6 +26,10 @@
     var options = $.extend(defaults, options);
     var map = initialize_google_map();
     $.each(options.regions, add_region); // Add all the regions to the map
+    if(options.selected_polygon == null) {
+      switch_to_mode(CREATE_MODE);
+      alert("Click on the map to add points to the region. When you're done close the region by clicking on the first marker")
+    }
     
     return this.each(function() {
       obj = $(this);
@@ -111,8 +115,12 @@
             }
             break;
           case CREATE_MODE:
-            switch_to_mode(EDIT_MODE);
-            prepare_for_edit(options.selected_polygon);
+            if(options.selected_polygon == null) {
+              document.location = options.create_url;
+            } else {
+              switch_to_mode(EDIT_MODE);
+              prepare_for_edit(options.selected_polygon);
+            }
             break;
         }
       });
@@ -187,7 +195,10 @@
         if(!polygon.is_selected && options.mode == EDIT_MODE) {
           set_polygon_style(polygon, 'mouseout');
         }
-        $('.region_details').html(options.regions[options.selected_polygon.region_index].name)
+        if(options.selected_polygon != null){
+          $('.region_details').html(options.regions[options.selected_polygon.region_index].name)
+        }
+        
       });
       // click event
       google.maps.event.addListener(polygon, 'click', function() {
@@ -288,6 +299,9 @@
     // Returns a polygon to it's original coordinates
     // -------------------------
     function reset_polygon(polygon) {
+      if(polygon == null){
+        return;
+      }
       var coordinates = new Array();
       $.each(options.regions[polygon.region_index].points, function(){
         coordinates.push(new google.maps.LatLng(this[0], this[1]));
@@ -354,21 +368,7 @@
           }
         },
         function(region_id){
-          switch_to_mode(EDIT_MODE);
-          // Update the regions array with the new saved coordinates
-          var length = options.regions.push({
-            id: region_id,
-            name: region_name,
-            points: new_points
-          });
-          options.selected_region_id = region_id;
-          add_region(length-1, options.regions[length-1]);
-          
-          // Notify the user
-          obj.prepend($('<div class="flash_message notice">Saved!</div>'));
-          setTimeout(function(){
-            $('.flash_message.notice').fadeOut('slow', function(){$(this).remove()});
-          }, 5000);
+          document.location = options.create_url+'/'+region_id+'/edit_borders';
         },
         'json'
       );

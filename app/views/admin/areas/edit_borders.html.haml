@@ -9,16 +9,16 @@
         create_url: '#{admin_areas_path}',
         update_url: '#{bulk_update_admin_areas_path}',
         regions: #{@areas.collect(&:to_a).to_json}, 
-        selected_region_id: #{@selected_area.id},
+        selected_region_id: #{@selected_area.present? ? @selected_area.id : 'null'},
         center: {
-          lat: #{@selected_area.center.x}, 
-          lng: #{@selected_area.center.y}
+          lat: #{@selected_area.present? ? @selected_area.center.x : @default_area.center.x}, 
+          lng: #{@selected_area.present? ? @selected_area.center.y : @default_area.center.y}
         },
-        bounds: #{@selected_area.bounds.to_json}
+        bounds: #{@selected_area.present? ? @selected_area.bounds.to_json : @default_area.bounds.to_json}
       });
     });
-
-  = render :partial => 'admin/areas/nav'
+  - if @area.present?
+    = render :partial => 'admin/areas/nav'
 
   #map_canvas
     .region_details
@@ -39,6 +39,6 @@
   %p 
     %strong 1. Click the 'New region' button
     %br/
-    %strong 2. Click on the map to add pints to the region
+    %strong 2. Click on the map to add points to the region
     %br/
     %strong 3. When you're done close the region by clicking on the first marker
