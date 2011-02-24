@@ -19,7 +19,7 @@
   
 <%= post.title.upcase %>
 By <%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>, <%=post.user_email %>
-<%= post.created_at.strftime("%a, %e %B, %Y") %>
+<%= post.created_at.to_date.to_s(:long) %>
 <% if defined?(OPEN_PORCH_POP3)%>
   Post your note to neighbors: <%=@issue.area.slug %>@<%= OPEN_PORCH_POP3['host'] %>
 <% end %>

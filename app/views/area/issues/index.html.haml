@@ -1,9 +1,10 @@
 = render :partial => 'layouts/account_nav'
 
 .columns
-  %h2 #{@area.name} Forum Archive
   
   .left_column
+    %h2 #{@area.name} Forum Archive
+    
     - if @issues.blank?
       No issues for this month.
     - else
@@ -25,3 +26,6 @@
         - next_month = @current_month.next_month
         = link_to "#{next_month.strftime('%b %Y')} &raquo;".html_safe, archive_area_issues_path(@area, next_month.year, next_month.month)
     = render :partial => 'area/posts/posts_search_form', :locals => {:advanced => true}
+    
+    = show_ad_for(:current_issue, @area)
+    

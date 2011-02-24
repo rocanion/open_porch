@@ -7,8 +7,16 @@
       %h3 #{@area.city}, #{@area.state} &bull; Forum started <strong>#{@area.created_at.to_date.to_s(:long)}</strong>
       %h3 Neighborhood forum members: <strong>#{@area.memberships.count}</strong>
       %h3 Approx. households within boundary: <strong>#{@area.households}</strong>
-    
-    - unless logged_in?
+      %h3 Messages posted since start-up: <strong>#{@area.issues_count}</strong>
+      
+    - if logged_in?
+      %h3 Post Your Message
+      %p
+        = mail_to(@area.email, 'Using email')
+        %br/
+        = link_to('Using the web', new_area_post_path(@area))
+      
+    - else
       %h3 
         Only registered members can read and participate in
         %br/
@@ -20,10 +28,10 @@
         = f.check_box :remember_me, :label => 'Remember me when I come back'
         = f.submit 'Log In'
 
-  - if @area.border.present?
-    .right_column      
-      = render :partial => 'area/posts/posts_search_form'
-      
+  .right_column      
+    = render :partial => 'area/posts/posts_search_form'
+    
+    - if @area.border.present?
       = content_for :head do
         = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false"
         = javascript_include_tag 'google_maps'
@@ -32,5 +40,8 @@
         initialize_gmap(document.getElementById("map_canvas"), #{@area.center.x}, #{@area.center.y}, {}, #{@area.bounds.to_json});
         add_region(#{@area.id}, [#{@area.border_coordinates}], 'selected')
       #map_canvas{:style => 'width:280px; height:400px'}
+      %p
+        %em= @area.description
       
+    = show_ad_for(:current_issue, @area)
       

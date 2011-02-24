@@ -1,19 +1,22 @@
 = render :partial => 'layouts/account_nav'
-  
+
 .columns
-  %h2
-    = @area.name
-    Forum Archive  
   .left_column
+    %h2
+      = @area.name
+      Forum Archive  
     %h3 No. #{@issue.number} &ndash; #{@issue.sent_at.to_date.to_s(:long)}
-    %ul.list
-      = render :partial => 'area/posts/post', :collection => @issue.posts
-  .right_column
+
     .pagination
       - if @prev_issue.present?
-        = link_to '&laquo; Previous Issue'.html_safe, area_issue_path(@area, @prev_issue)
+        = link_to "&laquo; Issue No. #{@prev_issue.number}".html_safe, area_issue_path(@area, @prev_issue)
       - if @next_issue.present?
-        = link_to 'Next Issue &raquo;'.html_safe, area_issue_path(@area, @next_issue)
+        = link_to "Issue No. #{@next_issue.number} &raquo;".html_safe, area_issue_path(@area, @next_issue)
+
+    %ul.list
+      = render :partial => 'area/posts/post', :collection => @issue.posts
+
+  .right_column
     = render :partial => 'area/posts/posts_search_form', :locals => {:advanced => true}
 
     = show_ad_for(:current_issue, @area)

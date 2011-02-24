@@ -1,7 +1,7 @@
 %li
   %h4= post.title
   %p.meta
-    By <strong>#{post.user_full_name}</strong>, #{post.user_address}
+    By <strong>#{mail_to(post.user_email, post.user_full_name)}</strong>, #{post.user_address}
     %br/
-    #{post.created_at.to_s(:long)}
+    #{post.created_at.to_date.to_s(:long)}
   = simple_format post.content

@@ -134,6 +134,12 @@ class Area < ActiveRecord::Base
     Area.order('state, city, name').collect{|a| [[a.name, a.city, a.state].join(', '), a.id]}
   end
   
+  def email
+    if defined?(OPEN_PORCH_POP3)
+      "#{self.slug}@#{OPEN_PORCH_POP3['host']}"
+    end
+  end
+  
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)

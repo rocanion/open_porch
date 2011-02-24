@@ -27,7 +27,7 @@
     By 
     <strong><%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>, <%= mail_to(post.user_email) %></strong>
     <br/>
-    <%= post.created_at.strftime("%a, %e %B, %Y") %>
+    <%= post.created_at.to_date.to_s(:long)%>
     <% if defined?(OPEN_PORCH_POP3)%>
       <br/>Post your note to neighbors: <%=mail_to("#{@issue.area.slug}@#{OPEN_PORCH_POP3['host']}") %>
     <% end %>
