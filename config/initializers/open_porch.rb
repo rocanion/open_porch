@@ -1,4 +1,17 @@
-open_porch_file = defined?(OPEN_PORCH_CONFIG_FILE) ? OPEN_PORCH_CONFIG_FILE : File.expand_path('../open_porch.yml', File.dirname(__FILE__))
+if defined?(OPEN_PORCH_CONFIG_FILE)
+  open_porch_file = OPEN_PORCH_CONFIG_FILE 
+else
+  # Look for a configuration file to load
+  path = File.expand_path('./config')
+  while (File.exists?(path) and (path != '/'))
+    open_porch_file = "#{path}/open_porch.yml"
+    if (File.exists?(open_porch_file))
+      break
+    else
+      path = File.expand_path("..", path)
+    end
+  end
+end
 
 
 if File.exists?(open_porch_file)
