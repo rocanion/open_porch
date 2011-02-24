@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Area::IssuesControllerTest < ActionController::TestCase
+class Areas::IssuesControllerTest < ActionController::TestCase
   def setup
     login_as(:regular_user)
     @current_user = @controller.current_user

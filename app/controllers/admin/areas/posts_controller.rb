@@ -30,6 +30,10 @@ class Admin::Areas::PostsController < Admin::Areas::BaseController
     end
     render :layout => false
   end
+  
+  def destroy
+    @post.destroy
+  end
 
 protected
   def load_post

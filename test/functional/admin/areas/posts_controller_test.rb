@@ -43,4 +43,12 @@ class Admin::Areas::PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  def test_destroy
+    post = a Post
+    assert_difference 'Post.count', -1 do
+      xhr :delete, :destroy, :area_id => post.area, :id => post
+    end
+    assert_response :success
+  end
+  
 end

@@ -14,9 +14,9 @@
         = link_to "Issue No. #{@next_issue.number} &raquo;".html_safe, area_issue_path(@area, @next_issue)
 
     %ul.list
-      = render :partial => 'area/posts/post', :collection => @issue.posts
+      = render :partial => 'areas/posts/post', :collection => @issue.posts
 
   .right_column
-    = render :partial => 'area/posts/posts_search_form', :locals => {:advanced => true}
+    = render :partial => 'areas/posts/posts_search_form', :locals => {:advanced => true}
 
     = show_ad_for(:current_issue, @area)

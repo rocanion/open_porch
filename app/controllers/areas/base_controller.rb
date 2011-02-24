@@ -1,4 +1,4 @@
-class Area::BaseController < ApplicationController
+class Areas::BaseController < ApplicationController
   before_filter :load_area
   before_filter :initialize_search
   

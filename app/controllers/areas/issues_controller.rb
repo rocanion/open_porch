@@ -1,4 +1,4 @@
-class Area::IssuesController < Area::BaseController
+class Areas::IssuesController < Areas::BaseController
   before_filter :load_issue,
     :only => :show
   
@@ -19,7 +19,7 @@ class Area::IssuesController < Area::BaseController
   def current
     @issue = @area.issues.sent.last
     if @issue.present?
-      render :template => 'area/issues/show'
+      render :template => 'areas/issues/show'
     else
       render :text => 'Issue not found', :status => 404
     end

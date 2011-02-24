@@ -12,3 +12,4 @@
       = link_to 'edit', edit_admin_area_post_path(@area, post), :class => 'ajax-button', :remote => true
   .status
     = link_to '', toggle_reviewed_by_admin_area_post_path(@area, post), :id => dom_id(post, :status), :remote => true, :method => :post, :class => (post.reviewed? ? 'reviewed ajax-button' : 'unreviewed ajax-button')
+    = link_to 'delete', admin_area_post_path(@area, post), :method => :delete, :confirm => 'Area you sure you want to delete this post?', :remote => true

@@ -11,7 +11,7 @@
       %ul.list
         - @issues.each do |issue|
           %li
-            %h3=link_to "No. #{issue.number} &ndash; #{issue.sent_at.to_date.to_s(:long)}".html_safe, area_issue_path(@area, issue)
+            %h3=link_to "No. #{issue.number} &ndash; #{issue.sent_at.to_date.to_s(:long)}".html_safe, area_issue_path(@area, issue.number)
             - issue.posts.each do |post|
               .post
                 %h4= post.title
@@ -25,7 +25,7 @@
       - unless @current_month == Date.today.beginning_of_month
         - next_month = @current_month.next_month
         = link_to "#{next_month.strftime('%b %Y')} &raquo;".html_safe, archive_area_issues_path(@area, next_month.year, next_month.month)
-    = render :partial => 'area/posts/posts_search_form', :locals => {:advanced => true}
+    = render :partial => 'areas/posts/posts_search_form', :locals => {:advanced => true}
     
     = show_ad_for(:current_issue, @area)
     

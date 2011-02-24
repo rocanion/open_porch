@@ -10,15 +10,14 @@ Rails.application.routes.draw do
   get '/verify-email/:email_verification_key' => 'users#verify_email', :as => :verify_email
   get '/resend-email-verification/:email_verification_key' => 'users#resend_email_verification', :as => :resend_email_verification
     
-  resources :areas, :only => :show
-  namespace :area, :path => '/areas/:area_id' do
-    get '/current-issue' => 'issues#current', :as => :current_issue
-    resources :issues,  :only => [:index, :show] do
+  resources :areas, :only => :show do
+    get '/current-issue' => 'areas/issues#current', :as => :current_issue
+    resources :issues, :controller => 'areas/issues', :only => [:index, :show] do
       collection do
         get '/:year/:month', :action => :index, :as => :archive
       end
     end
-    resources :posts,   :only => [:index, :new, :create]
+    resources :posts, :controller => 'areas/posts', :only => [:index, :new, :create]
   end
   
   namespace :admin do

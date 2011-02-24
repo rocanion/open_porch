@@ -1,4 +1,4 @@
-class AreasController < Area::BaseController
+class AreasController < Areas::BaseController
   skip_before_filter :login_required,
     :only => :show
   before_filter :load_area,

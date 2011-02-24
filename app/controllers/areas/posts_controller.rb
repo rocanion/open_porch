@@ -1,4 +1,4 @@
-class Area::PostsController < Area::BaseController
+class Areas::PostsController < Areas::BaseController
   before_filter :build_post,
     :only => [:new, :create]
   
