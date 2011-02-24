@@ -11,6 +11,8 @@ class OpenPorchGenerator < Rails::Generators::Base
     directory 'public/javascripts', 'public/javascripts'
     directory 'public/images', 'public/images'
     directory 'app/views/stylesheets', 'app/views/stylesheets'
+    copy_file 'public/stylesheets/jquery-ui.css', 'public/stylesheets/jquery-ui.css'
+    directory 'public/stylesheets/images', 'public/stylesheets/images'
   end
   
   def generate_config_example_files
