@@ -33,14 +33,18 @@ class Post < ActiveRecord::Base
   def user_full_name
     [user_first_name, user_last_name].join(' ')
   end
-
+  
+  def send_immediatelly!
+    self.issue = self.area.issues.create!
+    self.save
+    self.issue.reload
+    self.issue.send! 
+  end
+  
 protected
   def create_issue
     if self.area.send_mode?(:immediate)
-      self.issue = self.area.issues.create!
-      self.save
-      self.issue.reload
-      self.issue.send! 
+      self.send_immediatelly!
     elsif self.area.send_mode?(:batched) && self.area.current_issue.blank?
       self.area.issues.create
     end

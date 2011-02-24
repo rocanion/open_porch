@@ -86,6 +86,7 @@ class IssueTest < ActiveSupport::TestCase
       assert_difference 'Issue.count' do
         issue.send!
         assert issue.sent_at.is_a?(Time)
+        area = Area.find(area.id)
         assert_not_equal issue, area.current_issue
       end
     end
@@ -106,6 +107,7 @@ class IssueTest < ActiveSupport::TestCase
       assert_no_difference 'Issue.count' do
         issue.send!
         assert issue.sent_at.is_a?(Time)
+        area = Area.find(area.id)
         assert_nil area.current_issue
       end
     end

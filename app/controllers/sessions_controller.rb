@@ -6,7 +6,11 @@ class SessionsController < ApplicationController
   def create
     if @session_user.save
       login(@session_user)
-      redirect_to(area_path(current_user.areas.first), :notice => "Welcome, you are now logged in.")
+      if current_user.areas.empty?
+        redirect_to(user_path, :notice => "Welcome, you are now logged in.")
+      else
+        redirect_to(area_path(current_user.areas.first), :notice => "Welcome, you are now logged in.")
+      end
     else
       flash.now[:alert] = 'Login failed. Did you mistype?'
       render :action => :new

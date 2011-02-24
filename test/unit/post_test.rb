@@ -24,21 +24,46 @@ class PostTest < ActiveSupport::TestCase
   def test_create_dummy
     area = Area.create_dummy(:send_mode => 'batched')
     assert_created area
+    assert area.send_mode?(:batched)
     assert area.issues.empty?
 
+    # Creating the first post will also create an issue
     assert_difference ['Post.count', 'Issue.count'] do
-      post = area.posts.create_dummy
-      assert_created post
-      assert_equal post.area.id, area.id
-      assert post.area.send_mode?(:batched)
-    end
-
-    assert_difference 'Post.count' do
-      assert_no_difference 'Issue.count' do
+      assert_emails 0 do
         post = area.posts.create_dummy
         assert_created post
+        assert_equal post.area.id, area.id
+      end
+    end
+
+    # The second post will NOT create a new issue
+    assert_difference 'Post.count' do
+      assert_no_difference 'Issue.count' do
+        assert_emails 0 do
+          post = area.posts.create_dummy
+          assert_created post
+        end
       end
     end
   end
 
+  def test_send_immediatelly
+    area = Area.create_dummy(:send_mode => 'batched')
+    assert_created area
+    assert area.send_mode?(:batched)
+
+    post = nil
+    assert_difference ['Post.count', 'Issue.count'] do
+      assert_emails 0 do
+        post = area.posts.create_dummy
+      end
+    end
+    
+    assert_difference 'Issue.count' do
+      assert_emails 1 do
+        post.send_immediatelly!
+      end
+    end
+    
+  end
 end

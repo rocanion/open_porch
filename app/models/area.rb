@@ -55,6 +55,7 @@ class Area < ActiveRecord::Base
   
   before_validation :set_send_mode, :on => :create
   after_create :initialize_issue_numbers
+  after_save :check_send_mode_change, :on => :update
   
   # == Class Methods ========================================================
   
@@ -112,7 +113,7 @@ class Area < ActiveRecord::Base
   end
   
   def current_issue
-    self.issues.where(:sent_at => nil).first
+    @current_issue ||= self.issues.where(:sent_at => nil).first
   end
   
   def send_mode?(mode)
@@ -147,5 +148,24 @@ protected
   
   def set_send_mode
     self.send_mode ||= 'immediate'
+  end
+  
+  def check_send_mode_change
+    # Detach any posts from the current issue
+    if self.send_mode_changed? && self.send_mode?(:immediate)
+      if self.current_issue
+        self.current_issue.posts.each do |post|
+          post.update_attribute(:issue_id, nil)
+        end
+        # Delete the current issue
+        self.current_issue.reload
+        self.current_issue.destroy
+        @current_issue = nil
+      end
+      # Send any post left over
+      self.posts.in_issue(nil).each do |post|
+        post.send_immediatelly!
+      end
+    end
   end
 end
