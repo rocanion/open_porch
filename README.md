@@ -1,6 +1,8 @@
 # Open Porch
 * * *
 
+## Overview
+
 [Open Porch](http://openporch.org) was created by 2010 [Knight News Challenge](http://www.newschallenge.org/) winner [Front Porch Forum](http://frontporchforum.com) thanks to support from the [John S. and James L. Knight Foundation](http://www.knightfoundation.org/).  
 
 The software was built by [The Working Group, Inc.](http://www.theworkinggroup.ca/).  
@@ -26,24 +28,38 @@ Front Porch Forum's new platform is based on Open Porch.  Open Porch is a Ruby o
   * Once the user is logged in he can edit his account.
   
 * **User authentication:** 
-  * This includes the basic login, logout, remember me functionality, forgot password and email verification
+  * This includes the basic login, logout, remember me functionality, forgot password and email verification.
   
 * **Neighbourhood forums:** 
   * Each user has access to a forum in his neighbourhood.
   * The posts in a Neighborhood Forum are grouped in issues that are emailed periodically to all the members of the neighbourhood.
-  * A user can read the current issue on his Neighbourhood Forum or search for older issues
+  * A user can read the current issue on his Neighbourhood Forum or search for older issues.
 
 * **User participation:** 
-  * Users are encouraged to contribute to their Neighbourhood Forum by posting new messages via email of via the website
+  * Users are encouraged to contribute to their Neighbourhood Forum by posting new messages via email of via the website.
   
 ### Administration
 
+* **Users:**
+  * As an administrator you can use the admin interface you can create, edit and delete users in the system.
+  * Users can be filtered by name, email or role.
+
 * **Areas:** 
   * As an administrator you have access to all the areas (Neighbourhoods) in the system.
-  * Each area is replesented by a polygon
-  * You can manage the area details, memberships and issues
+  * Each area is represented by a polygon on a map. The points of an area can be manipulated directly by using the map editor tool provided.
+  * From the admin interface you can manage the area details, memberships and issues.
   
+* **Issues:** 
+  * An area can operate in two distinct modes: immediate and batched.
+  * In immediate mode each message posted to a furum is immediatelly send to each user of the forum.
+  * In batched mode messages are held back for review by the administrator and can be edited and added to an issue individually. Each issue can then be scheduled individually.
   
+* **Reports:** 
+  * Areas can be searched by name or location using the admin interface.
+  * Each area maintains records of it's activity regarding number of new users, quitters, new posts and new issues which can be visualized in a chart and filtered by date.
+
+
+
 * * *
 ## Installation
 
@@ -101,5 +117,49 @@ The generator will give you a list of files you need to get started. You can and
 * **Static files:** These are all the javascripts, stylesheets and images used in Open Porch.
 * **Sample config files:** These are sample config files that will help you setup your own system.
 * **Migrations:** All the migrations needed by Open Porch
+
+
+
+* * *
+## Configuration
+
+Open Porch uses `config/open_porch.yml` aa it's main configuration file.
+
+### Mass mailing with PostageApp
+
+To send out the issues newsletter to all users in a forum, Open Porch makes use of [PostageApp](http://postageapp.com).
+
+To enable this functionality create a PostageApp account and fill in the respective section in `config/open_porch.yml`
+
+
+### POP3 server
+
+Open Porch can read emails posted to a POP3 server. 
+By looking up the FROM field it can find the user who sent the message. By looking up the TO field it can find the destination furum. This mechanism allows users to communicate directly with their neighbourhood forum via email.
+
+To enable this functionality fill in the respective section in `config/open_porch.yml`
+
+### Advertisement with OpenX
+
+Open Porch displays ads on each forum page. 
+
+To enable this functionality create an OpenX account and fill in the respective section in `config/open_porch.yml`
+
+
+
+
+* * *
+## Cronjobs
+
+Open Porch uses the `whenever` gem to send issue newsletters and to fetch new messages from the pop3 server.
+
+Install `whenever` and create you `schedule.rb` file 
+
+    set :output, "log/cron.log"
+    job_type :exec, "cd :path && RAILS_ENV=:environment :task :output"
+
+    every 5.minutes do
+      exec "./bin/pop3.rb"
+    end
 
 

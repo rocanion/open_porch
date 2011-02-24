@@ -2,8 +2,8 @@
   .header
     %h2 Areas
     = formatted_form_for @search, :url => [:admin, :areas], :html => {:method => :get, :class => 'admin_search'} do |f|
-      = f.text_field :full_name_search, :label => 'Search by name'
-      = f.element('and show activities between') do
+      = f.text_field :full_name_search, :label => 'name or location'
+      = f.element('and show activity between') do
         = text_field_tag :activity_start_date,  params[:activity_start_date], :type => :date
         = text_field_tag :activity_end_date,    params[:activity_end_date], :type => :date
       = f.submit 'Find'
