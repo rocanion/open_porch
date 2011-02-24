@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
-  s.date = %q{2011-02-23}
+  s.date = %q{2011-02-24}
   s.default_executable = %q{open_porch_engine}
   s.description = %q{}
   s.email = %q{jack@theworkinggroup.ca}
@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
     "app/controllers/registrations_controller.rb",
     "app/controllers/sessions_controller.rb",
     "app/controllers/users_controller.rb",
-    "app/helpers/application_helper.rb",
+    "app/helpers/open_porch_helper.rb",
     "app/mailers/user_mailer.rb",
     "app/models/address.rb",
     "app/models/area.rb",
@@ -69,14 +69,17 @@ Gem::Specification.new do |s|
     "app/views/admin/areas/new.html.haml",
     "app/views/admin/areas/new.js.haml",
     "app/views/admin/areas/posts/_edit.html.haml",
+    "app/views/admin/areas/posts/_post_status.html.haml",
     "app/views/admin/areas/posts/edit.js.rjs",
     "app/views/admin/areas/posts/show.js.rjs",
+    "app/views/admin/areas/posts/toggle_reviewed_by.js.rjs",
     "app/views/admin/areas/posts/update.js.rjs",
     "app/views/admin/areas/show.html.haml",
     "app/views/admin/user_activity/show.html.haml",
     "app/views/admin/users/_form.html.haml",
     "app/views/admin/users/edit.html.haml",
     "app/views/admin/users/index.html.haml",
+    "app/views/admin/users/new.html.haml",
     "app/views/area/issues/index.html.haml",
     "app/views/area/issues/show.html.haml",
     "app/views/area/posts/_post.html.haml",
@@ -119,7 +122,6 @@ Gem::Specification.new do |s|
     "config/application.rb",
     "config/boot.rb",
     "config/database_example.yml",
-    "config/email_example.yml",
     "config/environment.rb",
     "config/environments/development.rb",
     "config/environments/production.rb",
@@ -157,6 +159,7 @@ Gem::Specification.new do |s|
     "db/migrate/20110215211012_create_area_activities.rb",
     "db/migrate/20110215213802_create_email_messages.rb",
     "db/migrate/20110217165018_change_send_mode_to_string.rb",
+    "db/migrate/20110223160609_denormalize_user_info_in_posts.rb",
     "db/seeds.rb",
     "doc/README_FOR_APP",
     "lib/generators/open_porch_generator.rb",
@@ -170,6 +173,7 @@ Gem::Specification.new do |s|
     "public/422.html",
     "public/500.html",
     "public/favicon.ico",
+    "public/images/icons/ajax-loader.gif",
     "public/images/icons/calendar.png",
     "public/images/icons/post_new.png",
     "public/images/icons/post_reviewed.png",
@@ -184,6 +188,19 @@ Gem::Specification.new do |s|
     "public/javascripts/region_editor.js",
     "public/javascripts/user_activity.js",
     "public/robots.txt",
+    "public/stylesheets/images/ui-bg_flat_0_aaaaaa_40x100.png",
+    "public/stylesheets/images/ui-bg_flat_75_ffffff_40x100.png",
+    "public/stylesheets/images/ui-bg_glass_55_fbf9ee_1x400.png",
+    "public/stylesheets/images/ui-bg_glass_65_ffffff_1x400.png",
+    "public/stylesheets/images/ui-bg_glass_75_dadada_1x400.png",
+    "public/stylesheets/images/ui-bg_glass_75_e6e6e6_1x400.png",
+    "public/stylesheets/images/ui-bg_glass_95_fef1ec_1x400.png",
+    "public/stylesheets/images/ui-bg_highlight-soft_75_cccccc_1x100.png",
+    "public/stylesheets/images/ui-icons_222222_256x240.png",
+    "public/stylesheets/images/ui-icons_2e83ff_256x240.png",
+    "public/stylesheets/images/ui-icons_454545_256x240.png",
+    "public/stylesheets/images/ui-icons_888888_256x240.png",
+    "public/stylesheets/images/ui-icons_cd0a0a_256x240.png",
     "public/stylesheets/jquery-ui.css",
     "script/rails",
     "test/dummy/area.rb",
@@ -226,7 +243,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/FrontPorchForum/open_porch}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.5.2}
   s.summary = %q{Open Porch is Rails Engine}
   s.test_files = [
     "test/dummy/area.rb",
@@ -267,7 +284,6 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then

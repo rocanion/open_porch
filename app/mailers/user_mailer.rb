@@ -19,8 +19,7 @@ class UserMailer < PostageApp::Mailer
     @issue = issue
     mail(
       :subject => "#{issue.number}-#{issue.area.name}",
-      # :to => issue.area.users.collect(&:email)
-      :to => 'jack@twg.ca'
+      :to => issue.area.users.collect(&:email)
     )
   end
 
