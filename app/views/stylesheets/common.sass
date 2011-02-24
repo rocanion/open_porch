@@ -94,34 +94,60 @@ table
       background: #ddd
 
 // === Form ========================================
-.form_element
-  margin-bottom: 10px
-  .label
-    margin-bottom: 5px
-  .errors, .description
-    font: 11px/20px Arial, sans-serif
-    letter-spacing: 1px
-  .errors
-    color: red
-  .description
-    font-style: italic
-    color: #6E666E
+form.formatted
+  .form_element
+    margin-bottom: 10px
+    .label
+      font: 10px/20px Arial, sans-serif
+      color: #6E666E
+      text-transform: uppercase
+      letter-spacing: 1px
+      margin-bottom: 5px
+    .errors, .description
+      font: 11px/20px Arial, sans-serif
+      letter-spacing: 1px
+    .errors
+      color: red
+    .description
+      font-style: italic
+      color: #6E666E
     
-.form_element.text_field, .form_element.password_field
-  input
+  .form_element.text_field, .form_element.password_field
+    input
+      border: 1px solid #a6a8ab
+      padding: 5px
+      width: 90%
+    .search
+      width: 150px
+    
+  .form_element.text_area textarea
     border: 1px solid #a6a8ab
     padding: 5px
     width: 90%
-    
-.form_element.text_area textarea
-  border: 1px solid #a6a8ab
-  padding: 5px
-  width: 90%
   
-.form_element.check_box
-  .value
-    label
-      padding-left: 5px
+  .form_element.check_box
+    .value
+      label
+        padding-left: 5px
+
+// === Form  admin search========================================
+form.admin_search
+  overflow: hidden
+  float: right
+  .form_element
+    float: left
+    width: auto
+    margin-right: 10px
+    .label
+      margin-bottom: 0px
+    .value
+      input[type=text], input[type=date]
+        width: 150px
+  .form_element.submit_element
+    padding-top: 20px
+    width: 50px
+  
+  
 
 // === Flash messages ========================================
 .flash_wrapper

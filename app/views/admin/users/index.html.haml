@@ -1,12 +1,14 @@
 .columns
-  %h2 Users
-  = link_to 'Add new user', new_admin_user_path
+  .header
+    %h2 Users
+    = formatted_form_for @search, :url => [:admin, :users], :html => {:method => :get, :class => 'admin_search'} do |f|
+      = f.text_field :email_or_name_or_address_search, :label => 'Search'
+      = f.select :role_equals, User.roles_for_select, :include_blank => 'All Roles', :label => '&nbsp;'
+      = f.submit 'Find'
+  
+    %h5= link_to 'Add new user', new_admin_user_path
+  
   = will_paginate @users
-  = form_for @search, :url => [:admin, :users], :html => {:method => :get} do |f|
-    = f.label :email_or_name_or_address_search, 'Search'
-    = f.text_field :email_or_name_or_address_search, :style => 'width: 150px'
-    = f.select :role_equals, User.roles_for_select, :include_blank => 'All Roles'
-    = f.submit 'Find'
 
   %table
     %tr
@@ -21,7 +23,7 @@
         %td= link_to user.full_name, [:edit, :admin, user]
         %td= user.email
         %td= user.role.humanize
-        %td= user.created_at
+        %td= user.created_at.to_date.to_s(:long)
         %td
           = link_to 'delete', admin_user_path(user), :method => :delete, :confirm => 'Are you sure you want to delete this user?'
           
