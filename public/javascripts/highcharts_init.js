@@ -15,7 +15,8 @@ function draw_chart(options) {
      },
      tooltip: {
         formatter: function() {
-          return '<b>'+ this.x.replace('<br/>', '/') +'</b><br/>' + this.y + ' ' + this.series.name;
+          var day = this.x.split('<br/>')
+          return '<b>'+ day[1] + ' ' + day[0] + '</b><br/>' + this.y + ' ' + this.series.name;
         }
      },
      legend: {

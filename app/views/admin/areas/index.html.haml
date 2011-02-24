@@ -12,11 +12,11 @@
           = text_field_tag :activity_end_date,    params[:activity_end_date], :type => :date
       .field.submit
         = f.submit 'Find'
-  :javascript
 
+  :javascript
     $(document).ready(function() {
       draw_chart({
-        days : #{@activities.collect{|d| d.day.strftime('%d<br/>%m')}.to_json}, 
+        days : #{@activities.collect{|d| d.day.strftime('%d<br/>%b')}.to_json}, 
         series : [
           {
             name: 'New Users',
@@ -37,7 +37,7 @@
         ]
       });
     })   
-  #chart-container{:style=>"width: 100%; height: 400px"}
+  #chart-container{:style=>"width: 100%; height: 200px"}
 
   = will_paginate @areas
 
