@@ -137,7 +137,7 @@ class Area < ActiveRecord::Base
   
   def email
     if defined?(OPEN_PORCH_POP3)
-      "#{self.slug}@#{OPEN_PORCH_POP3['host']}"
+      "#{self.slug}@#{OPEN_PORCH_POP3['mailto']}"
     end
   end
   

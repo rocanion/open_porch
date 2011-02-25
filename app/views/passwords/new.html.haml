@@ -3,11 +3,11 @@
     %h1 Reset your password
 
     = form_tag passwords_path, :class => 'formatted' do
-      .form_element.text_field_element
+      .form_element.text_field
         .label
           %label Email
         .value= text_field_tag :email
 
       .form_element.submit_element
         = submit_tag 'Send Reset Password Email'
-        = link_to 'Already have an account?', login_path
+    %p= link_to 'Already have an account?', login_path
