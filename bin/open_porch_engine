@@ -105,6 +105,8 @@ end
 log_file = File.expand_path("#{ROOT_PATH}/log/pop3_#{RAILS_ENV}.log", File.dirname(__FILE__))
 ActiveRecord::Base.logger = Logger.new(log_file)
 
+# Set the timezone
+ActiveRecord::Base.default_timezone = :utc
 
 
 # Setup mailer views
@@ -112,6 +114,7 @@ ActionMailer::Base.view_paths = File.expand_path("../app/views", File.dirname(__
 
 
 # ======= Main =============================================================
+
 
 # Send all scheduled issues
 unsent_issues = Issue.scheduled_before(Time.now).all
