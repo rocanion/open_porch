@@ -1,6 +1,4 @@
-<% if defined?(OPEN_PORCH_POP3)%>
-  <p>To POST your message, email to <%=mail_to("#{@issue.area.slug}@#{OPEN_PORCH_POP3['host']}") %></p>
-<% end %>
+<p>To POST your message, email to <%= mail_to(@issue.area.email) %></p>
 
 
 <h2><%= "#{@issue.area.name} NEIGHBORHOOD FORUM NO.#{@issue.number}".upcase %></h2>
@@ -28,9 +26,7 @@
     <strong><%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>, <%= mail_to(post.user_email) %></strong>
     <br/>
     <%= post.created_at.to_date.to_s(:long)%>
-    <% if defined?(OPEN_PORCH_POP3)%>
-      <br/>Post your note to neighbors: <%=mail_to("#{@issue.area.slug}@#{OPEN_PORCH_POP3['host']}") %>
-    <% end %>
+    <br/>Post your note to neighbors: <%= mail_to(@issue.area.email) %>
   </p>
   <%= simple_format(auto_link(post.content)) %>
 <% end %>
