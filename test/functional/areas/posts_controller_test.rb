@@ -40,10 +40,11 @@ class Areas::PostsControllerTest < ActionController::TestCase
   def test_shouldnt_post_to_other_forums
     area = an Area
     assert_created area
+    assert !@controller.current_user.is_admin?
     assert_no_difference 'Post.count' do
       post :create, :area_id => area
     end
-    assert_response 404
+    assert_redirected_to user_path
   end
   
 end

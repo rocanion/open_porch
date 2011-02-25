@@ -12,7 +12,7 @@
         - @issues.each do |issue|
           %li
             %h3=link_to "No. #{issue.number} &ndash; #{issue.sent_at.to_date.to_s(:long)}".html_safe, area_issue_path(@area, issue.number)
-            - issue.posts.each do |post|
+            - issue.posts.order(:position).each do |post|
               .post
                 %h4= post.title
                 %p.meta By #{mail_to(post.user_email, post.user_full_name)}, #{post.user_address}

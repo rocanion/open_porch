@@ -4,9 +4,18 @@ class Areas::BaseController < ApplicationController
   
 protected
   def load_area
-    @area = current_user.areas.find(params[:area_id] || params[:id])
+    if current_user.is_admin?
+      @area = Area.find(params[:area_id] || params[:id])
+    else
+      @area = current_user.areas.find(params[:area_id] || params[:id])
+    end
   rescue ActiveRecord::RecordNotFound
-    render :text => 'Area not found', :status => 404
+    flash[:alert] = "The area you were looking for was not found"
+    if current_user.areas.empty?
+      redirect_to user_path
+    else
+      redirect_to area_path(current_user.areas.first)
+    end
   end
   
   def initialize_search

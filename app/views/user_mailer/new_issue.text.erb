@@ -5,7 +5,7 @@ To POST your message, email to <%=@issue.area.slug %>@<%= OPEN_PORCH_POP3['host'
 <%= "#{@issue.area.name} NEIGHBORHOOD FORUM NO.#{@issue.number}".upcase %>
 
 
-<% @issue.posts.order('position').each do |post| %>
+<% @issue.posts.order(:position).each do |post| %>
   <%=post.title.upcase %>
   By <%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>
   
@@ -13,7 +13,7 @@ To POST your message, email to <%=@issue.area.slug %>@<%= OPEN_PORCH_POP3['host'
 
 
 
-<% @issue.posts.order('position').each do |post| %>
+<% @issue.posts.order(:position).each do |post| %>
 ---------------------------------------------
   
   

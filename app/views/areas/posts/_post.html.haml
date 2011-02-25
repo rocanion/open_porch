@@ -1,4 +1,5 @@
 %li
+  %a{:name => dom_id(post, :anchor)}
   %h4= post.title
   %p.meta
     By <strong>#{mail_to(post.user_email, post.user_full_name)}</strong>, #{post.user_address}

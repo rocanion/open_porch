@@ -3,7 +3,7 @@
 
   %h2 Issue ##{@issue.number} - #{@issue.sent_at.to_date.to_s(:long)}
   %ul.list
-    - @issue.posts.each do |post|
+    - @issue.posts.order(:position).each do |post|
       %li
         %h4= post.title
         %p.meta
