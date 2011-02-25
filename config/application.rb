@@ -7,6 +7,8 @@ require 'rails/all'
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module OpenPorch
+  VERSION = '0.3.0 (beta)'
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -39,4 +41,5 @@ module OpenPorch
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
   end
+  
 end
