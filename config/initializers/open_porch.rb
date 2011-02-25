@@ -1,3 +1,6 @@
+OPEN_PORCH_VERSION = '0.3.0 (beta)'
+
+
 if defined?(OPEN_PORCH_CONFIG_FILE)
   open_porch_file = OPEN_PORCH_CONFIG_FILE 
 else
