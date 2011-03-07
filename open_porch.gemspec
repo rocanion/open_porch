@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
-  s.date = %q{2011-02-25}
+  s.date = %q{2011-03-07}
   s.default_executable = %q{open_porch_engine}
   s.description = %q{}
   s.email = %q{jack@theworkinggroup.ca}
@@ -288,7 +288,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rails>, ["= 3.0.4"])
+      s.add_runtime_dependency(%q<rails>, [">= 3.0.4"])
       s.add_runtime_dependency(%q<pg>, ["= 0.10.1"])
       s.add_runtime_dependency(%q<haml>, ["= 3.0.25"])
       s.add_runtime_dependency(%q<spatial_adapter>, ["= 1.2.0"])
@@ -302,7 +302,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<whenever>, ["= 0.6.2"])
       s.add_runtime_dependency(%q<postageapp>, [">= 0"])
     else
-      s.add_dependency(%q<rails>, ["= 3.0.4"])
+      s.add_dependency(%q<rails>, [">= 3.0.4"])
       s.add_dependency(%q<pg>, ["= 0.10.1"])
       s.add_dependency(%q<haml>, ["= 3.0.25"])
       s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])
@@ -317,7 +317,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<postageapp>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rails>, ["= 3.0.4"])
+    s.add_dependency(%q<rails>, [">= 3.0.4"])
     s.add_dependency(%q<pg>, ["= 0.10.1"])
     s.add_dependency(%q<haml>, ["= 3.0.25"])
     s.add_dependency(%q<spatial_adapter>, ["= 1.2.0"])

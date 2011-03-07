@@ -1,8 +1,12 @@
+require 'haml'
 require "wristband"
+require 'postageapp'
+require 'spatial_adapter'
 require "open_porch"
 require "formatted_form"
 require "will_paginate"
 require "meta_search"
+require 'geokit'
 require "rails"
 
 module OpenPorch
