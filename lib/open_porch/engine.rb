@@ -1,5 +1,6 @@
 require 'haml'
 require "wristband"
+require 'active_link_to'
 require 'postageapp'
 require 'spatial_adapter'
 require "open_porch"
