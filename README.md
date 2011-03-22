@@ -163,3 +163,8 @@ Install `whenever` and create you `schedule.rb` file
     end
 
 
+* * *
+## License
+
+Open Porch is released under the [GNU General Public License, version 3 (GPLv3)](http://www.opensource.org/licenses/gpl-3.0)
+
