@@ -159,7 +159,7 @@ Install `whenever` and create you `schedule.rb` file
     job_type :exec, "cd :path && RAILS_ENV=:environment :task :output"
 
     every 5.minutes do
-      exec "./bin/pop3.rb"
+      exec "open_porch_engine"
     end
 
 
