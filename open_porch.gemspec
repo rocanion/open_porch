@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{open_porch}
-  s.version = "0.5.1"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["The Working Group Inc"]
@@ -161,7 +161,6 @@ Gem::Specification.new do |s|
     "db/migrate/20110215213802_create_email_messages.rb",
     "db/migrate/20110217165018_change_send_mode_to_string.rb",
     "db/migrate/20110223160609_denormalize_user_info_in_posts.rb",
-    "db/seeds.rb",
     "doc/README_FOR_APP",
     "lib/generators/open_porch_generator.rb",
     "lib/open_porch.rb",

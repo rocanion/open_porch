@@ -4,6 +4,7 @@
 config/database.yml
 config/open_porch.yml
 db/schema.rb
+db/seeds.rb
 db/dumps/*
 log/*.log
 tmp/**/*

@@ -1,4 +1,4 @@
-OPEN_PORCH_VERSION = '0.5.0'
+OPEN_PORCH_VERSION = '1.0'
 
 open_porch_file = ''
 if defined?(OPEN_PORCH_CONFIG_FILE)

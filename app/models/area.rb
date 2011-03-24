@@ -151,9 +151,9 @@ class Area < ActiveRecord::Base
     when :newsletter_text
       url = URI.parse(openx_url)
       res = Net::HTTP.start(url.host, url.port) {|http|
-        http.get("/afr.php?zoneid=#{OPEN_PORCH_ZONES[zone_name.to_s]}&region=#{self.slug}&cb=#{time}&n=a8417ca6")
+        http.get("/afr.php?zoneid=#{OPEN_PORCH_ZONES[zone_name.to_s]}&region=#{self.slug}&cb=#{time}")
       }
-      res.body.gsub("\n", '').gsub(/.*<body>(.*)<div id='beacon.*/, '\1').html_safe
+      res.body.gsub("\n", '').gsub(/.*<body>(.*)<div id='beacon.*/, '\1')
     else
       %{
         <a href="#{openx_url}/ck.php?cb=#{time}&n=a8417ca6", class="ad #{zone_name}" target="_blank">
