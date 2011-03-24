@@ -11,7 +11,7 @@ Open Porch design is based on experienced gained by operating the successful Fro
 
 Front Porch Forum's mission is to help nearby neighbors connect and build community.  It does that by hosting regional networks of small online neighborhood forums.  By early 2011, 24,000 households subscribed to its Vermont pilot, including half of those in Burlington.  People make great use of FPF to find lost cats, report car break-ins, borrow ladders, recommend plumbers, debate school budgets, announce a blood drive, organize a block party and much more.  Since each posting is shared among clearly identified nearby neighbors, people report that over time they feel more connected to neighbors and better informed about what's going on around them. This leads eventually, for many, to get more involved in local issues and fulfills FPF's mission.
 
-Front Porch Forum's new platform is based on Open Porch.  Open Porch is a Ruby on Rails gem released under an MIT open source license.
+Front Porch Forum's new platform is based on Open Porch.  Open Porch is a Ruby on Rails gem released under the [GNU General Public License, version 3 (GPLv3)](http://www.opensource.org/licenses/gpl-3.0).
 
 **The Knight News Challenge:** KNC is a media innovation contest that aims to advance the future of news by funding new ways to digitally inform communities.
 
@@ -58,7 +58,8 @@ Front Porch Forum's new platform is based on Open Porch.  Open Porch is a Ruby o
   * Areas can be searched by name or location using the admin interface.
   * Each area maintains records of it's activity regarding number of new users, quitters, new posts and new issues which can be visualized in a chart and filtered by date.
 
-
+* **Advertising:** 
+  * Ads can be added to both the forum pages and the e-newsletter issues.
 
 * * *
 ## Installation
@@ -141,7 +142,7 @@ To enable this functionality fill in the respective section in `config/open_porc
 
 ### Advertisement with OpenX
 
-Open Porch displays ads on each forum page. 
+Open Porch displays ads on both the forum pages and the e-newsletter issues.
 
 To enable this functionality create an OpenX account and fill in the respective section in `config/open_porch.yml`
 
