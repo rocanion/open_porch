@@ -19,4 +19,4 @@
   .right_column
     = render :partial => 'areas/posts/posts_search_form', :locals => {:advanced => true}
 
-    = show_ad_for(:current_issue, @area)
+    = @area.openx_ad(:current_issue)

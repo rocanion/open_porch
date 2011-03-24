@@ -1,4 +1,4 @@
-To POST your message, email to <%= mail_to(@issue.area.email) %>
+To POST your message, email to <%= @issue.area.email %>
 
 <%= "#{@issue.area.name} NEIGHBORHOOD FORUM NO.#{@issue.number}".upcase %>
 
@@ -10,17 +10,18 @@ To POST your message, email to <%= mail_to(@issue.area.email) %>
 <% end %>
 
 
+----------------------------------------------------------------------------
+<%= @issue.area.openx_ad(:newsletter_text) %>
+----------------------------------------------------------------------------
 
-<% @issue.posts.order(:position).each do |post| %>
----------------------------------------------
+
+<% @issue.posts.order(:position).each_with_index do |post, i| %>
   
   
-<%= post.title.upcase %>
-By <%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>, <%=post.user_email %>
-<%= post.created_at.to_date.to_s(:long) %>
-Post your note to neighbors: <%= mail_to(@issue.area.email) %>
+<%= "#{i+1}) #{post.title.upcase}" %>
+By <%= post.user_first_name%> <%= post.user_last_name%>, <%=post.user_address %>, <%=post.user_email %> on <%= post.created_at.to_date.to_s(:long) %>
 
-<%= post.content %>
+<%= post.content.html_safe %>
 
 <% end %>
 

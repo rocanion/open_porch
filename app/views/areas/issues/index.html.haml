@@ -27,5 +27,4 @@
         = link_to "#{next_month.strftime('%b %Y')} &raquo;".html_safe, archive_area_issues_path(@area, next_month.year, next_month.month)
     = render :partial => 'areas/posts/posts_search_form', :locals => {:advanced => true}
     
-    = show_ad_for(:current_issue, @area)
-    
+    = @area.openx_ad(:current_issue)

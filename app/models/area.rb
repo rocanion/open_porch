@@ -141,6 +141,29 @@ class Area < ActiveRecord::Base
     end
   end
   
+  # afr.php returns HTML code
+  def openx_ad(zone_name)
+    return unless defined?(OPEN_PORCH_ZONES)
+    time = Time.now.to_i
+    openx_url = "http://d1.openx.org"
+
+    case zone_name.to_sym
+    when :newsletter_text
+      url = URI.parse(openx_url)
+      res = Net::HTTP.start(url.host, url.port) {|http|
+        http.get("/afr.php?zoneid=#{OPEN_PORCH_ZONES[zone_name.to_s]}&region=#{self.slug}&cb=#{time}&n=a8417ca6")
+      }
+      res.body.gsub("\n", '').gsub(/.*<body>(.*)<div id='beacon.*/, '\1').html_safe
+    else
+      %{
+        <a href="#{openx_url}/ck.php?cb=#{time}&n=a8417ca6", class="ad #{zone_name}" target="_blank">
+          <img src="http://d1.openx.org/avw.php?zoneid=#{OPEN_PORCH_ZONES[zone_name.to_s]}&region=#{self.slug}&cb=#{time}&n=a8417ca6" />
+        </a>
+      }.html_safe
+    end
+  end
+  
+  
 protected
   def initialize_issue_numbers
     self.create_issue_number(:sequence_number => 0)

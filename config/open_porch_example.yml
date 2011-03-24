@@ -12,7 +12,8 @@ pop3:
 openx_zones:
   development:
     current_issue: ZONE_ID
-    newsletter: ZONE_ID
+    newsletter_text: ZONE_ID
+    newsletter_image: ZONE_ID
     
 # PostageApp configuration
 postageapp:
